@@ -1,0 +1,46 @@
+# Understanding Server Components in Next.js
+
+Server Components are the default in Next.js 13+ and allow you to render components on the server for better performance.
+
+## Benefits of Server Components
+
+- Reduced client-side JavaScript
+- Access to backend resources
+- Better initial page load
+- Improved SEO
+
+## Example
+
+```tsx
+// No 'use client' directive needed - this is a server component by default
+import { db } from "@/lib/db";
+
+export default async function UserList() {
+  const users = await db.users.findMany();
+
+  return (
+    <ul>
+      {users.map((user) => (
+        <li key={user.id}>{user.name}</li>
+      ))}
+    </ul>
+  );
+}
+```
+
+## When to Use Server Components
+
+Use Server Components when:
+
+- Fetching data
+- Accessing backend resources directly
+- Keeping sensitive information on the server
+- No client-side interactivity is needed
+
+<Demo />
+
+## Best Practices
+
+1. Use Server Components by default
+2. Move client-side logic to leaf components
+3. Keep sensitive data on the server

@@ -1,0 +1,33 @@
+# Understanding Client Components in Next.js
+
+Client Components are a fundamental concept in Next.js that allow you to make parts of your application interactive.
+
+## When to Use Client Components
+
+Use the `'use client'` directive when your component needs to:
+
+- Use browser APIs
+- Add interactivity and event listeners
+- Use React hooks like `useState` or `useEffect`
+
+## Example
+
+```tsx
+"use client";
+
+import { useState } from "react";
+
+export default function Counter() {
+  const [count, setCount] = useState(0);
+
+  return <button onClick={() => setCount(count + 1)}>Count: {count}</button>;
+}
+```
+
+<Demo />
+
+## Best Practices
+
+1. Keep client components as small as possible
+2. Push state management down the tree
+3. Use Server Components by default

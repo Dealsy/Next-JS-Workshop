@@ -1,14 +1,17 @@
 import { getLessonById, lessons } from "@/data/lessons";
+import { notFound } from "next/navigation";
+import LessonContent from "@/components/LessonContent";
 
-export default function LessonPage({
+export default async function LessonPage({
   params,
 }: {
   params: { lessonId: string };
 }) {
-  const lesson = getLessonById(params.lessonId);
+  const param = await params;
+  const lesson = getLessonById(param.lessonId);
 
   if (!lesson) {
-    return <div>Lesson not found</div>;
+    notFound();
   }
 
   return (
@@ -27,14 +30,12 @@ export default function LessonPage({
           </div>
         </header>
 
-        {/* Lesson content will be dynamically loaded here */}
-        <div className="prose max-w-none">
-          <p>Lesson content coming soon...</p>
-        </div>
+        <LessonContent lessonId={lesson.id} />
       </div>
     </div>
   );
 }
+
 export function generateStaticParams() {
   return lessons.map((lesson) => ({
     lessonId: lesson.id,

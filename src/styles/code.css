@@ -1,0 +1,21 @@
+/* Night Owl theme specific styles */
+pre {
+  background-color: #011627 !important;
+  border-radius: 0.5rem;
+  margin: 1.5rem 0;
+}
+
+.shiki {
+  background-color: #011627 !important;
+  padding: 1rem;
+  overflow-x: auto;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+/* Ensure code blocks don't overflow */
+.prose pre {
+  overflow-x: auto;
+}

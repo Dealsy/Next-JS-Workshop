@@ -1,39 +1,41 @@
 import Link from "next/link";
+import { lessons } from "@/data/lessons";
 
-const lessonSections = [
-  {
-    title: "1. Client & Server",
-    lessons: [
-      { title: "Use Client", path: "/lessons/1_Client_Server/use_client" },
-      { title: "Use Server", path: "/lessons/1_Client_Server/use_server" },
-    ],
-  },
-  {
-    title: "2. Routing",
-    lessons: [
-      { title: "Nested Routing", path: "/lessons/2_Routing/nested_routing" },
-      { title: "Dynamic Routing", path: "/lessons/2_Routing/dynamic_routing" },
-      {
-        title: "Parallel Routing",
-        path: "/lessons/2_Routing/parallel_routing",
-      },
-    ],
-  },
-  // Add more sections as needed
-];
+// Helper function to group lessons by category and maintain order
+function getLessonsBySection() {
+  const sections = [
+    {
+      id: "1_Client_Server",
+      title: "1. Client & Server",
+      category: "Client & Server",
+    },
+    {
+      id: "2_Routing",
+      title: "2. Routing",
+      category: "Routing",
+    },
+  ];
+
+  return sections.map((section) => ({
+    ...section,
+    lessons: lessons.filter((lesson) => lesson.category === section.category),
+  }));
+}
 
 export default function Sidebar() {
+  const lessonSections = getLessonsBySection();
+
   return (
     <aside className="w-64 border-r bg-gray-50 p-4 hidden md:block">
       <nav>
-        {lessonSections.map((section, index) => (
-          <div key={index} className="mb-6">
+        {lessonSections.map((section) => (
+          <div key={section.id} className="mb-6">
             <h2 className="font-semibold mb-2">{section.title}</h2>
             <ul className="space-y-2">
-              {section.lessons.map((lesson, lessonIndex) => (
-                <li key={lessonIndex}>
+              {section.lessons.map((lesson) => (
+                <li key={lesson.id}>
                   <Link
-                    href={lesson.path}
+                    href={`/lessons/${lesson.id}`}
                     className="text-sm text-gray-600 hover:text-blue-600 block py-1"
                   >
                     {lesson.title}

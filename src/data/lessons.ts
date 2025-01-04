@@ -5,7 +5,7 @@ export interface Lesson {
   category: string;
   difficulty: "beginner" | "intermediate" | "advanced";
   prerequisites?: string[];
-  path: string;
+  order?: number;
 }
 
 export const lessons: Lesson[] = [
@@ -15,7 +15,7 @@ export const lessons: Lesson[] = [
     description: "Learn when and how to use client-side components in Next.js",
     category: "Client & Server",
     difficulty: "beginner",
-    path: "/lessons/1_Client_Server/use_client",
+    order: 1,
   },
   {
     id: "use-server",
@@ -23,7 +23,7 @@ export const lessons: Lesson[] = [
     description: "Master server-side component patterns and best practices",
     category: "Client & Server",
     difficulty: "beginner",
-    path: "/lessons/1_Client_Server/use_server",
+    order: 2,
   },
   // Add more lessons...
 ];
@@ -33,5 +33,18 @@ export function getLessonById(id: string): Lesson | undefined {
 }
 
 export function getLessonsByCategory(category: string): Lesson[] {
-  return lessons.filter((lesson) => lesson.category === category);
+  return lessons
+    .filter((lesson) => lesson.category === category)
+    .sort((a, b) => (a.order || 0) - (b.order || 0));
+}
+
+// Add a function to get categories in the correct order
+export const orderedCategories = [
+  "Client & Server",
+  "Routing",
+  "Data Fetching",
+];
+
+export function getCategories(): string[] {
+  return orderedCategories;
 }
