@@ -23,7 +23,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <div className="flex">
-          <SidebarProvider defaultOpen={true}>
+          <SidebarProvider defaultOpen>
             <Sidebar />
             <main className="flex-1 flex flex-col">
               <Header />
