@@ -1,5 +1,3 @@
-
-
 import { getLessonById, lessons } from "@/data/lessons";
 import { notFound } from "next/navigation";
 import LessonContent from "@/components/LessonContent";
@@ -11,6 +9,7 @@ export async function generateMetadata({
 }: {
   params: { lessonId: string };
 }): Promise<Metadata> {
+  "use cache";
   const param = await params;
   const lesson = getLessonById(param.lessonId);
   if (!lesson) return {};
@@ -25,7 +24,7 @@ export default async function LessonPage({
 }: {
   params: { lessonId: string };
 }) {
-  'use cache'
+  "use cache";
   const param = await params;
   const lesson = getLessonById(param.lessonId);
 

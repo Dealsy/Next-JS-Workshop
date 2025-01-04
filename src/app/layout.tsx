@@ -6,6 +6,7 @@ import Header from "@/components/Header";
 import Sidebar from "@/components/Sidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import Footer from "@/components/Footer";
+import { Suspense } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,6 +24,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <div className="flex">
+        <Suspense fallback={<div>Loading...</div>}>
           <SidebarProvider defaultOpen>
             <Sidebar />
             <main className="flex-1 flex flex-col">
@@ -33,7 +35,8 @@ export default function RootLayout({
                 </div>
               </div>
             </main>
-          </SidebarProvider>
+            </SidebarProvider>
+          </Suspense>
         </div>
         <Footer />
       </body>
