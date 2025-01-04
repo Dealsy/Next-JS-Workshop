@@ -5,12 +5,14 @@ import Pagination from "@/components/Pagination";
 
 const LESSONS_PER_PAGE = 6;
 
-export default function Lessons({
+export default async function Lessons({
   searchParams,
 }: {
   searchParams: { page?: string };
 }) {
-  const currentPage = Number(searchParams.page) || 1;
+  const params = await searchParams;
+
+  const currentPage = Number(params.page) || 1;
   const startIndex = (currentPage - 1) * LESSONS_PER_PAGE;
   const endIndex = startIndex + LESSONS_PER_PAGE;
   const currentLessons = lessons.slice(startIndex, endIndex);

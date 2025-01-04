@@ -3,11 +3,14 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import { getLessonContent } from "@/lib/lessons";
 import CodeBlock from "./CodeBlock";
 import Demo from "./Demo";
+import { Skeleton } from "./ui/skeleton";
 
 const components = {
   pre: CodeBlock,
   Demo: Demo,
 };
+
+
 
 export default async function LessonContent({
   lessonId,
@@ -18,8 +21,17 @@ export default async function LessonContent({
 
   return (
     <div className="prose prose-slate max-w-none">
-      <Suspense fallback={<div>Loading...</div>}>
-        <MDXRemote source={source} components={components} />
+      <Suspense
+        fallback={
+          <div className="max-w-none">
+            <Skeleton className="h-10 w-full mb-4" />
+            <Skeleton className="h-64 w-full mb-4" />
+            <Skeleton className="h-20 w-full mb-4" />
+            <Skeleton className="h-52 w-full mb-4" />
+          </div>
+        }
+      >
+       <MDXRemote source={source} components={components} />
       </Suspense>
     </div>
   );

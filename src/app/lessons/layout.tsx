@@ -1,3 +1,4 @@
+import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
 
 export default function LessonsLayout({
@@ -8,8 +9,12 @@ export default function LessonsLayout({
   return (
     <div className="min-h-screen">
       <nav className="bg-gray-100 p-4">
-        <Link href="/" className="text-blue-500 hover:underline">
-          ← Back to Lessons
+        <Link
+          href="/lessons"
+          className="inline-flex items-center text-sm text-gray-600 hover:text-gray-900"
+        >
+          <ChevronLeft className="w-4 h-4 mr-1" />
+          Back to Lessons
         </Link>
       </nav>
       {children}

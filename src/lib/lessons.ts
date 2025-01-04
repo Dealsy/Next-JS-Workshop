@@ -1,7 +1,8 @@
 import fs from "fs/promises";
 import path from "path";
+import { cache } from "react";
 
-export async function getLessonContent(lessonId: string) {
+export const getLessonContent = cache(async (lessonId: string) => {
   const contentPath = path.join(
     process.cwd(),
     "src/content/lessons",
@@ -25,4 +26,4 @@ export async function getLessonContent(lessonId: string) {
     console.error(`Error loading lesson ${lessonId}:`, e);
     throw e;
   }
-}
+});
