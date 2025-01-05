@@ -2,6 +2,9 @@
 
 The `'use server'` directive in Next.js enables Server Actions, allowing you to run code exclusively on the server, even when it's called from client components.
 
+Server actions should be used to perform an action, such as creating a todo item, updating a user's profile, or deleting a comment.
+You should not use server actions to perform a query, such as fetching data from a database.
+
 <Alert type="warning">
 You should think of server actions as a public API that you can call from your client components.
 
@@ -16,12 +19,14 @@ you want to secure your server actions.
 Use the `'use server'` directive when you need to:
 
 - Mutate data in your database
-- Access sensitive server-side resources
 - Perform server-only operations
 - Handle form submissions securely
-- Execute heavy computations
+- Handle any server-side CRUD operations
 
 ## Example
+
+In this example, the server action is defined in a separate file and imported into the component.
+this is the typical way that you would use server actions.
 
 ```tsx
 // action.ts
@@ -36,7 +41,10 @@ export async function createTodo(title: string) {
   });
 }
 
-// Component using the server action
+// In a separate file using the server action
+
+import { createTodo } from "./action";
+
 export default function TodoForm() {
   return (
     <form action={createTodo}>
@@ -47,12 +55,34 @@ export default function TodoForm() {
 }
 ```
 
+You can also use `'use server'` in a component to open a door to the server.
+
+Here is an example:
+
+```tsx
+async function deleteTodo(formData: FormData) {
+  "use server";
+
+  // This code only runs on the server
+  const id = Number(formData.get("id"));
+  todos = todos.filter((t) => t.id !== id);
+  revalidatePath("/lessons/(exercises)/directives/use_server");
+}
+
+export default function TodoList() {
+  return (
+    <form action={deleteTodo}>
+      <button type="submit">Delete Todo</button>
+    </form>
+  );
+}
+```
+
 ## Best Practices
 
 1. Keep Server Actions Focused
 
    - One action should do one thing
-   - Keep business logic in the server action
    - Return minimal necessary data
 
 2. Error Handling
@@ -70,17 +100,17 @@ export default function TodoForm() {
 
 - Server Actions must be async functions
 - Can't mix client and server code in the same file
-- Form actions need proper type safety
 - Server Actions can't access client-side APIs
+- Server Actions are API calls and will cause a network request
 
 <InteractiveExercises>
 
-Ready to try it yourself? Head over to the [Use Server Exercise](/lessons/directives/use_server) where you'll:
+Ready to try it yourself? Head over to the [Use Server Exercise](/lessons/use_server) where you'll:
 
 - Create a server action to handle form submission
-- Implement proper error handling
-- Add input validation
-- Handle loading and success states
+- setup a TODO list and add a todo item
+- handle errors
+- handle loading and success states
 
 </InteractiveExercises>
 ## Additional Resources

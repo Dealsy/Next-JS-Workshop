@@ -1,6 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { ExerciseUrl } from "@/components/excercise-url";
+import { EXERCISE_URLS } from "@/constants";
+import { ExerciseContainer } from "@/components/excerciseContainer";
 
 /*
  * 🚀 Exercise: Understanding the 'use client' Directive
@@ -11,7 +13,7 @@ import { useState } from "react";
  * 1. Update the counter function by creating a counter button and counter display
  * 2. Remove the 'use client' directive from the top of this file and
  *    take notice of the errors
- * 2. Fix the errors by adding the 'use client' directive back the top of this file
+ * 2. Fix the errors by adding the 'use client' directive  the top of this file
  *
  * 🧩 Extra Credit:
  * 1. Add a reset button
@@ -45,16 +47,19 @@ function Counter() {
 
 export default function UseClientExercise() {
   return (
-    <div className="max-w-xl mx-auto my-8">
+    <ExerciseContainer>
+      {/* You can remove this div if you want to work with the full page */}
       <div className="mb-8">
         <h1 className="text-2xl font-bold mb-4">Understanding use client</h1>
         <p className="text-gray-600">
           In this exercise, you&apos;ll learn when and why to use the &apos;use
           client&apos; directive by implementing a simple counter component.
         </p>
+
+        <ExerciseUrl url={EXERCISE_URLS.use_client} />
       </div>
 
       <Counter />
-    </div>
+    </ExerciseContainer>
   );
 }

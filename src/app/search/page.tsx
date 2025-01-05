@@ -2,12 +2,14 @@ import Link from "next/link";
 import { ArrowRightIcon } from "lucide-react";
 import { lessons } from "@/data/lessons";
 
-export default function SearchResults({
+export default async function SearchResults({
   searchParams,
 }: {
   searchParams: { q?: string };
 }) {
-  const query = searchParams.q?.toLowerCase() || "";
+  const params = await searchParams;
+
+  const query = params.q?.toLowerCase() || "";
   const filteredLessons = lessons.filter(
     (lessons) =>
       lessons.title.toLowerCase().includes(query) ||

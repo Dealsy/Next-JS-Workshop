@@ -1,5 +1,5 @@
 "use client";
-import { ChevronLeft, Home, Slash } from "lucide-react";
+import { Home, Slash } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -12,6 +12,14 @@ import {
 } from "@/components/ui/breadcrumb";
 import React from "react";
 
+function isNavigableSegment(segment: string): boolean {
+  if (segment.startsWith("(")) return false;
+  if (segment === "lessons") return true;
+  if (segment.includes("(")) return false;
+
+  return true;
+}
+
 export default function LessonsLayout({
   children,
 }: {
@@ -19,6 +27,9 @@ export default function LessonsLayout({
 }) {
   const pathname = usePathname();
   const pathSegments = pathname.split("/").filter(Boolean);
+
+  // Filter out non-navigable segments
+  const navigableSegments = pathSegments.filter(isNavigableSegment);
 
   return (
     <div className="min-h-screen">
@@ -37,9 +48,11 @@ export default function LessonsLayout({
               </BreadcrumbLink>
             </BreadcrumbItem>
 
-            {pathSegments.map((segment, index) => {
-              const href = `/${pathSegments.slice(0, index + 1).join("/")}`;
-              const isLast = index === pathSegments.length - 1;
+            {navigableSegments.map((segment, index) => {
+              const href = `/${navigableSegments
+                .slice(0, index + 1)
+                .join("/")}`;
+              const isLast = index === navigableSegments.length - 1;
 
               return (
                 <React.Fragment key={href}>
@@ -49,7 +62,7 @@ export default function LessonsLayout({
                   <BreadcrumbItem>
                     {isLast ? (
                       <BreadcrumbPage className="capitalize text-gray-900 dark:text-gray-100">
-                        {segment}
+                        {segment.replace(/-/g, " ")}
                       </BreadcrumbPage>
                     ) : (
                       <BreadcrumbLink asChild>
@@ -57,7 +70,7 @@ export default function LessonsLayout({
                           href={href}
                           className="capitalize text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100"
                         >
-                          {segment}
+                          {segment.replace(/-/g, " ")}
                         </Link>
                       </BreadcrumbLink>
                     )}
