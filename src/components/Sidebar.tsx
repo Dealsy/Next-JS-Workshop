@@ -40,7 +40,7 @@ export default function Sidebar() {
 
   return (
     <UISidebar variant="sidebar" collapsible="offcanvas">
-      <SidebarHeader className="border-b p-4">
+      <SidebarHeader className="border-b p-[25.5px]">
         <Link href="/" className="flex items-center space-x-2">
           <Book className="h-6 w-6" />
           <span className="text-lg font-semibold">Next.js Workshop</span>

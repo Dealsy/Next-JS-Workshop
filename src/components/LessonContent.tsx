@@ -4,13 +4,13 @@ import { getLessonContent } from "@/lib/lessons";
 import CodeBlock from "./CodeBlock";
 import Demo from "./Demo";
 import { Skeleton } from "./ui/skeleton";
+import Alert from "./alert";
 
 const components = {
   pre: CodeBlock,
   Demo: Demo,
+  Alert: Alert,
 };
-
-
 
 export default async function LessonContent({
   lessonId,
@@ -31,7 +31,7 @@ export default async function LessonContent({
           </div>
         }
       >
-       <MDXRemote source={source} components={components} />
+        <MDXRemote source={source} components={components} />
       </Suspense>
     </div>
   );

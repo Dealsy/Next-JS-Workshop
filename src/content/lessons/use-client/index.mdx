@@ -1,14 +1,16 @@
 # Understanding Client Components in Next.js
 
-Client Components are a fundamental concept in Next.js that allow you to make parts of your application interactive.
+Client Components are a fundamental concept in Next.js that allow you to make parts of your application interactive. They're essential when you need to use browser APIs, handle user interactions, or manage client-side state.
 
 ## When to Use Client Components
 
 Use the `'use client'` directive when your component needs to:
 
-- Use browser APIs
-- Add interactivity and event listeners
-- Use React hooks like `useState` or `useEffect`
+- Use browser APIs (localStorage, window, etc.)
+- Add interactivity and event handlers
+- Use React hooks (useState, useEffect, etc.)
+- Handle form submissions
+- Add client-side routing logic
 
 ## Example
 
@@ -29,5 +31,37 @@ export default function Counter() {
 ## Best Practices
 
 1. Keep client components as small as possible
+
+   - Only mark components as client when they need interactivity
+   - Split client and server logic into separate components
+
 2. Push state management down the tree
+
+   - Keep client components at the leaves of your component tree
+   - Parent components can remain server components
+
 3. Use Server Components by default
+   - Start with server components
+   - Convert to client components only when needed
+   - This optimizes your application's performance
+
+## Common Gotchas
+
+- You can't use `'use client'` in the middle of a file
+- You can't mix server and client code in the same component
+- Client components can't import server components (but server components can import client components)
+
+## Interactive Exercise
+
+Ready to try it yourself? Head over to the [Use Client Exercise](/lessons/directives/use_client) where you'll:
+
+- Create a counter component
+- Learn why the 'use client' directive is needed
+- Handle user interactions
+- Implement client-side state management
+
+## Additional Resources
+
+- [Next.js Documentation on Client Components](https://nextjs.org/docs/app/building-your-application/rendering/client-components)
+- [React Server Components RFC](https://github.com/reactjs/rfcs/blob/main/text/0188-server-components.md)
+- [Understanding Server and Client Components](https://nextjs.org/docs/app/building-your-application/rendering)

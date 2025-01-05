@@ -1,46 +1,89 @@
-# Understanding Server Components in Next.js
+# Understanding Server Actions with 'use server'
 
-Server Components are the default in Next.js 13+ and allow you to render components on the server for better performance.
+The `'use server'` directive in Next.js enables Server Actions, allowing you to run code exclusively on the server, even when it's called from client components.
 
-## Benefits of Server Components
+<Alert type="warning">
+You should think of server actions as a public API that you can call from your client components.
 
-- Reduced client-side JavaScript
-- Access to backend resources
-- Better initial page load
-- Improved SEO
+Next JS still leaves authentication and authorization checks up to you.
+So it is important that you implement these checks in your server actions if
+you want to secure your server actions.
+
+</Alert>
+
+## When to Use Server Actions
+
+Use the `'use server'` directive when you need to:
+
+- Mutate data in your database
+- Access sensitive server-side resources
+- Perform server-only operations
+- Handle form submissions securely
+- Execute heavy computations
 
 ## Example
 
 ```tsx
-// No 'use client' directive needed - this is a server component by default
+// action.ts
+"use server";
+
 import { db } from "@/lib/db";
 
-export default async function UserList() {
-  const users = await db.users.findMany();
+export async function createTodo(title: string) {
+  // This code only runs on the server
+  await db.todo.create({
+    data: { title },
+  });
+}
 
+// Component using the server action
+export default function TodoForm() {
   return (
-    <ul>
-      {users.map((user) => (
-        <li key={user.id}>{user.name}</li>
-      ))}
-    </ul>
+    <form action={createTodo}>
+      <input type="text" name="title" />
+      <button type="submit">Add Todo</button>
+    </form>
   );
 }
 ```
 
-## When to Use Server Components
-
-Use Server Components when:
-
-- Fetching data
-- Accessing backend resources directly
-- Keeping sensitive information on the server
-- No client-side interactivity is needed
-
-<Demo />
-
 ## Best Practices
 
-1. Use Server Components by default
-2. Move client-side logic to leaf components
-3. Keep sensitive data on the server
+1. Keep Server Actions Focused
+
+   - One action should do one thing
+   - Keep business logic in the server action
+   - Return minimal necessary data
+
+2. Error Handling
+
+   - Use try/catch blocks
+   - Return meaningful error messages
+   - Validate input data server-side
+
+3. Security Considerations
+   - Never expose sensitive data or credentials
+   - Always validate and sanitize inputs
+   - Use proper authentication checks
+
+## Common Gotchas
+
+- Server Actions must be async functions
+- Can't mix client and server code in the same file
+- Form actions need proper type safety
+- Server Actions can't access client-side APIs
+
+## Interactive Exercise
+
+Ready to try it yourself? Head over to the [Use Server Exercise](/lessons/directives/use_server) where you'll:
+
+- Create a server action to handle form submission
+- Implement proper error handling
+- Add input validation
+- Handle loading and success states
+
+## Additional Resources
+
+- [Next.js Server Actions Documentation](https://nextjs.org/docs/app/api-reference/functions/server-actions)
+- [Form Handling with Server Actions](https://nextjs.org/docs/app/building-your-application/data-fetching/forms-and-mutations)
+- [Server Actions Security](https://nextjs.org/docs/app/building-your-application/data-fetching/forms-and-mutations#security)
