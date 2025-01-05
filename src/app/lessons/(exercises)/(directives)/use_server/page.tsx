@@ -21,9 +21,10 @@
  */
 
 import CodeBlock from "@/components/CodeBlock";
-import { ExerciseUrl } from "@/components/excercise-url";
-import { ExerciseContainer } from "@/components/excerciseContainer";
+
+import { ExercisesUrl } from "@/components/exercises-url";
 import { EXERCISE_URLS } from "@/constants";
+import { ExercisesContainer } from "@/components/exerciseContainer";
 
 // This simulates a database
 let todos: { id: number; title: string; completed: boolean }[] = [];
@@ -36,7 +37,7 @@ async function createTodo(formData: FormData) {
 
 export default function UseServerExercise() {
   return (
-    <ExerciseContainer>
+    <ExercisesContainer>
       {/* You can remove this div if you want to work with the full page */}
       <div className="mb-8 flex flex-col gap-4">
         <h1 className="text-2xl font-bold ">Understanding use server</h1>
@@ -45,7 +46,7 @@ export default function UseServerExercise() {
           In this exercise, you&apos;ll learn how to use Server Actions to
           handle form submissions and data mutations.
         </p>
-        <ExerciseUrl url={EXERCISE_URLS.use_server} />
+        <ExercisesUrl url={EXERCISE_URLS.use_server} />
       </div>
 
       <div className="space-y-4">
@@ -72,6 +73,6 @@ export default function UseServerExercise() {
           ))}
         </ul>
       </div>
-    </ExerciseContainer>
+    </ExercisesContainer>
   );
 }

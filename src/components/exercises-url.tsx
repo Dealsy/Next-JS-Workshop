@@ -1,5 +1,4 @@
-
-export function ExerciseUrl({ url }: { url: React.ReactNode }) {
+export function ExercisesUrl({ url }: { url: React.ReactNode }) {
   return (
     <div className="flex flex-col gap-4 w-full">
       <p className="text-gray-600 dark:text-gray-400">

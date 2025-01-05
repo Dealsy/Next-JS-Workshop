@@ -1,8 +1,8 @@
 "use client";
 
-import { ExerciseUrl } from "@/components/excercise-url";
+import { ExercisesUrl } from "@/components/exercises-url";
 import { EXERCISE_URLS } from "@/constants";
-import { ExerciseContainer } from "@/components/excerciseContainer";
+import { ExercisesContainer } from "@/components/exerciseContainer";
 
 /*
  * 🚀 Exercise: Understanding the 'use client' Directive
@@ -47,7 +47,7 @@ function Counter() {
 
 export default function UseClientExercise() {
   return (
-    <ExerciseContainer>
+    <ExercisesContainer>
       {/* You can remove this div if you want to work with the full page */}
       <div className="mb-8">
         <h1 className="text-2xl font-bold mb-4">Understanding use client</h1>
@@ -56,10 +56,10 @@ export default function UseClientExercise() {
           client&apos; directive by implementing a simple counter component.
         </p>
 
-        <ExerciseUrl url={EXERCISE_URLS.use_client} />
+        <ExercisesUrl url={EXERCISE_URLS.use_client} />
       </div>
 
       <Counter />
-    </ExerciseContainer>
+    </ExercisesContainer>
   );
 }
