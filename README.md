@@ -37,6 +37,10 @@ pnpm dev
 
 ## Workshop Structure
 
+Once you run the workshop, you can select a lesson from the sidebar or lessons page.
+
+The idea is to use both your editor and the browser to do exercises and read information.
+
 Each lesson consists of:
 
 1. **Concept Explanation** - MDX documentation with code examples
