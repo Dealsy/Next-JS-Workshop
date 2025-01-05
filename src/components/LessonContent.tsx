@@ -5,11 +5,13 @@ import CodeBlock from "./CodeBlock";
 import Demo from "./Demo";
 import { Skeleton } from "./ui/skeleton";
 import Alert from "./alert";
+import { InteractiveExercises } from "./interactive-exercises";
 
 const components = {
   pre: CodeBlock,
   Demo: Demo,
   Alert: Alert,
+  InteractiveExercises: InteractiveExercises,
 };
 
 export default async function LessonContent({
@@ -20,7 +22,7 @@ export default async function LessonContent({
   const { source } = await getLessonContent(lessonId);
 
   return (
-    <div className="prose prose-slate max-w-none">
+    <div className="prose prose-slate max-w-none dark:prose-invert">
       <Suspense
         fallback={
           <div className="max-w-none">

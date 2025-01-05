@@ -7,6 +7,7 @@ import Sidebar from "@/components/Sidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import Footer from "@/components/Footer";
 import { Suspense } from "react";
+import ThemeProvider from "@/components/ThemeProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,24 +22,31 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
-        <div className="flex">
-        <Suspense fallback={<div>Loading...</div>}>
-          <SidebarProvider defaultOpen>
-            <Sidebar />
-            <main className="flex-1 flex flex-col">
-              <Header />
-              <div className="flex-1 overflow-auto">
-                <div className="flex bg-background flex-grow flex-col px-6 min-h-screen pt-4">
-                  {children}
-                </div>
-              </div>
-            </main>
-            </SidebarProvider>
-          </Suspense>
-        </div>
-        <Footer />
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <div className="flex">
+            <Suspense fallback={<div>Loading...</div>}>
+              <SidebarProvider defaultOpen>
+                <Sidebar />
+                <main className="flex-1 flex flex-col">
+                  <Header />
+                  <div className="flex-1 overflow-auto">
+                    <div className="flex bg-background flex-grow flex-col px-6 min-h-screen pt-4">
+                      {children}
+                    </div>
+                  </div>
+                </main>
+              </SidebarProvider>
+            </Suspense>
+          </div>
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   );
