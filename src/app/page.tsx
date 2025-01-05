@@ -1,6 +1,14 @@
 import Link from "next/link";
 import { ArrowRightIcon } from "lucide-react";
 import { lessons } from "@/data/lessons";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+  CardFooter,
+} from "@/components/ui/card";
 
 export default function Home() {
   return (
@@ -9,15 +17,12 @@ export default function Home() {
         <h1 className="text-4xl font-bold mb-4">
           Welcome to Next.js Learning Workshop
         </h1>
-        <p className="text-xl text-gray-600 mb-8">
+        <p className="text-xl text-muted-foreground mb-8">
           Master Next.js 15+ through hands-on, interactive lessons
         </p>
-        <Link
-          href="/lessons"
-          className="bg-blue-600 text-white px-6 py-3 rounded-lg text-lg font-semibold hover:bg-blue-700 transition-colors"
-        >
-          Start Learning
-        </Link>
+        <Button asChild size="lg">
+          <Link href="/lessons">Start Learning</Link>
+        </Button>
       </section>
 
       <section className="mb-16">
@@ -40,10 +45,14 @@ export default function Home() {
                 "Learn from carefully crafted lessons and compare with reference solutions.",
             },
           ].map((item, index) => (
-            <div key={index} className="bg-white p-6 rounded-lg shadow-md">
-              <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
-              <p className="text-gray-600">{item.description}</p>
-            </div>
+            <Card key={index}>
+              <CardHeader>
+                <CardTitle>{item.title}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">{item.description}</p>
+              </CardContent>
+            </Card>
           ))}
         </div>
       </section>
@@ -52,16 +61,26 @@ export default function Home() {
         <h2 className="text-3xl font-bold mb-6">Featured Lessons</h2>
         <div className="grid md:grid-cols-2 gap-8">
           {lessons.slice(0, 2).map((lesson) => (
-            <div key={lesson.id} className="bg-white p-6 rounded-lg shadow-md">
-              <h3 className="text-xl font-semibold mb-2">{lesson.title}</h3>
-              <p className="text-gray-600 mb-4">{lesson.description}</p>
-              <Link
-                href={`/lessons/${lesson.id}`}
-                className="text-blue-600 font-semibold hover:underline inline-flex items-center"
-              >
-                Start Lesson <ArrowRightIcon className="ml-2 w-4 h-4" />
-              </Link>
-            </div>
+            <Card key={lesson.id}>
+              <CardHeader>
+                <CardTitle>{lesson.title}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground mb-4">
+                  {lesson.description}
+                </p>
+              </CardContent>
+              <CardFooter>
+                <Button asChild variant="link" className="p-0">
+                  <Link
+                    href={`/lessons/${lesson.id}`}
+                    className="inline-flex items-center"
+                  >
+                    Start Lesson <ArrowRightIcon className="ml-2 w-4 h-4" />
+                  </Link>
+                </Button>
+              </CardFooter>
+            </Card>
           ))}
         </div>
       </section>

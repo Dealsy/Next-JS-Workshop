@@ -2,10 +2,11 @@ import Link from "next/link";
 import { GithubIcon } from "lucide-react";
 import SearchBar from "./SearchBar";
 import { SidebarTrigger } from "./ui/sidebar";
+import ThemeToggle from "./ThemeToggle";
 
 export default function Header() {
   return (
-    <header className=" sticky top-0 z-50 h-14 items-center gap-2 border-b flex h-[80px] items-center justify-between bg-background px-8 py-5">
+    <header className=" sticky top-0 z-50 h-14 items-center gap-2 border-b flex justify-between bg-background px-8 py-5">
       <div className="flex flex-row items-center gap-4">
         <SidebarTrigger />
         <Link href="/" className="text-xl font-bold">
@@ -14,6 +15,7 @@ export default function Header() {
       </div>
       <div className="flex items-center space-x-4">
         <SearchBar />
+        <ThemeToggle />
         <nav>
           <ul className="flex space-x-4">
             <li>

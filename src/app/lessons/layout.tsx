@@ -1,21 +1,72 @@
-import { ChevronLeft } from "lucide-react";
+"use client";
+import { ChevronLeft, Home, Slash } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import React from "react";
 
 export default function LessonsLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const pathname = usePathname();
+  const pathSegments = pathname.split("/").filter(Boolean);
+
   return (
     <div className="min-h-screen">
-      <nav className="bg-gray-100 p-4">
-        <Link
-          href="/lessons"
-          className="inline-flex items-center text-sm text-gray-600 hover:text-gray-900"
-        >
-          <ChevronLeft className="w-4 h-4 mr-1" />
-          Back to Lessons
-        </Link>
+      <nav className="bg-gray-100 dark:bg-gray-800/40 p-4">
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink asChild>
+                <Link
+                  href="/"
+                  className="flex items-center text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100"
+                >
+                  <Home className="w-4 h-4 mr-1" />
+                  Home
+                </Link>
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+
+            {pathSegments.map((segment, index) => {
+              const href = `/${pathSegments.slice(0, index + 1).join("/")}`;
+              const isLast = index === pathSegments.length - 1;
+
+              return (
+                <React.Fragment key={href}>
+                  <BreadcrumbSeparator className="text-gray-500 dark:text-gray-400">
+                    <Slash className="w-4 h-4" />
+                  </BreadcrumbSeparator>
+                  <BreadcrumbItem>
+                    {isLast ? (
+                      <BreadcrumbPage className="capitalize text-gray-900 dark:text-gray-100">
+                        {segment}
+                      </BreadcrumbPage>
+                    ) : (
+                      <BreadcrumbLink asChild>
+                        <Link
+                          href={href}
+                          className="capitalize text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100"
+                        >
+                          {segment}
+                        </Link>
+                      </BreadcrumbLink>
+                    )}
+                  </BreadcrumbItem>
+                </React.Fragment>
+              );
+            })}
+          </BreadcrumbList>
+        </Breadcrumb>
       </nav>
       {children}
     </div>

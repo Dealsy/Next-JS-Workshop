@@ -2,6 +2,14 @@ import Link from "next/link";
 import { ArrowRightIcon } from "lucide-react";
 import { lessons } from "@/data/lessons";
 import Pagination from "@/components/Pagination";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+  CardFooter,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 const LESSONS_PER_PAGE = 6;
 
@@ -22,24 +30,33 @@ export default async function Lessons({
       <h1 className="text-4xl font-bold mb-8">Lessons</h1>
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         {currentLessons.map((lesson) => (
-          <Link
-            key={lesson.id}
-            href={`/lessons/${lesson.id}`}
-            className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow"
-          >
-            <h3 className="text-xl font-semibold mb-2">{lesson.title}</h3>
-            <p className="text-gray-600 mb-4">{lesson.description}</p>
-            <span className="text-blue-600 inline-flex items-center">
-              Start Lesson <ArrowRightIcon className="ml-2 w-4 h-4" />
-            </span>
-          </Link>
+          <Card key={lesson.id} className="hover:shadow-lg transition-shadow">
+            <CardHeader>
+              <CardTitle>{lesson.title}</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-muted-foreground">{lesson.description}</p>
+            </CardContent>
+            <CardFooter>
+              <Button asChild variant="link" className="p-0">
+                <Link
+                  href={`/lessons/${lesson.id}`}
+                  className="inline-flex items-center"
+                >
+                  Start Lesson <ArrowRightIcon className="ml-2 w-4 h-4" />
+                </Link>
+              </Button>
+            </CardFooter>
+          </Card>
         ))}
       </div>
-      <Pagination
-        currentPage={currentPage}
-        totalItems={lessons.length}
-        itemsPerPage={LESSONS_PER_PAGE}
-      />
+      <div className="mt-8">
+        <Pagination
+          currentPage={currentPage}
+          totalItems={lessons.length}
+          itemsPerPage={LESSONS_PER_PAGE}
+        />
+      </div>
     </div>
   );
 }
