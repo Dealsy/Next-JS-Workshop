@@ -5,8 +5,6 @@ export const EXERCISE_URLS = {
   use_client: "src/app/lessons/(exercises)/(directives)/use_client/page.tsx",
 } as const;
 
-
-
 export const categories = {
   "Client & Server": "Client & Server",
   Routing: "Routing",
@@ -24,7 +22,7 @@ export const difficulties = {
 export const clientServerLessons = [
   {
     id: "use-client",
-    title: "Understanding use client",
+    title: "Understanding 'use client'",
     description: "Learn when and how to use client-side components in Next.js",
     category: categories["Client & Server"],
     difficulty: difficulties["beginner"],
@@ -32,7 +30,7 @@ export const clientServerLessons = [
   },
   {
     id: "use-server",
-    title: "Understanding use server",
+    title: "Using 'use server' and server actions",
     description: "Master server-side component patterns and best practices",
     category: categories["Client & Server"],
     difficulty: difficulties["intermediate"],
@@ -102,9 +100,20 @@ export const optimizationsLessons = [
   },
 ];
 
+export const seoLessons = [
+  {
+    id: "seo",
+    title: "SEO",
+    description: "Learn how to optimize your Next.js app for SEO",
+    category: categories["SEO"],
+    difficulty: difficulties["intermediate"],
+    order: 1,
+  },
+];
 
 export const lessons: Lesson[] = [
   ...clientServerLessons,
   ...routingLessons,
   ...optimizationsLessons,
+  ...seoLessons,
 ];

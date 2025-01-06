@@ -1,9 +1,7 @@
 import {
   categories,
-  clientServerLessons,
   difficulties,
   lessons,
-  routingLessons,
 } from "@/constants";
 
 export interface Lesson {

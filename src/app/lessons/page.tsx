@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { ArrowRightIcon } from "lucide-react";
-import { Lesson, lessons } from "@/data/lessons";
+import { Lesson } from "@/data/lessons";
 import Pagination from "@/components/Pagination";
+import { lessons } from "@/constants";
 
 const LESSONS_PER_PAGE = 9;
 
