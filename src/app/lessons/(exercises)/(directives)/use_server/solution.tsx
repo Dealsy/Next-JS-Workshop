@@ -13,7 +13,7 @@ import { revalidatePath } from "next/cache";
 
 // Simulated database
 let todos: { id: number; title: string; completed: boolean }[] = [];
-let nextId = 1;
+let todoIdCounter = 1;
 
 // Define server actions at the module level
 async function createTodo(formData: FormData) {
@@ -26,13 +26,9 @@ async function createTodo(formData: FormData) {
     throw new Error("Title is required");
   }
 
-  if (title.length < 3) {
-    throw new Error("Title must be at least 3 characters");
-  }
-
   // Create todo
   const todo = {
-    id: nextId++,
+    id: todoIdCounter++,
     title,
     completed: false,
   };
@@ -78,7 +74,7 @@ export default async function UseServerExercise() {
             name="title"
             className="flex-1 px-3 py-2 border rounded"
             placeholder="Add a new todo..."
-            minLength={3}
+            minLength={2}
             required
           />
           <button

@@ -33,6 +33,12 @@ this is the typical way that you would use server actions.
 import { db } from "@/lib/db";
 
 export async function createTodo(title: string) {
+  const user = await getCurrentUser();
+
+  if (!user.id) {
+    throw new Error("Unauthorized");
+  }
+
   // This code only runs on the server
   await db.todo.create({
     data: { title },
@@ -58,16 +64,22 @@ You can also use `'use server'` in a component to open a door to the server.
 Here is an example:
 
 ```tsx
-async function deleteTodo(formData: FormData) {
-  "use server";
-
-  // This code only runs on the server
-  const id = Number(formData.get("id"));
-  todos = todos.filter((t) => t.id !== id);
-  revalidatePath("/lessons/(exercises)/directives/use_server");
-}
-
 export default function TodoList() {
+  async function deleteTodo(formData: FormData) {
+    "use server";
+
+    const user = await getCurrentUser();
+
+    if (!user.id) {
+      throw new Error("Unauthorized");
+    }
+
+    // This code only runs on the server
+    const id = Number(formData.get("id"));
+    todos = todos.filter((t) => t.id !== id);
+    revalidatePath("/");
+  }
+
   return (
     <form action={deleteTodo}>
       <button type="submit">Delete Todo</button>
@@ -85,9 +97,8 @@ export default function TodoList() {
 
 2. Error Handling
 
-   - Use try/catch blocks
    - Return meaningful error messages
-   - Validate input data server-side
+   - Validate input data server-side ( You can use Zod to validate input data server-side)
 
 3. Security Considerations
    - Never expose sensitive data or credentials
@@ -114,5 +125,5 @@ Ready to try it yourself? Head over to the [Use Server Exercise](/lessons/use_se
 ## Additional Resources
 
 - [Next.js Server Actions Documentation](https://nextjs.org/docs/app/api-reference/functions/server-actions)
-- [Form Handling with Server Actions](https://nextjs.org/docs/app/building-your-application/data-fetching/forms-and-mutations)
 - [Server Actions Security](https://nextjs.org/docs/app/building-your-application/data-fetching/forms-and-mutations#security)
+- [Revalidate Path](https://nextjs.org/docs/app/api-reference/functions/revalidatePath)

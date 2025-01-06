@@ -9,7 +9,9 @@ export const categories = {
   "Client & Server": "Client & Server",
   Routing: "Routing",
   DataFetching: "Data Fetching",
+  Cache: "Cache",
   Optimizations: "Optimizations",
+  Rendering: "Rendering",
   SEO: "SEO",
 } as const;
 
@@ -31,7 +33,7 @@ export const clientServerLessons = [
   {
     id: "use-server",
     title: "Using 'use server' and server actions",
-    description: "Master server-side component patterns and best practices",
+    description: "Learn what 'use server' is and how to use it",
     category: categories["Client & Server"],
     difficulty: difficulties["intermediate"],
     order: 2,
@@ -98,6 +100,25 @@ export const optimizationsLessons = [
     difficulty: difficulties["intermediate"],
     order: 1,
   },
+  {
+    id: "font-optimization",
+    title: "Font Optimization",
+    description: "Learn how to optimize fonts in Next.js",
+    category: categories["Optimizations"],
+    difficulty: difficulties["intermediate"],
+    order: 2,
+  },
+];
+
+export const cacheLessons = [
+  {
+    id: "use-cache",
+    title: "useCache",
+    description: "Learn how to use 'use cache' in Next.js",
+    category: categories["Cache"],
+    difficulty: difficulties["intermediate"],
+    order: 1,
+  },
 ];
 
 export const seoLessons = [
@@ -111,9 +132,22 @@ export const seoLessons = [
   },
 ];
 
+export const renderingLessons = [
+  {
+    id: "ppr",
+    title: "Partial Prerendering (PPR)",
+    description: "Learn what PPR is and how it works in Next.js",
+    category: categories["Rendering"],
+    difficulty: difficulties["intermediate"],
+    order: 1,
+  },
+];
+
 export const lessons: Lesson[] = [
   ...clientServerLessons,
   ...routingLessons,
   ...optimizationsLessons,
   ...seoLessons,
+  ...cacheLessons,
+  ...renderingLessons,
 ];
