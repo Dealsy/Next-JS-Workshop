@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { Book, ChevronRight } from "lucide-react";
-import { Lesson } from "@/data/lessons";
 import { categories, lessons } from "@/constants";
 import {
   Sidebar as UISidebar,
@@ -15,12 +14,7 @@ import {
   SidebarMenuItem,
   SidebarMenuButton,
 } from "@/components/ui/sidebar";
-
-// Helper to generate the correct lesson path
-function getLessonPath(lesson: Lesson) {
-  const categoryPath = lesson.category.toLowerCase().replace(/[&\s]+/g, "_");
-  return `/lessons/${categoryPath}/${lesson.id}`;
-}
+import { getLessonPath } from "@/lib/utils";
 
 function getLessonsBySection() {
   // Create sections from categories

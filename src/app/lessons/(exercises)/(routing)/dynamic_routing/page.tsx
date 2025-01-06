@@ -1,5 +1,4 @@
 import { ExercisesContainer } from "@/components/exerciseContainer";
-import { PostSlug } from "./data";
 
 /*
  * Exercise: Dynamic Routing in Next.js
@@ -26,11 +25,7 @@ import { PostSlug } from "./data";
  * - Use generateStaticParams to pre-render all posts
  */
 
-interface BlogPostParams {
-  params: {
-    slug: PostSlug;
-  };
-}
+
 
 // This is the main page that will display the blog posts
 // It will link to the [slug] page for each post

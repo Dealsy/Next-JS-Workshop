@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowRightIcon } from "lucide-react";
-import { lessons } from "@/data/lessons";
+import { lessons } from "@/constants";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -9,6 +9,7 @@ import {
   CardContent,
   CardFooter,
 } from "@/components/ui/card";
+import { getLessonPath } from "@/lib/utils";
 
 export default function Home() {
   return (
@@ -60,20 +61,18 @@ export default function Home() {
       <section>
         <h2 className="text-3xl font-bold mb-6">Featured Lessons</h2>
         <div className="grid md:grid-cols-2 gap-8">
-          {lessons.slice(0, 2).map((lesson) => (
-            <Card key={lesson.id}>
+          {lessons.slice(0, 4).map((lesson) => (
+            <Card key={lesson.id} className="flex flex-col">
               <CardHeader>
                 <CardTitle>{lesson.title}</CardTitle>
               </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground mb-4">
-                  {lesson.description}
-                </p>
+              <CardContent className="flex-grow">
+                <p className="text-muted-foreground">{lesson.description}</p>
               </CardContent>
-              <CardFooter>
+              <CardFooter className="mt-auto">
                 <Button asChild variant="link" className="p-0">
                   <Link
-                    href={`/lessons/${lesson.id}`}
+                    href={getLessonPath(lesson)}
                     className="inline-flex items-center"
                   >
                     Start Lesson <ArrowRightIcon className="ml-2 w-4 h-4" />
