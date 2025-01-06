@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowRightIcon } from "lucide-react";
-import { lessons } from "@/data/lessons";
+import { lessons } from "@/constants";
 
 export default async function SearchResults({
   searchParams,

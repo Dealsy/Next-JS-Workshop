@@ -1,3 +1,5 @@
+import { Lesson } from "./data/lessons";
+
 export const EXERCISE_URLS = {
   use_server: "src/app/lessons/(exercises)/(directives)/use_server/page.tsx",
   use_client: "src/app/lessons/(exercises)/(directives)/use_client/page.tsx",
@@ -7,6 +9,10 @@ export const categories = {
   "Client & Server": "Client & Server",
   Routing: "Routing",
   DataFetching: "Data Fetching",
+  Cache: "Cache",
+  Optimizations: "Optimizations",
+  Rendering: "Rendering",
+  SEO: "SEO",
 } as const;
 
 export const difficulties = {
@@ -18,7 +24,7 @@ export const difficulties = {
 export const clientServerLessons = [
   {
     id: "use-client",
-    title: "Understanding use client",
+    title: "Understanding 'use client'",
     description: "Learn when and how to use client-side components in Next.js",
     category: categories["Client & Server"],
     difficulty: difficulties["beginner"],
@@ -26,11 +32,27 @@ export const clientServerLessons = [
   },
   {
     id: "use-server",
-    title: "Understanding use server",
-    description: "Master server-side component patterns and best practices",
+    title: "Using 'use server' and server actions",
+    description: "Learn what 'use server' is and how to use it",
     category: categories["Client & Server"],
     difficulty: difficulties["intermediate"],
     order: 2,
+  },
+  {
+    id: "server-components",
+    title: "Server Components",
+    description: "Learn how to use server components in Next.js",
+    category: categories["Client & Server"],
+    difficulty: difficulties["intermediate"],
+    order: 3,
+  },
+  {
+    id: "data-streaming",
+    title: "Data Streaming",
+    description: "Learn how to stream data to the client in Next.js",
+    category: categories["Client & Server"],
+    difficulty: difficulties["intermediate"],
+    order: 4,
   },
 ];
 
@@ -43,4 +65,89 @@ export const routingLessons = [
     difficulty: difficulties["beginner"],
     order: 1,
   },
+  {
+    id: "parallel-routes",
+    title: "Parallel Routes",
+    description: "Learn how to implement parallel routes in Next.js",
+    category: categories["Routing"],
+    difficulty: difficulties["intermediate"],
+    order: 2,
+  },
+  {
+    id: "loading-ui",
+    title: "Loading UI",
+    description: "Learn how to implement loading UI with loading.ts in Next.js",
+    category: categories["Routing"],
+    difficulty: difficulties["intermediate"],
+    order: 3,
+  },
+  {
+    id: "error-handling",
+    title: "Error Handling",
+    description: "Learn how to handle errors with error.ts in Next.js",
+    category: categories["Routing"],
+    difficulty: difficulties["intermediate"],
+    order: 4,
+  },
+];
+
+export const optimizationsLessons = [
+  {
+    id: "image-optimization",
+    title: "Image Optimization",
+    description: "Learn how to optimize images in Next.js",
+    category: categories["Optimizations"],
+    difficulty: difficulties["intermediate"],
+    order: 1,
+  },
+  {
+    id: "font-optimization",
+    title: "Font Optimization",
+    description: "Learn how to optimize fonts in Next.js",
+    category: categories["Optimizations"],
+    difficulty: difficulties["intermediate"],
+    order: 2,
+  },
+];
+
+export const cacheLessons = [
+  {
+    id: "use-cache",
+    title: "useCache",
+    description: "Learn how to use 'use cache' in Next.js",
+    category: categories["Cache"],
+    difficulty: difficulties["intermediate"],
+    order: 1,
+  },
+];
+
+export const seoLessons = [
+  {
+    id: "seo",
+    title: "SEO",
+    description: "Learn how to optimize your Next.js app for SEO",
+    category: categories["SEO"],
+    difficulty: difficulties["intermediate"],
+    order: 1,
+  },
+];
+
+export const renderingLessons = [
+  {
+    id: "ppr",
+    title: "Partial Prerendering (PPR)",
+    description: "Learn what PPR is and how it works in Next.js",
+    category: categories["Rendering"],
+    difficulty: difficulties["intermediate"],
+    order: 1,
+  },
+];
+
+export const lessons: Lesson[] = [
+  ...clientServerLessons,
+  ...routingLessons,
+  ...optimizationsLessons,
+  ...seoLessons,
+  ...cacheLessons,
+  ...renderingLessons,
 ];

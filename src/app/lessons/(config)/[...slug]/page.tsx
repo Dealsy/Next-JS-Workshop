@@ -1,11 +1,11 @@
-import { getLessonById, lessons } from "@/data/lessons";
+import { getLessonById } from "@/data/lessons";
 import { notFound } from "next/navigation";
 import LessonContent from "@/components/LessonContent";
 import { Metadata } from "next";
 import { BookOpen } from "lucide-react";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { difficulties } from "@/constants";
+import { difficulties, lessons } from "@/constants";
 
 /*
  * DO NOT EDIT

@@ -20,7 +20,6 @@
  * - Remember to revalidate the path after mutations
  */
 
-import CodeBlock from "@/components/CodeBlock";
 
 import { ExercisesUrl } from "@/components/exercises-url";
 import { EXERCISE_URLS } from "@/constants";
@@ -28,7 +27,7 @@ import { ExercisesContainer } from "@/components/exerciseContainer";
 
 // This simulates a database
 let todos: { id: number; title: string; completed: boolean }[] = [];
-let nextId = 1;
+let todoIdCounter = 1;
 
 // Add 'use server' directive here and implement the createTodo action
 async function createTodo(formData: FormData) {

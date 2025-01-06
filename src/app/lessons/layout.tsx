@@ -14,20 +14,30 @@ import React from "react";
 import { getLessonById } from "@/data/lessons";
 
 function isNavigableSegment(segment: string): boolean {
-  // Don't show segments that:
-  // 1. Start with parentheses (like (config))
-  // 2. Are numbered category folders (like 1_Client_Server)
-  // 3. Are internal routing folders
+  // Only show:
+  // 1. The "lessons" segment
+  // 2. The actual lesson ID
+  // Skip:
+  // 1. Group folders (client_server, routing, etc.)
+  // 2. Config folders that start with (
   if (segment.startsWith("(")) return false;
-  if (segment.match(/^\d+_/)) return false;
   if (segment === "lessons") return true;
-  if (segment.includes("(")) return false;
 
-  return true;
+  // Check if this segment is a lesson ID
+  const lesson = getLessonById(segment);
+  if (lesson) return true;
+
+  return false;
 }
 
 function formatSegment(segment: string): string {
-  // Convert kebab-case to Title Case and handle special cases
+  // If it's a lesson ID, show the lesson title
+  const lesson = getLessonById(segment);
+  if (lesson) {
+    return lesson.title;
+  }
+
+  // Otherwise, capitalize the segment
   return segment
     .split("-")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
@@ -37,15 +47,19 @@ function formatSegment(segment: string): string {
 function getBreadcrumbHref(segments: string[], index: number): string {
   const currentSegment = segments[index];
 
-  // If it's a lesson ID, we need to include its category
+  // If it's a lesson ID, construct the full path with category
   const lesson = getLessonById(currentSegment);
   if (lesson) {
     const categoryPath = lesson.category.toLowerCase().replace(/[&\s]+/g, "_");
     return `/lessons/${categoryPath}/${currentSegment}`;
   }
 
-  // Otherwise, just join the path segments
-  return `/${segments.slice(0, index + 1).join("/")}`;
+  // For the lessons index
+  if (currentSegment === "lessons") {
+    return "/lessons";
+  }
+
+  return "#";
 }
 
 export default function LessonsLayout({
