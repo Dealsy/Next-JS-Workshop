@@ -2,6 +2,7 @@ import {
   categories,
   clientServerLessons,
   difficulties,
+  lessons,
   routingLessons,
 } from "@/constants";
 
@@ -16,7 +17,6 @@ export interface Lesson {
 }
 
 // Combine all lessons
-export const lessons: Lesson[] = [...clientServerLessons, ...routingLessons];
 
 export type Category = keyof typeof categories;
 export type Difficulty = keyof typeof difficulties;

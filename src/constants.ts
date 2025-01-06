@@ -1,12 +1,18 @@
+import { Lesson } from "./data/lessons";
+
 export const EXERCISE_URLS = {
   use_server: "src/app/lessons/(exercises)/(directives)/use_server/page.tsx",
   use_client: "src/app/lessons/(exercises)/(directives)/use_client/page.tsx",
 } as const;
 
+
+
 export const categories = {
   "Client & Server": "Client & Server",
   Routing: "Routing",
   DataFetching: "Data Fetching",
+  Optimizations: "Optimizations",
+  SEO: "SEO",
 } as const;
 
 export const difficulties = {
@@ -32,6 +38,22 @@ export const clientServerLessons = [
     difficulty: difficulties["intermediate"],
     order: 2,
   },
+  {
+    id: "server-components",
+    title: "Server Components",
+    description: "Learn how to use server components in Next.js",
+    category: categories["Client & Server"],
+    difficulty: difficulties["intermediate"],
+    order: 3,
+  },
+  {
+    id: "data-streaming",
+    title: "Data Streaming",
+    description: "Learn how to stream data to the client in Next.js",
+    category: categories["Client & Server"],
+    difficulty: difficulties["intermediate"],
+    order: 4,
+  },
 ];
 
 export const routingLessons = [
@@ -43,4 +65,46 @@ export const routingLessons = [
     difficulty: difficulties["beginner"],
     order: 1,
   },
+  {
+    id: "parallel-routes",
+    title: "Parallel Routes",
+    description: "Learn how to implement parallel routes in Next.js",
+    category: categories["Routing"],
+    difficulty: difficulties["intermediate"],
+    order: 2,
+  },
+  {
+    id: "loading-ui",
+    title: "Loading UI",
+    description: "Learn how to implement loading UI with loading.ts in Next.js",
+    category: categories["Routing"],
+    difficulty: difficulties["intermediate"],
+    order: 3,
+  },
+  {
+    id: "error-handling",
+    title: "Error Handling",
+    description: "Learn how to handle errors with error.ts in Next.js",
+    category: categories["Routing"],
+    difficulty: difficulties["intermediate"],
+    order: 4,
+  },
+];
+
+export const optimizationsLessons = [
+  {
+    id: "image-optimization",
+    title: "Image Optimization",
+    description: "Learn how to optimize images in Next.js",
+    category: categories["Optimizations"],
+    difficulty: difficulties["intermediate"],
+    order: 1,
+  },
+];
+
+
+export const lessons: Lesson[] = [
+  ...clientServerLessons,
+  ...routingLessons,
+  ...optimizationsLessons,
 ];

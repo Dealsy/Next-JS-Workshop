@@ -1,44 +1,33 @@
 This is the folder structure for the project, with numbered sections indicating recommended learning order.
 
 ```
-src/app/
-├── api/
-│   ├── lessons/
-│   │   ├── 1_Client_Server/           # Start with fundamental Next.js concepts
-│   │   │   ├── use_client/
-│   │   │   ├── use_server/
-│   │   │
-│   │   ├── 2_Routing/                 # Basic routing concepts
-│   │   │   ├── nested_routing/        # Start with basic routing
-│   │   │   ├── dynamic_routing/       # Then dynamic routes
-│   │   │   ├── parallel_routing/      # Advanced routing
-│   │   │   ├── search_params/         # URL manipulation
-│   │   │
-│   │   ├── 3_Data_Fetching/          # Core data handling
-│   │   │   ├── caching/              # Basic data fetching and caching
-│   │   │   ├── suspense/             # Loading states
-│   │   │   ├── streaming/            # Advanced data loading
-│   │   │
-│   │   ├── 4_Forms/                  # Interactive features
-│   │   │   ├── server_actions/       # Basic form handling
-│   │   │   ├── validation/           # Form validation
-│   │   │   ├── file_upload/          # Advanced form features
-│   │   │
-│   │   ├── 5_Error_Handling/         # Essential error handling
-│   │   │   ├── error_boundaries/
-│   │   │   ├── loading_states/
-│   │   │   ├── not_found/
-│   │   │
-│   │   ├── 6_State_Management/       # Managing application state
-│   │   │   ├── context/              # Client-side state
-│   │   │   ├── server_state/         # Server-side state
-│   │   │
-│   │   ├── 7_Middleware/             # Advanced request handling
-│   │   │   ├── basic_middleware/
-│   │   │   ├── auth_middleware/
-│   │   │   ├── response_manipulation/
-│   │   │
-│   │   ├── 8_Optimization/           # Final optimizations
-│   │   │   ├── metadata/             # SEO and metadata
-│   │   │   ├── image_optimization/   # Performance
+src/
+├── app/
+│   └── lessons/
+│       ├── (config)/
+│       │   └── [...slug]/           # Dynamic route handler for lessons
+│       └── (exercises)/             # Interactive exercises
+│           └── (directives)/        # Current exercise implementations
+│
+├── content/
+│   └── lessons/                     # MDX content for lessons
+│       ├── 1_client_server/         # Client & Server concepts
+│       │   ├── use-client/
+│       │   └── use-server/
+│       └── 2_routing/               # Routing concepts
+│           └── dynamic-routing/
+│
+├── components/                      # Shared components
+│   ├── LessonContent.tsx           # MDX content renderer
+│   └── Sidebar.tsx                 # Navigation sidebar
+│
+└── data/
+    └── lessons.ts                  # Lesson metadata and configuration
 ```
+
+Key Changes:
+
+1. Standardized numbered category folders (1_client_server, 2_routing)
+2. Consistent URL structure matching content organization
+3. Clear separation between content and exercises
+4. Updated navigation components to handle new structure

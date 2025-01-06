@@ -28,7 +28,17 @@ export default async function LessonContent({
 
   // Get all folders in the lessons directory
   const lessonsDir = path.join(process.cwd(), "src/content/lessons");
-  const folders = await fs.readdir(lessonsDir);
+
+  let folders;
+  try {
+    folders = await fs.readdir(lessonsDir);
+  } catch (error) {
+    // Only log error if it's not a "directory not found" error
+    if ((error as NodeJS.ErrnoException).code !== "ENOENT") {
+      console.error("Error reading lessons directory:", error);
+    }
+    return <LessonUnderConstruction />;
+  }
 
   // Find the matching category folder (with number prefix and lowercase)
   const categoryFolder = folders.find((folder) =>
@@ -38,40 +48,34 @@ export default async function LessonContent({
   );
 
   if (!categoryFolder) {
-    console.error(`Category folder not found for ${lesson.category}`);
-    return (
-      <div className="text-center py-8">
-        <h2 className="text-xl font-semibold mb-2">
-          Lesson Under Construction
-        </h2>
-        <p className="text-muted-foreground">
-          The content for this lesson is currently being developed. Please check
-          back later.
-        </p>
-      </div>
-    );
+    // Don't log an error - this is an expected state for lessons under development
+    return <LessonUnderConstruction />;
   }
 
   // Read the MDX content
   let source;
   try {
-    source = await fs.readFile(
-      path.join(lessonsDir, categoryFolder, lessonId, "index.mdx"),
-      "utf-8"
+    const mdxPath = path.join(
+      lessonsDir,
+      categoryFolder,
+      lessonId,
+      "index.mdx"
     );
+
+    // Check if file exists first
+    try {
+      await fs.access(mdxPath);
+    } catch {
+      return <LessonUnderConstruction />;
+    }
+
+    source = await fs.readFile(mdxPath, "utf-8");
   } catch (error) {
-    console.error("Error loading lesson content:", error);
-    return (
-      <div className="text-center py-8">
-        <h2 className="text-xl font-semibold mb-2">
-          Lesson Under Construction
-        </h2>
-        <p className="text-muted-foreground">
-          The content for this lesson is currently being developed. Please check
-          back later.
-        </p>
-      </div>
-    );
+    // Only log error if it's not a "file not found" error
+    if ((error as NodeJS.ErrnoException).code !== "ENOENT") {
+      console.error("Error loading lesson content:", error);
+    }
+    return <LessonUnderConstruction />;
   }
 
   return (
@@ -88,6 +92,19 @@ export default async function LessonContent({
       >
         <MDXRemote source={source} components={components} />
       </Suspense>
+    </div>
+  );
+}
+
+// Extract the "under construction" message into a reusable component
+function LessonUnderConstruction() {
+  return (
+    <div className="text-center py-8">
+      <h2 className="text-xl font-semibold mb-2">Lesson Under Construction</h2>
+      <p className="text-muted-foreground">
+        The content for this lesson is currently being developed. Please check
+        back later.
+      </p>
     </div>
   );
 }

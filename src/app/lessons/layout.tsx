@@ -16,10 +16,8 @@ import { getLessonById } from "@/data/lessons";
 function isNavigableSegment(segment: string): boolean {
   // Don't show segments that:
   // 1. Start with parentheses (like (config))
-  // 2. Are numbered category folders (like 1_Client_Server)
-  // 3. Are internal routing folders
+  // 2. Are internal routing folders
   if (segment.startsWith("(")) return false;
-  if (segment.match(/^\d+_/)) return false;
   if (segment === "lessons") return true;
   if (segment.includes("(")) return false;
 
