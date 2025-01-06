@@ -1,0 +1,106 @@
+# Dynamic Routing in Next.js
+
+Next.js provides a powerful dynamic routing system that allows you to create routes based on dynamic data. This is essential for building pages that display content based on parameters like IDs, slugs, or other dynamic values.
+
+## Core Concepts
+
+### Dynamic Route Segments
+
+In Next.js, you can create dynamic routes by wrapping a folder name in square brackets. For example:
+
+```tsx
+app / blog / [slug] / page.tsx; // Matches: /blog/hello-world
+app / shop / [categoryId] / [productId] / page.tsx; // Matches: /shop/electronics/123
+```
+
+The values captured from the URL are passed as props to your page component:
+
+```tsx
+// app/blog/[slug]/page.tsx
+export default function BlogPost({ params }: { params: { slug: string } }) {
+  return <h1>Post: {params.slug}</h1>;
+}
+```
+
+### Catch-all Segments
+
+For more flexible routing, you can use catch-all segments with [...folderName]:
+
+```tsx
+app / docs / [...slug] / page.tsx; // Matches: /docs/a/b/c
+```
+
+Or optional catch-all segments with [[...folderName]]:
+
+```tsx
+app / docs / [[...slug]] / page.tsx; // Matches: /docs AND /docs/a/b/c
+```
+
+### Generating Static Params
+
+For static site generation, you'll want to define which dynamic routes to pre-render:
+
+```tsx
+export async function generateStaticParams() {
+  const posts = await getPosts();
+
+  return posts.map((post) => ({
+    slug: post.slug,
+  }));
+}
+```
+
+## Best Practices
+
+1. **Type Safety**: Always type your params:
+
+```tsx
+interface BlogPostParams {
+  params: {
+    slug: string;
+  };
+}
+
+export default function BlogPost({ params }: BlogPostParams) {
+  // ...
+}
+```
+
+2. **Validation**: Always validate dynamic parameters before using them:
+
+```tsx
+import { notFound } from "next/navigation";
+
+export default function BlogPost({ params }: BlogPostParams) {
+  if (!isValidSlug(params.slug)) {
+    notFound();
+  }
+  // ...
+}
+```
+
+3. **Loading States**: Implement loading.tsx for better UX:
+
+```tsx
+// app/blog/[slug]/loading.tsx
+export default function Loading() {
+  return <div>Loading post...</div>;
+}
+```
+
+## Common Pitfalls
+
+1. **Forgetting to Handle Invalid Parameters**: Always implement error handling for invalid routes
+2. **Mixing Dynamic and Static Segments**: Be careful when combining dynamic segments with static segments
+3. **Not Implementing Loading States**: Users might see a blank page without proper loading states
+
+## Next Steps
+
+In the interactive exercise, you'll build a blog routing system that implements these concepts. You'll work with:
+
+- Dynamic route parameters
+- Parameter validation
+- Loading states
+- Error handling
+
+[Go to Exercise →](/lessons/2_Routing/dynamic_routing)

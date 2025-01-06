@@ -31,6 +31,34 @@ Located in: `src/app/lessons/(exercises)/[category]/[topic]/page.tsx`
 - Tests to validate solution
 - Reference solution (hidden)
 
+## Folder Structure Updates
+
+### Content Organization
+
+We've standardized the lesson content structure using numbered category folders:
+
+```
+src/content/lessons/
+├── 1_client_server/           # Client & Server concepts
+│   ├── use-client/
+│   └── use-server/
+└── 2_routing/                 # Routing concepts
+    └── dynamic-routing/
+```
+
+### URL Structure
+
+Lessons are now accessed via consistent URLs:
+
+- `/lessons/client_server/use-client`
+- `/lessons/routing/dynamic-routing`
+
+### Navigation Updates
+
+- Implemented breadcrumb navigation that skips numbered folder prefixes
+- Updated sidebar to show proper category groupings
+- Simplified URL structure to match content organization
+
 ## Implementation Checklist
 
 ### 1. Project Setup ✅
@@ -41,28 +69,28 @@ Located in: `src/app/lessons/(exercises)/[category]/[topic]/page.tsx`
 - [x] MDX rendering with syntax highlighting
 - [x] Dynamic lesson routing
 - [x] Sidebar navigation
+- [x] Standardized folder structure
+- [x] Breadcrumb navigation
 
-### 2. Lesson Structure
+### 2. Core Lessons Implementation
 
-- [ ] Create template for concept MDX files
-- [ ] Create template for interactive lessons
-- [ ] Setup testing infrastructure
-- [ ] Create solution validation system
+#### 1_Client_Server ✅
 
-### 3. Core Lessons Implementation
+- [x] use_client
+  - [x] Concept MDX
+  - [x] Interactive lesson
+  - [x] Solution
+- [x] use_server
+  - [x] Concept MDX
+  - [x] Interactive lesson
+  - [x] Solution
 
-#### 1_Client_Server
+#### 2_Routing (In Progress)
 
-- [ ] use_client
+- [ ] dynamic_routing
   - [x] Concept MDX
   - [ ] Interactive lesson
   - [ ] Solution
-- [ ] use_server
-  - [x] Concept MDX
-  - [ ] Interactive lesson
-  - [ ] Solution
-
-[... rest of lessons structure ...]
 
 > Note: For detailed folder structure, see [folder_structure.md](./folder_structure.md)
 

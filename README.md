@@ -43,7 +43,7 @@ The idea is to use both your editor and the browser to do exercises and read inf
 
 Each lesson consists of:
 
-1. **Concept Explanation** - MDX documentation with code examples
+1. **Concept Explanation** - documentation with code examples
 2. **Interactive Exercise** - Hands-on coding exercise
 3. **Solution** - Reference implementation
 4. **Additional Resources** - Links to official docs and related content

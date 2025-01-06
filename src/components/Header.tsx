@@ -6,7 +6,7 @@ import ThemeToggle from "./ThemeToggle";
 
 export default function Header() {
   return (
-    <header className=" sticky top-0 z-50 h-14 items-center gap-2 border-b flex justify-between bg-background px-8 py-5">
+    <header className="sticky top-0 z-50 h-20 items-center gap-2 border-b flex justify-between bg-background px-8 py-5">
       <div className="flex flex-row items-center gap-4">
         <SidebarTrigger />
         <Link href="/" className="text-xl font-bold">

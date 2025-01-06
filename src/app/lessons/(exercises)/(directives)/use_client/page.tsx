@@ -48,17 +48,7 @@ function Counter() {
 export default function UseClientExercise() {
   return (
     <ExercisesContainer>
-      {/* You can remove this div if you want to work with the full page */}
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold mb-4">Understanding use client</h1>
-        <p className="text-gray-600">
-          In this exercise, you&apos;ll learn when and why to use the &apos;use
-          client&apos; directive by implementing a simple counter component.
-        </p>
-
-        <ExercisesUrl url={EXERCISE_URLS.use_client} />
-      </div>
-
+      <ExercisesUrl url={EXERCISE_URLS.use_client} />
       <Counter />
     </ExercisesContainer>
   );
