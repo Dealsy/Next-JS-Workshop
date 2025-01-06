@@ -41,11 +41,11 @@ export default function RootLayout({
                       {children}
                     </div>
                   </div>
+                  <Footer />
                 </main>
               </SidebarProvider>
             </Suspense>
           </div>
-          <Footer />
         </ThemeProvider>
       </body>
     </html>

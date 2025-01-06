@@ -38,17 +38,7 @@ async function createTodo(formData: FormData) {
 export default function UseServerExercise() {
   return (
     <ExercisesContainer>
-      {/* You can remove this div if you want to work with the full page */}
-      <div className="mb-8 flex flex-col gap-4">
-        <h1 className="text-2xl font-bold ">Understanding use server</h1>
-
-        <p className="text-gray-600 dark:text-gray-400">
-          In this exercise, you&apos;ll learn how to use Server Actions to
-          handle form submissions and data mutations.
-        </p>
-        <ExercisesUrl url={EXERCISE_URLS.use_server} />
-      </div>
-
+      <ExercisesUrl url={EXERCISE_URLS.use_server} />
       <div className="space-y-4">
         <form className="flex gap-2">
           <input

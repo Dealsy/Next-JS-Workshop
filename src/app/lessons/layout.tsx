@@ -11,13 +11,41 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import React from "react";
+import { getLessonById } from "@/data/lessons";
 
 function isNavigableSegment(segment: string): boolean {
+  // Don't show segments that:
+  // 1. Start with parentheses (like (config))
+  // 2. Are numbered category folders (like 1_Client_Server)
+  // 3. Are internal routing folders
   if (segment.startsWith("(")) return false;
+  if (segment.match(/^\d+_/)) return false;
   if (segment === "lessons") return true;
   if (segment.includes("(")) return false;
 
   return true;
+}
+
+function formatSegment(segment: string): string {
+  // Convert kebab-case to Title Case and handle special cases
+  return segment
+    .split("-")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
+
+function getBreadcrumbHref(segments: string[], index: number): string {
+  const currentSegment = segments[index];
+
+  // If it's a lesson ID, we need to include its category
+  const lesson = getLessonById(currentSegment);
+  if (lesson) {
+    const categoryPath = lesson.category.toLowerCase().replace(/[&\s]+/g, "_");
+    return `/lessons/${categoryPath}/${currentSegment}`;
+  }
+
+  // Otherwise, just join the path segments
+  return `/${segments.slice(0, index + 1).join("/")}`;
 }
 
 export default function LessonsLayout({
@@ -49,9 +77,7 @@ export default function LessonsLayout({
             </BreadcrumbItem>
 
             {navigableSegments.map((segment, index) => {
-              const href = `/${navigableSegments
-                .slice(0, index + 1)
-                .join("/")}`;
+              const href = getBreadcrumbHref(navigableSegments, index);
               const isLast = index === navigableSegments.length - 1;
 
               return (
@@ -62,7 +88,7 @@ export default function LessonsLayout({
                   <BreadcrumbItem>
                     {isLast ? (
                       <BreadcrumbPage className="capitalize text-gray-900 dark:text-gray-100">
-                        {segment.replace(/-/g, " ")}
+                        {formatSegment(segment)}
                       </BreadcrumbPage>
                     ) : (
                       <BreadcrumbLink asChild>
@@ -70,7 +96,7 @@ export default function LessonsLayout({
                           href={href}
                           className="capitalize text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100"
                         >
-                          {segment.replace(/-/g, " ")}
+                          {formatSegment(segment)}
                         </Link>
                       </BreadcrumbLink>
                     )}

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Book, ChevronRight } from "lucide-react";
-import { lessons } from "@/data/lessons";
+import { Lesson, lessons } from "@/data/lessons";
 import {
   Sidebar as UISidebar,
   SidebarContent,
@@ -15,23 +15,35 @@ import {
   SidebarMenuButton,
 } from "@/components/ui/sidebar";
 
+// Helper to generate the correct lesson path
+function getLessonPath(lesson: Lesson) {
+  // Convert category to folder-friendly format
+  const categoryPath = lesson.category.toLowerCase().replace(/[&\s]+/g, "_");
+
+  return `/lessons/${categoryPath}/${lesson.id}`;
+}
+
 function getLessonsBySection() {
   const sections = [
     {
       id: "1_Client_Server",
       title: "Client & Server",
       category: "Client & Server",
+      path: "client_server",
     },
     {
       id: "2_Routing",
       title: "Routing",
       category: "Routing",
+      path: "routing",
     },
   ];
 
   return sections.map((section) => ({
     ...section,
-    lessons: lessons.filter((lesson) => lesson.category === section.category),
+    lessons: lessons
+      .filter((lesson) => lesson.category === section.category)
+      .sort((a, b) => (a.order || 0) - (b.order || 0)),
   }));
 }
 
@@ -40,7 +52,7 @@ export default function Sidebar() {
 
   return (
     <UISidebar variant="sidebar" collapsible="offcanvas">
-      <SidebarHeader className="border-b p-[25.5px]">
+      <SidebarHeader className="border-b p-[32px]">
         <Link href="/" className="flex items-center space-x-2">
           <Book className="h-6 w-6" />
           <span className="text-lg font-semibold">Next.js Workshop</span>
@@ -59,7 +71,7 @@ export default function Sidebar() {
                     {section.lessons.map((lesson) => (
                       <SidebarMenuItem key={lesson.id} className="pl-2">
                         <Link
-                          href={`/lessons/${lesson.id}`}
+                          href={getLessonPath(lesson)}
                           passHref
                           legacyBehavior
                         >

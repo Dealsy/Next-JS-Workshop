@@ -26,10 +26,12 @@ export default async function SearchResults({
             <Link
               key={lesson.id}
               href={`/lessons/${lesson.id}`}
-              className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow"
+              className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow dark:bg-gray-800/40"
             >
               <h3 className="text-xl font-semibold mb-2">{lesson.title}</h3>
-              <p className="text-gray-600 mb-4">{lesson.description}</p>
+              <p className="text-gray-600 mb-4 dark:text-gray-400">
+                {lesson.description}
+              </p>
               <span className="text-blue-600 inline-flex items-center">
                 Start Lesson <ArrowRightIcon className="ml-2 w-4 h-4" />
               </span>
