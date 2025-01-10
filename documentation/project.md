@@ -72,9 +72,9 @@ Lessons are now accessed via consistent URLs:
 - [x] Standardized folder structure
 - [x] Breadcrumb navigation
 
-### 2. Core Lessons Implementation
+## Lessons
 
-#### 1_Client_Server ✅
+#### 1_Client_Server
 
 - [x] use_client
   - [x] Concept MDX
@@ -84,13 +84,104 @@ Lessons are now accessed via consistent URLs:
   - [x] Concept MDX
   - [x] Interactive lesson
   - [x] Solution
+- [ ] Server Components
+  - [ ] Concept MDX
+  - [ ] Interactive lesson
+  - [ ] Solution
+- [ ] Composition Patterns
+  - [ ] Concept MDX
 
 #### 2_Routing (In Progress)
 
-- [ ] dynamic_routing
+- [ ] Layouts
+
+  - [ ] Concept MDX
+  - [ ] Interactive lesson
+
+- [ ] Linking and Navigating
+
+  - [ ] Concept MDX
+  - [ ] Interactive lessons:
+    - [ ] Link
+    - [ ] useRouter
+    - [ ] redirect
+  - [ ] Solutions:
+    - [ ] Link
+    - [ ] useRouter
+    - [ ] redirect
+
+- [ ] Error handling
+
+  - [ ] Concept MDX
+  - [ ] Interactive lessons:
+    - [ ] error.tsx
+    - [ ] useActionState
+  - [ ] Solutions:
+    - [ ] error.tsx
+    - [ ] useActionState
+
+- [ ] Loading UI and Data Streaming
+
+  - [ ] Concept MDX
+  - [ ] Interactive lessons:
+    - [ ] loading.tsx
+    - [ ] useSuspense
+  - [ ] Solutions:
+    - [ ] loading.tsx
+    - [ ] useSuspense
+
+- [ ] Route Groups
+
+  - [ ] Concept MDX
+
+- [x] Dynamic_routing
+
   - [x] Concept MDX
+  - [x] Interactive lesson
+  - [x] Solution
+
+- [ ] Parallel_routes
+
+  - [ ] Concept MDX
   - [ ] Interactive lesson
   - [ ] Solution
+
+- [ ] Intercepting Routes
+
+  - [ ] Concept MDX
+  - [ ] Interactive lesson
+  - [ ] Solution
+
+- [ ] Middleware
+  - [ ] Concept MDX
+
+### Cache
+
+- [ ] use cache
+  - [ ] Concept MDX
+  - [ ] Interactive lesson
+  - [ ] Solution
+
+### Optimizations
+
+- [ ] Image Optimization
+
+  - [ ] Concept MDX
+  - [ ] Interactive lesson
+  - [ ] Solution
+
+- [ ] Font Optimization
+  - [ ] Concept MDX
+
+### Rendering
+
+- [ ] Partial Prerendering
+  - [ ] Concept MDX - with interactive parts
+
+### SEO
+
+- [ ] Metadata
+  - [ ] Concept MDX
 
 > Note: For detailed folder structure, see [folder_structure.md](./folder_structure.md)
 

@@ -47,9 +47,9 @@ export const clientServerLessons = [
     order: 3,
   },
   {
-    id: "data-streaming",
-    title: "Data Streaming",
-    description: "Learn how to stream data to the client in Next.js",
+    id: "composition-patterns",
+    title: "Composition Patterns",
+    description: "Learn how to compose components in Next.js",
     category: categories["Client & Server"],
     difficulty: difficulties["intermediate"],
     order: 4,
@@ -58,19 +58,19 @@ export const clientServerLessons = [
 
 export const routingLessons = [
   {
-    id: "dynamic-routing",
-    title: "Dynamic Routing",
-    description: "Learn how to implement dynamic routes in Next.js",
+    id: "layouts",
+    title: "Layouts",
+    description: "Learn how to implement layouts in Next.js",
     category: categories["Routing"],
     difficulty: difficulties["beginner"],
     order: 1,
   },
   {
-    id: "parallel-routes",
-    title: "Parallel Routes",
-    description: "Learn how to implement parallel routes in Next.js",
+    id: "linking-and-navigating",
+    title: "Linking and Navigating",
+    description: "Learn how to implement linking and navigating in Next.js",
     category: categories["Routing"],
-    difficulty: difficulties["intermediate"],
+    difficulty: difficulties["beginner"],
     order: 2,
   },
   {
@@ -88,6 +88,52 @@ export const routingLessons = [
     category: categories["Routing"],
     difficulty: difficulties["intermediate"],
     order: 4,
+  },
+  {
+    id: "data-streaming",
+    title: "Data Streaming",
+    description: "Learn how to stream data to the client in Next.js",
+    category: categories["Routing"],
+    difficulty: difficulties["intermediate"],
+    order: 5,
+  },
+  {
+    id: "dynamic-routing",
+    title: "Dynamic Routing",
+    description: "Learn how to implement dynamic routes in Next.js",
+    category: categories["Routing"],
+    difficulty: difficulties["beginner"],
+    order: 6,
+  },
+  {
+    id: "parallel-routes",
+    title: "Parallel Routes",
+    description: "Learn how to implement parallel routes in Next.js",
+    category: categories["Routing"],
+    difficulty: difficulties["intermediate"],
+    order: 7,
+  },
+];
+
+export const cacheLessons = [
+  {
+    id: "use-cache",
+    title: "useCache",
+    description: "Learn how to use 'use cache' in Next.js",
+    category: categories["Cache"],
+    difficulty: difficulties["intermediate"],
+    order: 1,
+  },
+];
+
+export const renderingLessons = [
+  {
+    id: "ppr",
+    title: "Partial Prerendering (PPR)",
+    description: "Learn what PPR is and how it works in Next.js",
+    category: categories["Rendering"],
+    difficulty: difficulties["intermediate"],
+    order: 1,
   },
 ];
 
@@ -110,35 +156,13 @@ export const optimizationsLessons = [
   },
 ];
 
-export const cacheLessons = [
-  {
-    id: "use-cache",
-    title: "useCache",
-    description: "Learn how to use 'use cache' in Next.js",
-    category: categories["Cache"],
-    difficulty: difficulties["intermediate"],
-    order: 1,
-  },
-];
-
 export const seoLessons = [
   {
-    id: "seo",
-    title: "SEO",
-    description: "Learn how to optimize your Next.js app for SEO",
+    id: "metadata",
+    title: "Metadata",
+    description: "Learn how to add metadata to your Next.js app",
     category: categories["SEO"],
-    difficulty: difficulties["intermediate"],
-    order: 1,
-  },
-];
-
-export const renderingLessons = [
-  {
-    id: "ppr",
-    title: "Partial Prerendering (PPR)",
-    description: "Learn what PPR is and how it works in Next.js",
-    category: categories["Rendering"],
-    difficulty: difficulties["intermediate"],
+    difficulty: difficulties["beginner"],
     order: 1,
   },
 ];

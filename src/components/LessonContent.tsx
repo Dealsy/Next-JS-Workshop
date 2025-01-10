@@ -1,20 +1,8 @@
 import { Suspense } from "react";
-import { MDXRemote } from "next-mdx-remote/rsc";
 import { getLessonById } from "@/data/lessons";
-import CodeBlock from "./CodeBlock";
-import Demo from "./Demo";
 import { Skeleton } from "./ui/skeleton";
-import Alert from "./alert";
-import { InteractiveExercises } from "./interactive-exercises";
 import path from "path";
 import fs from "fs/promises";
-
-const components = {
-  pre: CodeBlock,
-  Demo: Demo,
-  Alert: Alert,
-  InteractiveExercises: InteractiveExercises,
-};
 
 export default async function LessonContent({
   lessonId,
@@ -52,31 +40,18 @@ export default async function LessonContent({
     return <LessonUnderConstruction />;
   }
 
-  // Read the MDX content
-  let source;
+  const mdxPath = path.join(lessonsDir, categoryFolder, lessonId, "index.mdx");
+
+  // Check if file exists first
   try {
-    const mdxPath = path.join(
-      lessonsDir,
-      categoryFolder,
-      lessonId,
-      "index.mdx"
-    );
-
-    // Check if file exists first
-    try {
-      await fs.access(mdxPath);
-    } catch {
-      return <LessonUnderConstruction />;
-    }
-
-    source = await fs.readFile(mdxPath, "utf-8");
-  } catch (error) {
-    // Only log error if it's not a "file not found" error
-    if ((error as NodeJS.ErrnoException).code !== "ENOENT") {
-      console.error("Error loading lesson content:", error);
-    }
+    await fs.access(mdxPath);
+  } catch {
     return <LessonUnderConstruction />;
   }
+
+  const Content = (
+    await import(`@/content/lessons/${categoryFolder}/${lessonId}/index.mdx`)
+  ).default;
 
   return (
     <div className="prose prose-slate max-w-none dark:prose-invert">
@@ -90,7 +65,7 @@ export default async function LessonContent({
           </div>
         }
       >
-        <MDXRemote source={source} components={components} />
+        <Content />
       </Suspense>
     </div>
   );

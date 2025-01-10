@@ -1,0 +1,226 @@
+Composition Patterns in Next.js help you structure your components efficiently by combining Server and Client Components. Understanding these patterns is crucial for building performant applications.
+
+<ServerClientGuide />
+
+## Core Patterns
+
+### The Server-Client Pattern
+
+This pattern involves wrapping client components with server components to minimize the client-side JavaScript bundle:
+
+```tsx
+// ServerComponent.tsx
+import ClientComponent from "./ClientComponent";
+
+export default function ServerComponent() {
+  const data = await fetchData(); // Server-side data fetch
+
+  return (
+    <div>
+      <h1>{data.title}</h1>
+      <ClientComponent initialData={data} />
+    </div>
+  );
+}
+
+// ClientComponent.tsx
+("use client");
+
+export default function ClientComponent({ initialData }) {
+  const [data, setData] = useState(initialData);
+  // Client-side interactivity
+  return <button onClick={() => setData(newData)}>Update</button>;
+}
+```
+
+### The Islands Architecture
+
+Break down your page into independent components that can be server or client rendered:
+
+```tsx
+import StaticHeader from "./StaticHeader";
+import InteractiveWidget from "./InteractiveWidget";
+import StaticFooter from "./StaticFooter";
+
+export default function Page() {
+  return (
+    <>
+      <StaticHeader /> {/* Server Component */}
+      <InteractiveWidget /> {/* Client Component */}
+      <StaticFooter /> {/* Server Component */}
+    </>
+  );
+}
+```
+
+## Best Practices
+
+1. **Providers at the Root**
+
+   Keep providers as close to the root as possible to minimize client JavaScript:
+
+   ```tsx
+   "use client";
+
+   // app/providers.tsx
+   export function Providers({ children }) {
+     return (
+       <ThemeProvider>
+         <AuthProvider>{children}</AuthProvider>
+       </ThemeProvider>
+     );
+   }
+
+   // app/layout.tsx
+   import { Providers } from "./providers";
+
+   export default function RootLayout({ children }) {
+     return (
+       <html>
+         <body>
+           <Providers>{children}</Providers>
+         </body>
+       </html>
+     );
+   }
+   ```
+
+2. **Passing Server Data to Client Components**
+
+   Pass data as props instead of fetching in client components.
+
+   Fetching data on the server is much more efficient than fetching data on the client.
+   We can call data in one line of code, and handle errors all in in the server component
+   before the client component is rendered.
+
+   ```tsx
+   // Good Pattern
+   async function ServerComponent() {
+     const data = await fetchData();
+
+     if (!data) {
+       return <div>Error fetching data</div>;
+     }
+
+     return <ClientComponent data={data} />;
+   }
+   ```
+
+   Avoid using useEffect to fetch data in client components,
+   useEffect is not designed for data fetching, its designed for side effects.
+
+   The React docs recommend that you use something else before reaching for useEffect
+   for data fetching.
+
+   [useEffect](https://react.dev/reference/react/useEffect)
+
+   ```tsx
+   // Avoid this pattern
+   "use client";
+
+   function ClientComponent() {
+     const [data, setData] = useState(null);
+     const [loading, setLoading] = useState(true);
+
+     useEffect(() => {
+       setLoading(true);
+       fetchData().then((data) => {
+         setData(data);
+         setLoading(false);
+       });
+     }, []);
+
+     return <div> {loading ? "Loading..." : data} </div>;
+   }
+   ```
+
+   If you need to fetch data in the client, Next JS recommend reaching
+   for something like React Query or SWR.
+
+   - [React Query](https://react-query.tanstack.com/)
+   - [SWR](https://swr.vercel.app/)
+
+   Of course if you are using the newer versions of React, you can also use
+   the 'use' hook to fetch data.
+
+   - [use hook](https://react.dev/reference/react/use)
+
+   An example:
+
+   ```tsx
+   "use client";
+
+   import { use } from "react";
+
+   type User = {
+     name: string;
+   };
+
+   export default function UserProfile() {
+     const user = use(
+       fetch("https://api.example.com/user/1").then((res) => res.json())
+     );
+
+     return <div>Hello, {user.name}</div>;
+   }
+   ```
+
+3. **Component Boundaries**
+
+Keep client components as small as possible:
+
+This example is a mix of client and server components.
+
+```tsx
+// Good Pattern
+function ServerComponent() {
+  return (
+    <div>
+      <h1>Static Content</h1>
+      <p>More static content</p>
+      <ClientButton /> {/* Only the button is client-side */}
+    </div>
+  );
+}
+```
+
+This example is all client side
+
+```tsx
+// Avoid This Pattern
+"use client";
+
+function EntireSection() {
+  return (
+    <div>
+      <h1>Now everything is client-side</h1>
+      <p>Even static content</p>
+      <button>Click me</button>
+    </div>
+  );
+}
+```
+
+## Common Pitfalls
+
+1. **Over-using Client Components**
+
+   - Don't mark entire pages or layouts as client components
+   - All children of components marked as 'use client' are also client components
+   - Keep client components focused on interactive elements
+
+2. **Prop Drilling Through Server Components**
+
+   - Server components can't pass non-serializable data to other server components through client components
+   - Use composition or context for complex data passing
+
+3. **Mixing Concerns**
+
+   - Don't mix data fetching and interactivity in the same component
+   - Separate server-side data fetching from client-side state management
+
+## Additional Resources
+
+- [Next.js Server Component Patterns](https://nextjs.org/docs/app/building-your-application/rendering/composition-patterns)
+- [React Server Components](https://nextjs.org/docs/app/building-your-application/rendering/server-components)
+- [Client Component Patterns](https://nextjs.org/docs/app/building-your-application/rendering/client-components)
