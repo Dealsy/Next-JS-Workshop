@@ -1,6 +1,4 @@
-import { Suspense } from "react";
 import { getLessonById } from "@/data/lessons";
-import { Skeleton } from "./ui/skeleton";
 import path from "path";
 import fs from "fs/promises";
 
@@ -55,18 +53,7 @@ export default async function LessonContent({
 
   return (
     <div className="prose prose-slate max-w-none dark:prose-invert">
-      <Suspense
-        fallback={
-          <div className="max-w-none">
-            <Skeleton className="h-10 w-full mb-4" />
-            <Skeleton className="h-64 w-full mb-4" />
-            <Skeleton className="h-20 w-full mb-4" />
-            <Skeleton className="h-52 w-full mb-4" />
-          </div>
-        }
-      >
-        <Content />
-      </Suspense>
+      <Content />
     </div>
   );
 }

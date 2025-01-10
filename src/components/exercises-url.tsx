@@ -2,8 +2,9 @@ export function ExercisesUrl({ url }: { url: React.ReactNode }) {
   return (
     <div className="flex flex-col gap-4 w-full mb-10">
       <p className="text-gray-600 dark:text-gray-400">
-        The exercise is located at:
+        Its time to open your code editor and start coding!
       </p>
+      <p className="text-gray-600 dark:text-gray-400">Head to:</p>
       <code className="text-gray-600 dark:text-gray-200 bg-gray-100 dark:bg-gray-800 rounded-md p-2">
         {url}
       </code>
