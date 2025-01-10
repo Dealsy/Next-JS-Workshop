@@ -54,7 +54,7 @@ export default async function LessonPage({
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8">
-        <Card className="max-w-4xl mx-auto">
+        <Card className="max-w-7xl mx-auto">
           <CardHeader className="space-y-4">
             <h1 className="text-3xl font-bold">{lesson.title}</h1>
             <p className="text-muted-foreground">{lesson.description}</p>
