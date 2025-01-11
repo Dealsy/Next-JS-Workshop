@@ -1,0 +1,204 @@
+Server Components are a fundamental concept in Next.js that allows you to render components on the server by default. This approach brings several benefits including improved performance, reduced client-side JavaScript, and better SEO.
+
+## What are Server Components?
+
+Server Components are React components that execute and render entirely on the server.
+
+- Can access server-side resources directly (databases, filesystem, etc.)
+- Don't increase your JavaScript bundle size
+- Keep sensitive data and logic on the server
+- Support streaming and progressive rendering
+
+```tsx
+// All pages are Server Components by default in Next.js
+export default function ServerComponent() {
+  return (
+    <div>
+      <h1>Hello from the Server!</h1>
+    </div>
+  );
+}
+```
+
+## Key Benefits
+
+### 1. Zero Client-Side JavaScript
+
+Server Components don't ship any JavaScript to the client by default. This means:
+
+- Faster page loads
+- Lower bandwidth usage
+- Better performance on low-end devices
+
+### 2. Direct Backend Access
+
+You can directly access backend resources:
+
+```tsx
+// Access database directly in a Server Component ( The client doesn't have access to the database )
+async function UserProfile({ userId }: { userId: string }) {
+  const user = await db.users.findUnique({
+    where: { id: userId },
+  });
+
+  return <div>Hello, {user.name}!</div>;
+}
+```
+
+### 3. Automatic Code Splitting
+
+Server Components help with automatic code splitting by keeping server-only code separate from client code.
+
+## When to Use Server Components
+
+Use Server Components when:
+
+- You need to access backend resources directly
+- The component doesn't need interactivity
+- You want to keep sensitive data/logic on the server
+- You want to reduce client-side JavaScript
+
+```tsx
+// Good use case for a Server Component
+async function ProductList() {
+  const products = await fetchProducts(); // Direct database access
+
+  return (
+    <div>
+      {products.map((product) => (
+        <div key={product.id}>
+          <h2>{product.name}</h2>
+          <p>{product.description}</p>
+        </div>
+      ))}
+    </div>
+  );
+}
+```
+
+## Server Components vs Client Components
+
+Here's when to use each:
+
+### Server Components
+
+- Static content rendering
+- Data fetching
+- Accessing backend resources
+- Large dependencies
+- Sensitive information
+
+### Client Components
+
+- Interactivity and event listeners
+- Browser APIs
+- State and lifecycle effects
+- Client-side routing
+
+Server Component
+
+```tsx
+async function BlogPost({ id }: { id: string }) {
+  const post = await fetchPost(id);
+  return (
+    <article>
+      <h1>{post.title}</h1>
+      <ClientLikeButton /> {/* Interactive part isolated */}
+      <p>{post.content}</p>
+    </article>
+  );
+}
+```
+
+Client Component
+
+```tsx
+"use client";
+function ClientLikeButton() {
+  const [liked, setLiked] = useState(false);
+
+  return (
+    <button onClick={() => setLiked(!liked)}>{liked ? "❤️" : "🤍"}</button>
+  );
+}
+```
+
+## Best Practices
+
+1. **Start with Server Components**
+
+   - Use Server Components by default
+   - Only switch to Client Components when needed for interactivity
+
+2. **Proper Component Boundaries**
+
+   - Keep interactive parts isolated in Client Components
+   - Don't make entire pages Client Components
+
+3. **Data Fetching**
+   - Fetch data in Server Components when possible
+   - Use React Suspense for loading states
+
+```tsx
+// Good pattern: Server Component with isolated client interactivity
+export default async function Page() {
+  const data = await fetchData();
+
+  return (
+    <div>
+      <ServerRenderedContent data={data} />
+      <ClientInteractiveWidget /> {/* Only this part is interactive */}
+    </div>
+  );
+}
+```
+
+## Common Pitfalls
+
+1. **Mixing Server and Client Code**
+
+```tsx
+// ❌ Wrong: Using browser APIs in Server Component
+export default function ServerComponent() {
+  const width = window.innerWidth; // This will fail!
+  return <div>Width: {width}</div>;
+}
+
+// ✅ Correct: Move browser API to Client Component
+("use client");
+export function WindowSize() {
+  const [width, setWidth] = useState(window.innerWidth);
+  // ... rest of the component
+}
+```
+
+2. **Over-using Client Components**
+
+```tsx
+// ❌ Wrong: Making entire page a Client Component
+"use client";
+export default function Page() {
+  return (
+    <div>
+      <StaticHeader /> {/* Could be a Server Component */}
+      <InteractiveForm /> {/* Needs to be Client */}
+      <StaticFooter /> {/* Could be a Server Component */}
+    </div>
+  );
+}
+
+// ✅ Correct: Only make interactive parts Client Components
+export default function Page() {
+  return (
+    <div>
+      <StaticHeader />
+      <ClientForm /> {/* Only this needs 'use client' */}
+      <StaticFooter />
+    </div>
+  );
+}
+```
+
+## Exercise
+
+Ready to try it yourself? Head to the [Server Components Exercise](/lessons/client_server/server-components/exercise) to practice implementing Server Components effectively.

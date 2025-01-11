@@ -86,8 +86,6 @@ Lessons are now accessed via consistent URLs:
   - [x] Solution
 - [ ] Server Components
   - [ ] Concept MDX
-  - [ ] Interactive lesson
-  - [ ] Solution
 - [ ] Composition Patterns
   - [ ] Concept MDX
 
