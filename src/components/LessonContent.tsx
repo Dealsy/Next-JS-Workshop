@@ -52,7 +52,7 @@ export default async function LessonContent({
   ).default;
 
   return (
-    <div className="prose prose-slate max-w-none dark:prose-invert">
+    <div className="prose prose-slate max-w-none dark:prose-invert prose-code:text-purple-600  dark:prose-code:text-teal-300 prose-code:before:content-none prose-code:after:content-none">
       <Content />
     </div>
   );

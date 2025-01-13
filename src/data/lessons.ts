@@ -1,8 +1,4 @@
-import {
-  categories,
-  difficulties,
-  lessons,
-} from "@/constants";
+import { categories, difficulties, lessons } from "@/constants";
 
 export interface Lesson {
   id: string;
@@ -12,6 +8,7 @@ export interface Lesson {
   difficulty: keyof typeof difficulties;
   prerequisites?: string[];
   order?: number;
+  featured?: boolean;
 }
 
 // Combine all lessons

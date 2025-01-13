@@ -1,5 +1,6 @@
 import { ExercisesContainer } from "@/components/exerciseContainer";
 import { ExercisesUrl } from "@/components/exercises-url";
+import { EXERCISE_URLS } from "@/constants";
 
 /*
  * Exercise: Dynamic Routing in Next.js
@@ -31,7 +32,7 @@ import { ExercisesUrl } from "@/components/exercises-url";
 export default function DynamicRoutingExercise() {
   return (
     <ExercisesContainer>
-      <ExercisesUrl url="/src/app/lessons/(exercises)/(2_routing)/dynamic_routing/page.tsx" />
+      <ExercisesUrl url={EXERCISE_URLS.dynamic_routing} />
       <div>
         <h1>TODO: Show blog post here</h1>
       </div>

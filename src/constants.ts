@@ -3,6 +3,10 @@ import { Lesson } from "./data/lessons";
 export const EXERCISE_URLS = {
   use_server: "src/app/lessons/(exercises)/(directives)/use_server/page.tsx",
   use_client: "src/app/lessons/(exercises)/(directives)/use_client/page.tsx",
+  server_components:
+    "src/app/lessons/(exercises)/(1_client&server)/server_components/page.tsx",
+  dynamic_routing:
+    "src/app/lessons/(exercises)/(2_routing)/dynamic_routing/page.tsx",
 } as const;
 
 export const categories = {
@@ -23,12 +27,21 @@ export const difficulties = {
 
 export const clientServerLessons = [
   {
+    id: "server-components",
+    title: "Server Components",
+    description: "Learn how to use server components in Next.js",
+    category: categories["Client & Server"],
+    difficulty: difficulties["intermediate"],
+    order: 1,
+    featured: true,
+  },
+  {
     id: "use-client",
     title: "Understanding 'use client'",
     description: "Learn when and how to use client-side components in Next.js",
     category: categories["Client & Server"],
     difficulty: difficulties["beginner"],
-    order: 1,
+    order: 2,
   },
   {
     id: "use-server",
@@ -36,22 +49,15 @@ export const clientServerLessons = [
     description: "Learn what 'use server' is and how to use it",
     category: categories["Client & Server"],
     difficulty: difficulties["intermediate"],
-    order: 2,
-  },
-  {
-    id: "server-components",
-    title: "Server Components",
-    description: "Learn how to use server components in Next.js",
-    category: categories["Client & Server"],
-    difficulty: difficulties["intermediate"],
     order: 3,
+    featured: true,
   },
   {
     id: "composition-patterns",
     title: "Composition Patterns",
     description: "Learn how to compose components in Next.js",
     category: categories["Client & Server"],
-    difficulty: difficulties["intermediate"],
+    difficulty: difficulties["beginner"],
     order: 4,
   },
 ];
@@ -78,15 +84,15 @@ export const routingLessons = [
     title: "Loading UI",
     description: "Learn how to implement loading UI with loading.ts in Next.js",
     category: categories["Routing"],
-    difficulty: difficulties["intermediate"],
+    difficulty: difficulties["beginner"],
     order: 3,
   },
   {
-    id: "error-handling",
-    title: "Error Handling",
+    id: "error-boundary",
+    title: "Error Boundaries",
     description: "Learn how to handle errors with error.ts in Next.js",
     category: categories["Routing"],
-    difficulty: difficulties["intermediate"],
+    difficulty: difficulties["beginner"],
     order: 4,
   },
   {
@@ -96,6 +102,7 @@ export const routingLessons = [
     category: categories["Routing"],
     difficulty: difficulties["intermediate"],
     order: 5,
+    featured: true,
   },
   {
     id: "dynamic-routing",
@@ -112,6 +119,7 @@ export const routingLessons = [
     category: categories["Routing"],
     difficulty: difficulties["intermediate"],
     order: 7,
+    featured: true,
   },
 ];
 
@@ -175,3 +183,20 @@ export const lessons: Lesson[] = [
   ...cacheLessons,
   ...renderingLessons,
 ];
+
+export const features = [
+  {
+    title: "Hands-on Learning",
+    description: `Practice real-world Next.js concepts with ${lessons.length} interactive lessons and exercises.`,
+  },
+  {
+    title: "Latest Features",
+    description:
+      "Stay up-to-date with the newest Next.js 15+ features and best practices.",
+  },
+  {
+    title: "Expert Guidance",
+    description:
+      "Learn from carefully crafted lessons and compare with reference solutions.",
+  },
+] as const;
