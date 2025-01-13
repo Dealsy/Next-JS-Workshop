@@ -1,5 +1,7 @@
 "use client";
 
+import { ExercisesUrl } from "@/components/exercises-url";
+import { EXERCISE_URLS } from "@/constants";
 import { MinusIcon, PlusIcon } from "lucide-react";
 import { useState } from "react";
 
@@ -39,6 +41,7 @@ export default function Page() {
 
   return (
     <div className="flex flex-col min-h-screen">
+      <ExercisesUrl url={EXERCISE_URLS.server_components} />
       {/* This is static conent, so it could be rednered on the server  */}
       <nav className="bg-gray-800 text-white p-4 flex justify-between items-center">
         <h1 className="text-2xl font-bold">Page Title</h1>

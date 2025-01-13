@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowRightIcon } from "lucide-react";
 import { lessons } from "@/constants";
+import { getLessonPath } from "@/lib/utils";
 
 export default async function SearchResults({
   searchParams,
@@ -19,13 +20,15 @@ export default async function SearchResults({
 
   return (
     <div className="container mx-auto px-4 py-12">
-      <h1 className="text-4xl font-bold mb-8">Search Results for "{query}"</h1>
+      <h1 className="text-4xl font-bold mb-8">
+        Search Results for <span className="text-blue-500">{query}</span>
+      </h1>
       {filteredLessons.length > 0 ? (
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredLessons.map((lesson) => (
             <Link
               key={lesson.id}
-              href={`/lessons/${lesson.id}`}
+              href={getLessonPath(lesson)}
               className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow dark:bg-gray-800/40"
             >
               <h3 className="text-xl font-semibold mb-2">{lesson.title}</h3>

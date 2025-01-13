@@ -44,9 +44,19 @@ The idea is to use both your editor and the browser to do exercises and read inf
 Each lesson consists of:
 
 1. **Concept Explanation** - documentation with code examples
-2. **Interactive Exercise** - Hands-on coding exercise
+2. **Interactive Exercise** - Hands-on coding exercise ( Most lessons will have an exercise, but some will be just a concept explanation )
 3. **Solution** - Reference implementation
 4. **Additional Resources** - Links to official docs and related content
+
+## Exercises
+
+You will find a link to an exercise at the bottom of each lesson that has one.
+
+From there you can click the link to open it, the excercise page will tell you the file path to go to in your editor to begin the excercise.
+
+Each excercise will have details on what you need to do with tips and extra credit options.
+
+You will also find a solutions file or folder that will contain the solution to the excercise.
 
 ## License
 
