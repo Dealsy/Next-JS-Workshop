@@ -1,4 +1,9 @@
 import { codeToHtml } from "shiki/bundle/web";
+import {
+  transformerNotationHighlight,
+  transformerNotationDiff,
+  transformerMetaHighlight,
+} from "@shikijs/transformers";
 
 interface CodeBlockProps {
   children: React.ReactNode;
@@ -28,7 +33,11 @@ async function highlight(code: string, lang: string) {
     return await codeToHtml(code, {
       lang,
       theme: "night-owl",
-      transformers: [],
+      transformers: [
+        transformerNotationHighlight(),
+        transformerNotationDiff(),
+        transformerMetaHighlight(),
+      ],
     });
   } catch (error) {
     console.error("Highlighting error:", error);
@@ -63,7 +72,7 @@ export default async function CodeBlock({
       </div>
       <div
         dangerouslySetInnerHTML={{ __html: highlightedCode }}
-        className="p-4 bg-[#011627]"
+        className="p-4 bg-[#011627] [&_.highlighted]:bg-blue-500/20 [&_.highlighted]:block [&_.diff.add]:bg-green-500/20 [&_.diff.add]:block [&_.diff.remove]:bg-red-500/20 [&_.diff.remove]:block"
       />
     </div>
   );

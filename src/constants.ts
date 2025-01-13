@@ -23,25 +23,25 @@ export const difficulties = {
 
 export const clientServerLessons = [
   {
+    id: "server-components",
+    title: "Server Components",
+    description: "Learn how to use server components in Next.js",
+    category: categories["Client & Server"],
+    difficulty: difficulties["intermediate"],
+    order: 1,
+  },
+  {
     id: "use-client",
     title: "Understanding 'use client'",
     description: "Learn when and how to use client-side components in Next.js",
     category: categories["Client & Server"],
     difficulty: difficulties["beginner"],
-    order: 1,
+    order: 2,
   },
   {
     id: "use-server",
     title: "Using 'use server' and server actions",
     description: "Learn what 'use server' is and how to use it",
-    category: categories["Client & Server"],
-    difficulty: difficulties["intermediate"],
-    order: 2,
-  },
-  {
-    id: "server-components",
-    title: "Server Components",
-    description: "Learn how to use server components in Next.js",
     category: categories["Client & Server"],
     difficulty: difficulties["intermediate"],
     order: 3,

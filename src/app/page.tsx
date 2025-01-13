@@ -11,7 +11,6 @@ import {
 } from "@/components/ui/card";
 import { getLessonPath } from "@/lib/utils";
 import { AuroraBackground } from "@/components/ui/aurora-background";
-import { MorphingText } from "@/components/ui/morphing-text";
 
 export default function Home() {
   return (
@@ -20,7 +19,7 @@ export default function Home() {
         <div className="container mx-auto px-4 py-12 flex-grow">
           <section className="text-center mb-16">
             <h1 className="text-4xl font-bold mb-4 text-muted-foreground">
-              <MorphingText texts={["Welcome to Next.js Learning Workshop"]} />
+              Welcome to Next.js Learning Workshop
             </h1>
             <p className="text-xl text-muted-foreground mb-8">
               Master Next.js 15+ through hands-on, interactive lessons
