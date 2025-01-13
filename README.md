@@ -48,7 +48,10 @@ Each lesson consists of:
 3. **Solution** - Reference implementation
 4. **Additional Resources** - Links to official docs and related content
 
-## Exercises
+## Where you will work and Exercises
+
+You will only need to work in the (exercises) folder, of course
+if you wish you look throught the rest of the code base that is compeletely fine, just be aware that if you do make changes it may break the workshop.
 
 You will find a link to an exercise at the bottom of each lesson that has one.
 
