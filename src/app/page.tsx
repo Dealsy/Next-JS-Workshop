@@ -11,6 +11,8 @@ import {
 } from "@/components/ui/card";
 import { getLessonPath } from "@/lib/utils";
 import { AuroraBackground } from "@/components/ui/aurora-background";
+import { NumberCircle } from "@/components/number-circle";
+import { StarBorder } from "@/components/ui/star-border";
 
 export default function Home() {
   return (
@@ -25,9 +27,9 @@ export default function Home() {
               Master Next.js 15+ through hands-on, interactive lessons and
               exercises.
             </p>
-            <Button asChild size="lg">
-              <Link href="/lessons">Start Learning</Link>
-            </Button>
+            <Link href="/lessons">
+              <StarBorder>Start Learning</StarBorder>
+            </Link>
           </section>
 
           <section className="mb-16">
@@ -48,21 +50,35 @@ export default function Home() {
             </div>
           </section>
 
-          <section className="mb-16  justify-center flex flex-col items-center">
-            <h2 className="text-3xl font-bold mb-6 text-muted-foreground prose">
+          <section className="mb-16 justify-center flex flex-col items-center max-w-3xl mx-auto bg-card/50 rounded-lg p-8 backdrop-blur-sm border">
+            <h2 className="text-3xl font-bold mb-8 text-muted-foreground bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text">
               How to use this workshop?
             </h2>
-            <p className="text-muted-foreground mb-6 prose">
-              To use this workshop, you can either use the sidebar to navigate
-              through the lessons, use the search bar to find a specific lesson,
-              or use the table of contents in the lessons page.
-            </p>
+            <div className="space-y-6">
+              <div className="flex items-start space-x-4">
+                <NumberCircle number={1} />
+                <p className="text-muted-foreground">
+                  Navigate through lessons using the sidebar, search bar, or
+                  table of contents in the lessons page.
+                </p>
+              </div>
 
-            <p className="text-muted-foreground mb-6 prose">
-              Most lessons contain a excercise to complete, if the lesson has an
-              excercise, you will find a link to it at the bottom of that
-              lesson.
-            </p>
+              <div className="flex items-start space-x-4">
+                <NumberCircle number={2} />
+                <p className="text-muted-foreground">
+                  Complete exercises found at the bottom of applicable lessons
+                  to practice what you&apos;ve learned.
+                </p>
+              </div>
+              <div className="flex items-start space-x-4">
+                <NumberCircle number={3} />
+                <p className="text-muted-foreground">
+                  Excercises are done with a combination of your editor and this
+                  browser, As you work through the excercises you will be able
+                  to see the changes you make in the browser in real time.
+                </p>
+              </div>
+            </div>
           </section>
 
           <section>

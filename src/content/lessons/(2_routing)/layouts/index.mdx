@@ -1,0 +1,153 @@
+Next.js 13+ introduced a powerful new way to handle layouts using the App Router. Layouts allow you to share UI between multiple pages while maintaining state and avoiding re-renders.
+
+## What are Layouts?
+
+A layout is UI that is shared between multiple pages. You can define layouts using the special `layout.tsx` file in the app directory. Layouts preserve state, remain interactive, and do not re-render when the page changes.
+
+```tsx
+// app/layout.tsx
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="en">
+      <body>
+        <nav>{/* Your navigation */}</nav>
+        <main>{children}</main>
+        <footer>{/* Your footer */}</footer>
+      </body>
+    </html>
+  );
+}
+```
+
+## Key Features
+
+### 1. Nested Layouts
+
+You can create nested layouts by adding `layout.tsx` files in child folders:
+
+<img
+  src="/layout.svg"
+  alt="Layout diagram showing how layouts work in Next.js"
+  className="w-full max-w-xl mx-auto my-8"
+/>
+
+```tsx
+// app/blog/layout.tsx
+export default function BlogLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <div>
+      <aside>{/* Blog-specific sidebar */}</aside>
+      {children}
+    </div>
+  );
+}
+```
+
+### 2. State Preservation
+
+- Layouts maintain state when navigating between pages
+- Components inside layouts stay mounted and preserve their state
+- No unnecessary re-renders when switching pages
+
+### 3. Partial Rendering
+
+- Only the page components update during navigation
+- The layout remains static, improving performance
+- Perfect for persistent navigation, sidebars, or shopping carts
+
+## Best Practices
+
+1. **Root Layout Requirements**
+
+   - Must contain `html` and `body` tags
+   - Required in the app directory
+   - Applies to all routes
+
+2. **Template vs Layout**
+
+   - Use layouts for persistent UI that preserves state
+   - Use templates when you need a new instance on each navigation
+
+3. **Data Fetching**
+   - Layouts can fetch their own data
+   - Data fetching occurs in parallel for improved performance
+
+```tsx
+// app/layout.tsx
+async function getUser() {
+  const res = await fetch("...");
+  return res.json();
+}
+
+export default async function Layout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const user = await getUser();
+  return (
+    <html>
+      <body>
+        <header>
+          <p>Welcome {user.name}</p>
+        </header>
+        {children}
+      </body>
+    </html>
+  );
+}
+```
+
+4. **Metadata**
+   - Define metadata in layouts to apply to all child routes
+   - Override in specific pages when needed
+
+```tsx
+export const metadata = {
+  title: "My Website",
+  description: "Welcome to my website",
+};
+```
+
+## Common Patterns
+
+### 1. Persistent Navigation
+
+```tsx
+export default function Layout({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="flex min-h-screen">
+      <nav className="w-64 bg-gray-100">{/* Navigation items */}</nav>
+      <main className="flex-1">{children}</main>
+    </div>
+  );
+}
+```
+
+### 2. Grouped Layouts
+
+Use route groups to create multiple root layouts:
+
+```
+app/
+├── (marketing)
+│   ├── layout.tsx
+│   └── page.tsx
+└── (dashboard)
+    ├── layout.tsx
+    └── page.tsx
+```
+
+## Exercise
+
+Now that you understand layouts, try the interactive exercise to practice implementing them in a real application. You'll create a dashboard layout with a persistent sidebar and header.
+
+[Start Exercise →](/lessons/routing/layouts/exercise)

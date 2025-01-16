@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Book, ChevronRight } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { categories, lessons } from "@/constants";
 import {
   Sidebar as UISidebar,
@@ -9,7 +9,6 @@ import {
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
-  SidebarHeader,
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
