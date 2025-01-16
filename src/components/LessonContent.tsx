@@ -61,7 +61,7 @@ export default async function LessonContent({
 // Extract the "under construction" message into a reusable component
 function LessonUnderConstruction() {
   return (
-    <div className="text-center py-8">
+    <div className="text-center py-8 ">
       <h2 className="text-xl font-semibold mb-2">Lesson Under Construction</h2>
       <p className="text-muted-foreground">
         The content for this lesson is currently being developed. Please check
