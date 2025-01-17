@@ -14,6 +14,7 @@ import {
   SidebarMenuButton,
 } from "@/components/ui/sidebar";
 import { getLessonPath } from "@/lib/utils";
+import { usePathname } from "next/navigation";
 
 function getLessonsBySection() {
   // Create sections from categories
@@ -29,6 +30,7 @@ function getLessonsBySection() {
 
 export default function Sidebar() {
   const lessonSections = getLessonsBySection();
+  const pathname = usePathname();
 
   return (
     <UISidebar variant="sidebar" collapsible="offcanvas">
@@ -53,7 +55,11 @@ export default function Sidebar() {
                               legacyBehavior
                             >
                               <SidebarMenuButton
-                                className="w-full justify-between"
+                                className={`w-full justify-between ${
+                                  pathname === getLessonPath(lesson)
+                                    ? "bg-accent text-accent-foreground"
+                                    : ""
+                                }`}
                                 size="sm"
                               >
                                 <span className="truncate">{lesson.title}</span>

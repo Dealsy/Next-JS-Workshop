@@ -1,0 +1,233 @@
+Next.js provides multiple ways to handle navigation in your application. In this lesson, we'll explore the different navigation methods and when to use each one.
+
+## Client-Side Navigation
+
+### The Link Component
+
+The Link component is the recommended way to handle client-side navigation.
+
+This component extends the HTML `<a>` tag to provide prefetching natviagation between routes.
+
+```tsx
+import Link from "next/link";
+
+export default function Navigation() {
+  return <Link href="/about">About Us</Link>;
+}
+```
+
+## Linking to dynamic segments
+
+You can use the Link component to link to dynamic segments in your routes,
+this is particularly useful for things like blog posts, where you want to link to a specific post.
+
+The highlighted code below shows how to use a string template literal to link to a dynamic segment.
+
+```tsx
+import Link from "next/link";
+
+export default function Posts({ posts }: { posts: Post[] }) {
+  return (
+    <ul>
+      {posts.map((post) => (
+        <li key={post}>
+          <Link href={`/posts/${post}`}>{post.title}</Link> // [!code highlight]
+        </li>
+      ))}
+    </ul>
+  );
+}
+```
+
+## Active Links
+
+You can use the `usePathname` hook to check if a link is active.
+
+```tsx
+"use client";
+
+import { usePathname } from "next/navigation";
+
+export default function Navigation() {
+  const pathname = usePathname();
+  return (
+    <Link href="/about" className={pathname === "/about" ? "text-primary" : ""}>
+      About Us
+    </Link>
+  );
+}
+```
+
+This code has a conditional check to see if the link is active, if it is then it changes the styles which will
+give a visual update for your user to see that this link is currently active.
+
+You can see this in action in the sidebar of this application.
+
+### The useRouter Hook
+
+When you need programmatic navigation or access to router features, use the `useRouter` hook:
+
+```tsx
+"use client";
+
+import { useRouter } from "next/navigation";
+
+export default function CheckoutForm() {
+  const router = useRouter();
+
+  const handlePayment = async (paymentDetails: PaymentDetails) => {
+    const response = await processPayment(paymentDetails);
+
+    if (response.success) {
+      router.push("/order-confirmation");
+    }
+  };
+
+  return <form onSubmit={handlePayment}>{/* Payment form fields */}</form>;
+}
+```
+
+In this example we are using `useRouter` to navigate to a new route once the payment function has
+completed and is successful.
+
+The `useRouter` hook provides these key methods:
+
+- `push(href)`: Navigate to a new route
+- `replace(href)`: Replace current route in history
+- `back()`: Navigate to previous route
+- `forward()`: Navigate to next route
+- `refresh()`: Refresh the current route
+- `prefetch(href)`: Prefetch a route for faster navigation
+
+It is reccomeneded to use the Link component over `useRouter` where possible.
+
+## Server-Side Navigation
+
+### Redirect Function
+
+Next JS allows developers to setup server-side redirects to allow users to be redirected to a new route
+from within the server.
+
+This is particularly useful for things like authentication flows, an example would be a Users
+session expires and they need to be redirected back to the login page.
+
+```tsx
+import { redirect } from "next/navigation";
+
+export default function ServerComponent() {
+  const session = await getSession();
+
+  if (!session) {
+    redirect("/login");
+  }
+
+  return <div>Protected Content</div>;
+}
+```
+
+It is also useful for server actions, if we have a server action that needs to redirect once it's
+completed then we can use redirect to do this.
+
+```tsx
+"use server";
+import { redirect } from "next/navigation";
+
+export default function DeleteTodo({ id }: { id: string }) {
+  const user = await getUser();
+
+  if (!user) {
+    redirect("/login");
+  }
+
+  await deleteTodo(id);
+  redirect("/todos");
+}
+```
+
+## Navigation Patterns
+
+### Conditional Navigation
+
+```tsx
+"use client";
+
+import { useRouter } from "next/navigation";
+
+type NavigateAfterActionProps = {
+  onComplete: () => void;
+};
+
+export default function NavigateAfterAction({
+  onComplete,
+}: NavigateAfterActionProps) {
+  const router = useRouter();
+
+  const handleSubmit = async () => {
+    const success = await saveData();
+
+    if (success) {
+      router.push("/success");
+    }
+  };
+
+  return <button onClick={handleSubmit}>Save and Continue</button>;
+}
+```
+
+### Navigation with Loading States
+
+```tsx
+"use client";
+
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+
+export default function NavigationWithLoading() {
+  const router = useRouter();
+  const [isNavigating, setIsNavigating] = useState(false);
+
+  const handleNavigation = async () => {
+    setIsNavigating(true);
+    await router.push("/dashboard");
+    setIsNavigating(false);
+  };
+
+  return (
+    <button onClick={handleNavigation} disabled={isNavigating}>
+      {isNavigating ? "Loading..." : "Go to Dashboard"}
+    </button>
+  );
+}
+```
+
+## Best Practices
+
+1. **Choose the Right Navigation Method**:
+
+   - Use `Link` for standard client-side navigation
+   - Use `useRouter` for programmatic navigation
+   - Use `redirect` for server-side redirects
+
+2. **Performance Considerations**:
+
+   - Leverage automatic prefetching with `Link`
+   - Use `router.prefetch()` for programmatic prefetching
+   - Implement loading states for slower navigations
+
+3. **Security and Authentication**:
+   - Use server-side `redirect` for authentication flows
+   - Implement middleware for route protection
+   - Handle sensitive redirects on the server
+
+<InteractiveExercises >
+Ready to try it yourself? Head over to the [Navigation Exercise](/navigation/) where you'll:
+
+- Use Next JS Link component to navigate to a new route
+- Setup a useRouter push function to navigate to a new route
+
+</InteractiveExercises>
+
+### Additional Resources
+
+- [Next.js Link Component](https://nextjs.org/docs/app/api-reference/components/link#linking-to-dynamic-segments)
+- [Linking and Navigation](https://nextjs.org/docs/app/building-your-application/routing/linking-and-navigating)
