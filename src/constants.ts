@@ -7,6 +7,7 @@ export const EXERCISE_URLS = {
     "src/app/lessons/(exercises)/(1_client&server)/server_components/page.tsx",
   dynamic_routing:
     "src/app/lessons/(exercises)/(2_routing)/dynamic_routing/page.tsx",
+  layouts: "src/app/lessons/(exercises)/(2_routing)/layouts/layout.tsx",
 } as const;
 
 export const categories = {

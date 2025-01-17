@@ -2,7 +2,28 @@ Next.js 13+ introduced a powerful new way to handle layouts using the App Router
 
 ## What are Layouts?
 
-A layout is UI that is shared between multiple pages. You can define layouts using the special `layout.tsx` file in the app directory. Layouts preserve state, remain interactive, and do not re-render when the page changes.
+A layout is a UI that is shared between multiple pages. You can define layouts using the app directory's special `layout.tsx` file.
+Layouts preserve state, remain interactive, and do not re-render when the page changes.
+
+### Root layout:
+
+A root layout is the layout that sits at the top of your app directory, this layout is applied to all pages
+created within the app.
+
+<ThemeImage
+  darkSrc="/images/dark_rootlayout.svg"
+  lightSrc="/images/light_rootlayout.svg"
+  alt="Layout diagram showing how layouts work in Next.js"
+  size="xs"
+/>
+
+The root layout is where you will typically define your Navigation in the form of a header and or footer,
+you may also define other things such as:
+
+- Theme
+- Authentication
+- Analytics
+- Sidebar
 
 ```tsx
 // app/layout.tsx
@@ -23,25 +44,29 @@ export default function RootLayout({
 }
 ```
 
-## Key Features
+The children prop is where all pages that are created within your app will be rendered.
 
 ### 1. Nested Layouts
 
-You can create nested layouts by adding `layout.tsx` files in child folders:
+Layouts can be nested within the app, this allows you to create a specific layout for a specific page.
 
-<img
-  src="/layout.svg"
+You can create nested layouts by adding a `layout.tsx` file in child folders:
+
+<ThemeImage
+  darkSrc="/images/dark_layout.svg"
+  lightSrc="/images/light_layout.svg"
   alt="Layout diagram showing how layouts work in Next.js"
-  className="w-full max-w-xl mx-auto my-8"
+  size="medium"
 />
+
+When you create a nested layout, you need to create it in the route folder that you want it to apply to,
+this nested layout will have a slightly different syntax to the root layout.
+
+Here is what it looks like:
 
 ```tsx
 // app/blog/layout.tsx
-export default function BlogLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div>
       <aside>{/* Blog-specific sidebar */}</aside>
@@ -50,6 +75,17 @@ export default function BlogLayout({
   );
 }
 ```
+
+<Alert type="info">
+  <span>
+    It's important to note that the nested layout will not override the root
+    layout, but rather it sits within it.
+  </span>
+  <span>
+    If you were to add a header or sidebar to the nested layout, it would still
+    have the root layout header and sidebar.
+  </span>
+</Alert>
 
 ### 2. State Preservation
 
@@ -60,8 +96,7 @@ export default function BlogLayout({
 ### 3. Partial Rendering
 
 - Only the page components update during navigation
-- The layout remains static, improving performance
-- Perfect for persistent navigation, sidebars, or shopping carts
+- The layout remains static.
 
 ## Best Practices
 
@@ -71,14 +106,10 @@ export default function BlogLayout({
    - Required in the app directory
    - Applies to all routes
 
-2. **Template vs Layout**
-
-   - Use layouts for persistent UI that preserves state
-   - Use templates when you need a new instance on each navigation
-
-3. **Data Fetching**
-   - Layouts can fetch their own data
+2. **Data Fetching**
+   - Layouts can fetch their data
    - Data fetching occurs in parallel for improved performance
+   - Whilst we can fetch data in the layouts, its still always reccomeneded to fetch data closest to the component that needs it.
 
 ```tsx
 // app/layout.tsx
@@ -94,27 +125,14 @@ export default async function Layout({
 }) {
   const user = await getUser();
   return (
-    <html>
-      <body>
-        <header>
-          <p>Welcome {user.name}</p>
-        </header>
-        {children}
-      </body>
-    </html>
+    <div>
+      <header>
+        <p>Welcome {user.name}</p>
+      </header>
+      {children}
+    </div>
   );
 }
-```
-
-4. **Metadata**
-   - Define metadata in layouts to apply to all child routes
-   - Override in specific pages when needed
-
-```tsx
-export const metadata = {
-  title: "My Website",
-  description: "Welcome to my website",
-};
 ```
 
 ## Common Patterns
@@ -125,29 +143,60 @@ export const metadata = {
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex min-h-screen">
-      <nav className="w-64 bg-gray-100">{/* Navigation items */}</nav>
+      <nav className="bg-gray-100">{/* Navigation items */}</nav>
       <main className="flex-1">{children}</main>
     </div>
   );
 }
 ```
 
-### 2. Grouped Layouts
+### 2. Authentication
 
-Use route groups to create multiple root layouts:
+You should place your authentication logic in the root layout, this will ensure that the user is authenticated for all pages within the app.
 
+```tsx
+// app/layout.tsx
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <div>
+      <AuthProvider>{children}</AuthProvider>
+    </div>
+  );
+}
 ```
-app/
-├── (marketing)
-│   ├── layout.tsx
-│   └── page.tsx
-└── (dashboard)
-    ├── layout.tsx
-    └── page.tsx
+
+### Theme
+
+Themes can be applied to the root layout, this will ensure that the theme is applied to all pages within the app.
+
+```tsx
+// app/layout.tsx
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <div>
+      <ThemeProvider>{children}</ThemeProvider>
+    </div>
+  );
+}
 ```
 
-## Exercise
+<InteractiveExercises >
+Ready to try it yourself? Head over to the [Layouts Exercise](/layouts/) where you'll:
 
-Now that you understand layouts, try the interactive exercise to practice implementing them in a real application. You'll create a dashboard layout with a persistent sidebar and header.
+- Create a nested layout
+- Add styling to the layout
+- Fetch some data and display it in the layout
 
-[Start Exercise →](/lessons/routing/layouts/exercise)
+</InteractiveExercises>
+
+### Additional Resources
+
+- [Next.js Layouts Documentation](https://nextjs.org/docs/app/getting-started/layouts-and-pages#creating-a-layout)

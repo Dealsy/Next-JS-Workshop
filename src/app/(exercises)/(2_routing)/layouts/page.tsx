@@ -1,95 +1,77 @@
-/**
- * Exercise: Implementing Layouts in Next.js
+import { ExercisesUrl } from "@/components/exercises-url";
+import { EXERCISE_URLS } from "@/constants";
+import { Layout, Layers, Zap } from "lucide-react";
+
+/*
+ * Exercise: Layouts in Next.js
  *
- * Your task is to create a dashboard layout with the following requirements:
- * 1. A persistent header with user information
- * 2. A sidebar with navigation links
- * 3. A main content area that changes while preserving layout state
+ * 🎯 Goal: Learn how a nested layouts work
  *
- * Complete the TODOs below to implement the layout.
+ * 📝 File Structure:
+ *  Update the code in the layout.tsx
+ *
+ * 📝 Info:
+ * Go to the layout.tsx file for your instructions
+ *
  */
 
-import { Card } from "@/components/ui/card";
-
-type DashboardLayoutProps = {
-  children: React.ReactNode;
-};
-
-type HeaderProps = {
-  username: string;
-};
-
-type SidebarProps = {
-  links: Array<{
-    href: string;
-    label: string;
-  }>;
-};
-
-// TODO: Implement the Header component
-function Header({ username }: HeaderProps) {
+export default function Page() {
   return (
-    // Add your header implementation here
-    // It should be a full-width header with:
-    // - Username display
-    // - Logout button
-    <div>Header goes here</div>
-  );
-}
-
-// TODO: Implement the Sidebar component
-function Sidebar({ links }: SidebarProps) {
-  return (
-    // Add your sidebar implementation here
-    // It should contain:
-    // - Navigation links
-    // - Fixed width of 64
-    // - Full height
-    <div>Sidebar goes here</div>
-  );
-}
-
-// TODO: Implement the DashboardLayout component
-export default function DashboardLayout({ children }: DashboardLayoutProps) {
-  const navigationLinks = [
-    { href: "/dashboard", label: "Overview" },
-    { href: "/dashboard/analytics", label: "Analytics" },
-    { href: "/dashboard/settings", label: "Settings" },
-  ];
-
-  return (
-    // Implement the layout structure here
-    // Requirements:
-    // - Full height layout
-    // - Fixed position header
-    // - Sidebar that scrolls independently
-    // - Main content area that scrolls independently
-    <div>Layout implementation goes here</div>
-  );
-}
-
-// Example page content for testing the layout
-export function DashboardPage() {
-  return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Dashboard Overview</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <Card className="p-4">
-          <h2 className="text-lg font-semibold">Recent Activity</h2>
-          <p>No recent activity</p>
-        </Card>
-        <Card className="p-4">
-          <h2 className="text-lg font-semibold">Statistics</h2>
-          <p>No statistics available</p>
-        </Card>
+    <>
+      {/* Feel free to remove this */}
+      <ExercisesUrl url={EXERCISE_URLS.layouts} />
+      <div className="flex justify-center p-4 min-h-screen">
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-2xl p-8 max-w-2xl w-full">
+          <h1 className="text-4xl font-bold text-center mb-6 text-gray-800 dark:text-white">
+            Welcome to Next.js Layouts!
+          </h1>
+          <p className="text-gray-600 dark:text-gray-300 text-center mb-8">
+            This page is ready for you to add a layout. Explore the power of
+            Next.js!
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <FeatureCard
+              icon={
+                <Layout className="w-8 h-8 text-gray-800 dark:text-white" />
+              }
+              title="Flexible Layouts"
+              description="Create reusable layouts with ease in Next.js."
+            />
+            <FeatureCard
+              icon={
+                <Layers className="w-8 h-8 text-gray-800 dark:text-white" />
+              }
+              title="Nested Structures"
+              description="Build complex UIs with nested layouts."
+            />
+            <FeatureCard
+              icon={<Zap className="w-8 h-8 text-gray-800 dark:text-white" />}
+              title="Fast & Efficient"
+              description="Optimized performance with Next.js layouts."
+            />
+          </div>
+        </div>
       </div>
+    </>
+  );
+}
+
+function FeatureCard({
+  icon,
+  title,
+  description,
+}: {
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+}) {
+  return (
+    <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-6 text-center hover:shadow-md transition-shadow">
+      <div className="flex justify-center mb-4">{icon}</div>
+      <h2 className="text-xl font-semibold mb-2 text-gray-800 dark:text-white">
+        {title}
+      </h2>
+      <p className="text-gray-600 dark:text-gray-300">{description}</p>
     </div>
   );
 }
-
-/**
- * Reference Solution:
- *
- * Check src/app/lessons/(exercises)/(2_routing)/layouts/solution.tsx
- * after attempting the exercise.
- */

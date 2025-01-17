@@ -12,7 +12,6 @@ import {
 import { getLessonPath } from "@/lib/utils";
 import { AuroraBackground } from "@/components/ui/aurora-background";
 import { NumberCircle } from "@/components/number-circle";
-import { StarBorder } from "@/components/ui/star-border";
 
 export default function Home() {
   return (
@@ -28,7 +27,7 @@ export default function Home() {
               exercises.
             </p>
             <Link href="/lessons">
-              <StarBorder>Start Learning</StarBorder>
+              <Button>Start Learning</Button>
             </Link>
           </section>
 
