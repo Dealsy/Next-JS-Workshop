@@ -4,7 +4,7 @@ Next.js provides multiple ways to handle navigation in your application. In this
 
 ### The Link Component
 
-The Link component is the recommended way to handle client-side navigation.
+The `<Link>` component is the recommended way to handle client-side navigation.
 
 This component extends the HTML `<a>` tag to provide prefetching natviagation between routes.
 
@@ -14,6 +14,34 @@ import Link from "next/link";
 export default function Navigation() {
   return <Link href="/about">About Us</Link>;
 }
+```
+
+The Link component will allow a user to navigate to a new route without reloading the page.
+
+## Prefetching
+
+The Link component has a `prefetch` prop which allows you to control whether the page should be prefetched.
+
+These are the options in App Router:
+
+- `null` (default): For statically generated pages, this will prefetch the full React Server Component data. For dynamic pages, this will prefetch up to the nearest route segment with a [`loading.js`](https://nextjs.org/docs/app/api-reference/file-conventions/loading) file. If there is no loading file, it will not fetch the full tree to avoid fetching too much data.
+- `true`: This will prefetch the full React Server Component data for all route segments, regardless of whether they contain a segment with `loading.js`.
+- `false`: This will not prefetch any data, even on hover.
+
+<Alert type="info">
+  These options were pulled directly from the Link component's TypeScript
+  file.
+
+You can check them out by Adding a Link component into yout app and then control clicking it
+
+</Alert>
+
+Example:
+
+```tsx
+<Link href="/about" prefetch={false}>
+  About Us
+</Link>
 ```
 
 ## Linking to dynamic segments
@@ -43,6 +71,9 @@ export default function Posts({ posts }: { posts: Post[] }) {
 
 You can use the `usePathname` hook to check if a link is active.
 
+The `usePathname` hook returns the current url pathname of the application, you can learn more about this
+here: [usePathname](https://nextjs.org/docs/app/api-reference/functions/use-pathname).
+
 ```tsx
 "use client";
 
@@ -58,8 +89,7 @@ export default function Navigation() {
 }
 ```
 
-This code has a conditional check to see if the link is active, if it is then it changes the styles which will
-give a visual update for your user to see that this link is currently active.
+This code has a conditional check to see if current url is `/about` if it is then we know the link is active and change the styles.
 
 You can see this in action in the sidebar of this application.
 
@@ -216,7 +246,6 @@ export default function NavigationWithLoading() {
 
 3. **Security and Authentication**:
    - Use server-side `redirect` for authentication flows
-   - Implement middleware for route protection
    - Handle sensitive redirects on the server
 
 <InteractiveExercises >
@@ -224,6 +253,7 @@ Ready to try it yourself? Head over to the [Navigation Exercise](/navigation/) w
 
 - Use Next JS Link component to navigate to a new route
 - Setup a useRouter push function to navigate to a new route
+- Setup a server-side redirect to navigate to a new route
 
 </InteractiveExercises>
 

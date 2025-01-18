@@ -1,4 +1,5 @@
 import { fetchLayoutData } from "@/data/data";
+import Link from "next/link";
 
 /*
  * Exercise: Layouts in Next.js
