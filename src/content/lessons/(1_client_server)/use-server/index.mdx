@@ -95,7 +95,7 @@ export default function TodoList() {
     todos = todos.filter((t) => t.id !== id);
     revalidatePath("/");
   }
-  // [!code highlight:end]
+
   return (
     <form action={deleteTodo}>
       s<button type="submit">Delete Todo</button>
