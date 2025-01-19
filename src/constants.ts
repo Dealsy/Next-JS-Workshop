@@ -1,15 +1,14 @@
 import { Lesson } from "./data/lessons";
 
 export const EXERCISE_URLS = {
-  use_server: "src/app/lessons/(exercises)/(directives)/use_server/page.tsx",
-  use_client: "src/app/lessons/(exercises)/(directives)/use_client/page.tsx",
+  use_server: "src/app/(exercises)/(directives)/use_server/page.tsx",
+  use_client: "src/app/(exercises)/(directives)/use_client/page.tsx",
   server_components:
-    "src/app/lessons/(exercises)/(1_client&server)/server_components/page.tsx",
-  dynamic_routing:
-    "src/app/lessons/(exercises)/(2_routing)/dynamic_routing/page.tsx",
-  layouts: "src/app/lessons/(exercises)/(2_routing)/layouts/layout.tsx",
+    "src/app/(exercises)/(1_client&server)/server_components/page.tsx",
+  dynamic_routing: "src/app/(exercises)/(2_routing)/dynamic_routing/page.tsx",
+  layouts: "src/app/(exercises)/(2_routing)/layouts/layout.tsx",
   linking_and_navigation:
-    "src/app/lessons/(exercises)/(2_routing)/linking-and-navigating/page.tsx",
+    "src/app/(exercises)/(2_routing)/linking-and-navigating/page.tsx",
 } as const;
 
 export const categories = {

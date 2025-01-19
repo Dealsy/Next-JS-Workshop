@@ -8,18 +8,17 @@
  *    'use server' directive to the function
  * 2. Add proper error handling and validation
  * 3. Update the UI after successful creation
+ * 4. Add todo deletion
  *
  * 🧩 Extra Credit:
  * 1. Add todo completion toggle
- * 2. Add todo deletion
- * 3. Add optimistic updates
+ * . Add optimistic updates
  *
  * 💡 Tips:
  * - Server Actions must be async functions
  * - Use formData to get form values
  * - Remember to revalidate the path after mutations
  */
-
 
 import { ExercisesUrl } from "@/components/exercises-url";
 import { EXERCISE_URLS } from "@/constants";
@@ -32,6 +31,10 @@ let todoIdCounter = 1;
 // Add 'use server' directive here and implement the createTodo action
 async function createTodo(formData: FormData) {
   // Implement todo creation
+}
+
+async function deleteTodo(formData: FormData) {
+  // Implement todo deletion
 }
 
 export default function UseServerExercise() {
