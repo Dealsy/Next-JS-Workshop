@@ -8,6 +8,8 @@ export const EXERCISE_URLS = {
   dynamic_routing:
     "src/app/lessons/(exercises)/(2_routing)/dynamic_routing/page.tsx",
   layouts: "src/app/lessons/(exercises)/(2_routing)/layouts/layout.tsx",
+  linking_and_navigation:
+    "src/app/lessons/(exercises)/(2_routing)/linking-and-navigating/page.tsx",
 } as const;
 
 export const categories = {

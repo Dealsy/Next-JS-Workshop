@@ -16,16 +16,15 @@ export function ExercisesUrl({ url }: { url: React.ReactNode }) {
           <AccordionTrigger>
             <div className="flex items-center">
               <Code className="w-5 h-5 mr-2" />
-              <span>Exercise Instructions</span>
+              <h1 className="text-xl font-bold">Ready to Code? 🚀</h1>
             </div>
           </AccordionTrigger>
           <AccordionContent>
             <div className="space-y-4">
               <p className="text-muted-foreground">
-                It's time to open your code editor and start coding!
+                Open your code editor and head to:
               </p>
               <div>
-                <p className="text-muted-foreground mb-2">Head to:</p>
                 <code className="block w-full bg-muted text-foreground rounded-md p-3 font-mono text-sm">
                   {url}
                 </code>
@@ -34,8 +33,8 @@ export function ExercisesUrl({ url }: { url: React.ReactNode }) {
                 <p className="text-muted-foreground text-sm flex items-start">
                   <ArrowRight className="w-5 h-5 mr-2 mt-0.5 flex-shrink-0" />
                   <span>
-                    Read the instructions in the file and complete the exercise.
-                    The updates will appear here as you work.
+                    Instructions to this exercise are in the file, use this page
+                    to see your changes.
                   </span>
                 </p>
               </div>

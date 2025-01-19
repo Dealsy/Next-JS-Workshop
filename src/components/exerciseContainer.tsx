@@ -3,5 +3,5 @@ export function ExercisesContainer({
 }: {
   children: React.ReactNode;
 }) {
-  return <div className="max-w-2xl mx-auto my-8">{children}</div>;
+  return <div className="max-w-4xl mx-auto my-8">{children}</div>;
 }
