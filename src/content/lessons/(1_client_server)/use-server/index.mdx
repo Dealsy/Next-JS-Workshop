@@ -26,6 +26,15 @@ Use the `'use server'` directive when you need to:
 In this example, the server action is defined in a separate file and imported into the component.
 this is the typical way that you would use server actions.
 
+<ThemeImage
+  darkSrc="/images/sep_dark_use_server.svg"
+  lightSrc="/images/sep_light_use_server.svg"
+  alt="Diagram showing how use server works in Next.js"
+  size="large"
+/>
+
+Here is an exmple:
+
 ```tsx
 // action.ts
 "use server";
@@ -61,28 +70,35 @@ export default function TodoForm() {
 
 You can also use `'use server'` in a component to open a door to the server.
 
+<ThemeImage
+  darkSrc="/images/dark_use_server.svg"
+  lightSrc="/images/light_use_server.svg"
+  alt="Diagram showing how use server works in Next.js"
+  size="medium"
+/>
+
 Here is an example:
 
 ```tsx
 export default function TodoList() {
   async function deleteTodo(formData: FormData) {
-    "use server";
+    "use server"; // Opens a door to the server
 
+    // This code only runs on the server
     const user = await getCurrentUser();
 
     if (!user.id) {
       throw new Error("Unauthorized");
     }
 
-    // This code only runs on the server
     const id = Number(formData.get("id"));
     todos = todos.filter((t) => t.id !== id);
     revalidatePath("/");
   }
-
+  // [!code highlight:end]
   return (
     <form action={deleteTodo}>
-      <button type="submit">Delete Todo</button>
+      s<button type="submit">Delete Todo</button>
     </form>
   );
 }

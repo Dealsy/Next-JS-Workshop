@@ -1,8 +1,8 @@
 import { Lesson } from "./data/lessons";
 
 export const EXERCISE_URLS = {
-  use_server: "src/app/(exercises)/(directives)/use_server/page.tsx",
-  use_client: "src/app/(exercises)/(directives)/use_client/page.tsx",
+  use_server: "src/app/(exercises)/(1_client&server)/use_server/page.tsx",
+  use_client: "src/app/(exercises)/(1_client&server)/use_client/page.tsx",
   server_components:
     "src/app/(exercises)/(1_client&server)/server_components/page.tsx",
   dynamic_routing: "src/app/(exercises)/(2_routing)/dynamic_routing/page.tsx",
