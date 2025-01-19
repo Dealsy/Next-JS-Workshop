@@ -1,14 +1,19 @@
-The `'use server'` directive in Next.js enables Server Actions, allowing you to run code exclusively on the server, even when it's called from client components.
+The `'use server'` directive in Next.js is used to create a door between the client and the server.
+
+`'use server'` is not saying that this is a server component,
+it is actually saying that the client can use the server to do something.
 
 Server actions should be used to perform an action, such as creating a todo item, updating a user's profile, or deleting a comment.
 You should not use server actions to perform a query, such as fetching data from a database.
+
+This is because server actions are not reactive, they will not update when data changes, they require
+an action to be performed in order to update or mutate data.
 
 <Alert type="warning">
 You should think of server actions as a public API that you can call from your client components.
 
 Next JS still leaves authentication and authorization checks up to you.
-So it is important that you implement these checks in your server actions if
-you want to secure your server actions.
+So it is important that you implement these checks in your server actions.
 
 </Alert>
 
@@ -33,12 +38,10 @@ this is the typical way that you would use server actions.
   size="large"
 />
 
-Here is an exmple:
-
 ```tsx
 // action.ts
 "use server";
-
+// This code only runs on the server
 import { db } from "@/lib/db";
 
 export async function createTodo(title: string) {
@@ -48,7 +51,6 @@ export async function createTodo(title: string) {
     throw new Error("Unauthorized");
   }
 
-  // This code only runs on the server
   await db.todo.create({
     data: { title },
   });
@@ -98,7 +100,7 @@ export default function TodoList() {
 
   return (
     <form action={deleteTodo}>
-      s<button type="submit">Delete Todo</button>
+      <button type="submit">Delete Todo</button>
     </form>
   );
 }
@@ -133,9 +135,9 @@ export default function TodoList() {
 Ready to try it yourself? Head over to the Use Server Exercise where you'll:
 
 - Create a server action to handle form submission
-- setup a TODO list and add a todo item
-- handle errors
-- handle loading and success states
+- Setup a TODO list and add a todo item
+- Handle errors
+- Handle loading and success states
 
 </InteractiveExercises>
 ## Additional Resources
