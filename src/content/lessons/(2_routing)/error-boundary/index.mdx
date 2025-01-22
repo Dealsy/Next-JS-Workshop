@@ -1,0 +1,168 @@
+Next.js provides a powerful error handling system through special `error.tsx` files. These files create error boundaries that gracefully catch and display errors while keeping the rest of your application functional.
+
+## What are Error Boundaries?
+
+Error boundaries in Next.js are React components that:
+
+- Catch JavaScript errors anywhere in their child component tree
+- Log those errors
+- Display a fallback UI instead of the crashed component tree
+
+## How Error Boundaries Work
+
+When you create an `error.tsx` file, Next.js automatically wraps the page or component in an error boundary. If an error occurs, the error UI is displayed while keeping the rest of the application interactive.
+
+```tsx
+// app/error.tsx
+"use client";
+
+type ErrorProps = {
+  error: Error;
+  reset: () => void;
+};
+
+export default function Error({ error, reset }: ErrorProps) {
+  return (
+    <div className="p-4 rounded-lg bg-red-50 border border-red-200">
+      <h2 className="text-red-800 font-semibold">Something went wrong!</h2>
+      <p className="text-red-600 mt-2">{error.message}</p>
+      <button
+        onClick={reset}
+        className="mt-4 px-4 py-2 bg-red-100 text-red-700 rounded hover:bg-red-200"
+      >
+        Reload
+      </button>
+    </div>
+  );
+}
+```
+
+<ThemeImage
+  darkSrc="/images/dark_error.svg"
+  lightSrc="/images/light_error.svg"
+  alt="Error boundary diagram showing how error boundaries work in Next.js"
+  size="large"
+/>
+
+## Key Concepts
+
+### 1. Client Components
+
+- Error components must be Client Components (marked with 'use client')
+- They receive `error` and `reset` props automatically
+- The `reset` function allows users to retry the failed operation
+
+### 2. Error Recovery
+
+```tsx
+"use client";
+
+export default function ErrorBoundary({ error, reset }: ErrorProps) {
+  useEffect(() => {
+    // Log the error to an error reporting service
+    console.error(error);
+  }, [error]);
+
+  return (
+    <div>
+      <h2>Something went wrong!</h2>
+      <button onClick={reset}>Try again</button>
+    </div>
+  );
+}
+```
+
+### 3. Nested Error Handling
+
+- Error boundaries can be nested
+- Errors are caught by the nearest parent error boundary
+- Different sections can have different error UIs
+
+## Best Practices
+
+1. **Graceful Degradation**
+
+   - Keep error messages user-friendly
+   - Provide clear recovery actions
+   - Maintain app functionality outside the error boundary
+
+2. **Error Logging**
+
+   ```tsx
+   export default function Error({ error }: ErrorProps) {
+     useEffect(() => {
+       // Send to your preferred error tracking service
+       reportError(error);
+     }, [error]);
+
+     return <ErrorUI />;
+   }
+   ```
+
+3. **Custom Error States**
+   - Create specific error UIs for different types of errors
+   - Handle expected vs unexpected errors differently
+
+## Common Patterns
+
+### 1. Error with Retry
+
+```tsx
+"use client";
+
+export default function DataError({ error, reset }: ErrorProps) {
+  return (
+    <div className="text-center py-8">
+      <h2 className="text-xl font-bold">Failed to load data</h2>
+      <p className="text-gray-600 mt-2">{error.message}</p>
+      <button
+        onClick={reset}
+        className="mt-4 px-6 py-2 bg-blue-500 text-white rounded-lg"
+      >
+        Retry
+      </button>
+    </div>
+  );
+}
+```
+
+### 2. Contextual Error UI
+
+```tsx
+"use client";
+
+export default function ContextualError({ error }: ErrorProps) {
+  if (error instanceof NetworkError) {
+    return <NetworkErrorUI />;
+  }
+
+  if (error instanceof ValidationError) {
+    return <ValidationErrorUI />;
+  }
+
+  return <GenericErrorUI />;
+}
+```
+
+## Working with Server Components
+
+Error boundaries work seamlessly with Server Components:
+
+```tsx
+// page.tsx
+export default async function Page() {
+  const data = await fetchData(); // If this throws, error.tsx handles it
+  return <DataDisplay data={data} />;
+}
+```
+
+## Exercise
+
+Head over to the exercise section to practice implementing error handling in a real-world scenario. You'll learn how to:
+
+1. Create error boundaries for different route segments
+2. Handle different types of errors
+3. Implement retry logic
+4. Log errors appropriately
+
+[Start Exercise →](/exercises/routing/error-handling)

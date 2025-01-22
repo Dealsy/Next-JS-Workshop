@@ -1,0 +1,74 @@
+Next.js 13+ introduced a powerful convention for handling loading states in your application through special `loading.tsx` files. These files allow you to create seamless loading experiences with minimal effort.
+
+## What is Loading UI?
+
+Loading UI is a built-in solution in Next.js that shows a loading state while a route segment's content is being loaded. It works automatically with React Suspense to provide instant loading states.
+
+## How Loading UI Works
+
+When you create a `loading.tsx` file, Next.js automatically wraps the page in a React Suspense boundary. While the content is loading, the loading UI is shown as a fallback, creating a seamless experience for users.
+
+```tsx
+// app/loading.tsx
+export default function Loading() {
+  return <div>Loading...</div>;
+}
+```
+
+For these files to work, you need to save your `loading.tsx` file at the folder level of the route.
+
+An example would be as follows:
+
+<ThemeImage
+  darkSrc="/images/dark_loading.svg"
+  lightSrc="/images/light_loading.svg"
+  alt="Loading UI diagram showing how loading UI works in Next.js"
+  size="small"
+/>
+
+For app-wide loading states, you can create a `loading.tsx` file in the root app directory. This will serve as the default loading UI for all pages unless overridden by more specific loading files.
+
+Additionally, placing a `loading.tsx` file in a parent folder allows you to share consistent loading UI across multiple child routes.
+
+## Key Features
+
+### 1. Automatic Suspense Boundaries
+
+- Next.js automatically wraps your route segments in Suspense
+- No manual Suspense configuration needed
+- Nested loading states work out of the box
+
+### 2. Instant Loading States
+
+- Loading UI is shown immediately on navigation
+- Prevents layout shift during loading
+- Improves perceived performance
+
+## Best Practices
+
+1. **Keep Loading UI Simple**
+
+   - Avoid complex animations that might impact performance
+   - Match the layout of the loaded content to prevent layout shift
+
+2. **Use Skeleton Loaders**
+
+   ```tsx
+   export default function Loading() {
+     return (
+       <div className="space-y-4">
+         <div className="h-8 bg-gray-200 rounded animate-pulse" />
+         <div className="h-8 bg-gray-200 rounded animate-pulse" />
+         <div className="h-8 bg-gray-200 rounded animate-pulse" />
+       </div>
+     );
+   }
+   ```
+
+<InteractiveExercises href="/loading">
+Ready to try it yourself? Head over to the Loading UI Exercise where you'll:
+
+- Create a loading UI
+- Implement skeleton loading
+
+</InteractiveExercises>

@@ -9,6 +9,7 @@ export const EXERCISE_URLS = {
   layouts: "src/app/(exercises)/(2_routing)/layouts/layout.tsx",
   linking_and_navigation:
     "src/app/(exercises)/(2_routing)/linking-and-navigating/page.tsx",
+  loading: "src/app/(exercises)/(2_routing)/loading/page.tsx",
 } as const;
 
 export const categories = {

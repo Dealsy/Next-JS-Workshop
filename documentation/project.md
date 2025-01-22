@@ -53,6 +53,29 @@ Lessons are now accessed via consistent URLs:
 - `/lessons/client_server/use-client`
 - `/lessons/routing/dynamic-routing`
 
+### Excercise Structure
+
+- Each excercise has a `page.tsx` file that has a description of the excercise written in jsdoc and comments
+- The excercise has a `solution.tsx` file and or folder that has the solution to the excercise
+
+Excercise urls look like this:
+
+-`src/app/(exercises)/(1_client&server)/use_server/page.tsx`
+
+-`src/app/(exercises)/(1_client&server)/use_client/page.tsx`
+
+-`src/app/(exercises)/(1_client&server)/server_components/page.tsx`
+
+-`src/app/(exercises)/(2_routing)/dynamic_routing/page.tsx`
+
+-`src/app/(exercises)/(2_routing)/layouts/layout.tsx`
+
+-`src/app/(exercises)/(2_routing)/linking-and-navigating/page.tsx`
+
+When adding a new excercise, you should add the excercise to the `EXERCISE_URLS` constant in `src/constants.ts`
+
+Excercise folder names should matach the id in the lessons constants that define the sidebar.
+
 ### Navigation Updates
 
 - Implemented breadcrumb navigation that skips numbered folder prefixes
@@ -84,29 +107,37 @@ Lessons are now accessed via consistent URLs:
   - [x] Concept MDX
   - [x] Interactive lesson
   - [x] Solution
-- [ ] Server Components
-  - [ ] Concept MDX
-- [ ] Composition Patterns
-  - [ ] Concept MDX
+- [x] Server Components
+  - [x] Concept MDX
+- [x] Composition Patterns
+  - [x] Concept MDX
 
 #### 2_Routing (In Progress)
 
-- [ ] Layouts
+- [x] Layouts
 
-  - [ ] Concept MDX
-  - [ ] Interactive lesson
+  - [x] Concept MDX
+  - [x] Interactive lesson
 
-- [ ] Linking and Navigating
+- [x] Linking and Navigating
+
+  - [x] Concept MDX
+  - [x] Interactive lessons:
+    - [x] Link
+    - [x] useRouter
+    - [x] redirect
+  - [x] Solutions:
+    - [x] Link
+    - [x] useRouter
+    - [x] redirect
+
+- [ ] Loading UI
 
   - [ ] Concept MDX
   - [ ] Interactive lessons:
-    - [ ] Link
-    - [ ] useRouter
-    - [ ] redirect
+    - [ ] loading.tsx
   - [ ] Solutions:
-    - [ ] Link
-    - [ ] useRouter
-    - [ ] redirect
+    - [ ] loading.tsx
 
 - [ ] Error handling
 
@@ -118,7 +149,7 @@ Lessons are now accessed via consistent URLs:
     - [ ] error.tsx
     - [ ] useActionState
 
-- [ ] Loading UI and Data Streaming
+- [ ] Data Streaming
 
   - [ ] Concept MDX
   - [ ] Interactive lessons:
