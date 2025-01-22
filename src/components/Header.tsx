@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { GithubIcon } from "lucide-react";
+import { GithubIcon, Map } from "lucide-react";
 import SearchBar from "./SearchBar";
 import { SidebarTrigger } from "./ui/sidebar";
 import ThemeToggle from "./ThemeToggle";
@@ -14,6 +14,12 @@ export default function Header() {
         </Link>
       </div>
       <div className="flex items-center space-x-4">
+        <div className="flex flex-row items-center gap-2">
+          <Map className="w-4 h-4" />
+          <Link href="/roadmap" className="text-sm">
+            Roadmap
+          </Link>
+        </div>
         <SearchBar />
         <ThemeToggle />
         <nav>

@@ -15,7 +15,6 @@ export const EXERCISE_URLS = {
 export const categories = {
   "Client & Server": "Client & Server",
   Routing: "Routing",
-  DataFetching: "Data Fetching",
   Cache: "Cache",
   Optimizations: "Optimizations",
   Rendering: "Rendering",
@@ -37,6 +36,7 @@ export const clientServerLessons = [
     difficulty: difficulties["intermediate"],
     order: 1,
     featured: true,
+    status: "completed",
   },
   {
     id: "use-client",
@@ -45,6 +45,7 @@ export const clientServerLessons = [
     category: categories["Client & Server"],
     difficulty: difficulties["beginner"],
     order: 2,
+    status: "completed",
   },
   {
     id: "use-server",
@@ -54,6 +55,7 @@ export const clientServerLessons = [
     difficulty: difficulties["intermediate"],
     order: 3,
     featured: true,
+    status: "completed",
   },
   {
     id: "composition-patterns",
@@ -62,6 +64,7 @@ export const clientServerLessons = [
     category: categories["Client & Server"],
     difficulty: difficulties["beginner"],
     order: 4,
+    status: "completed",
   },
 ];
 
@@ -73,6 +76,7 @@ export const routingLessons = [
     category: categories["Routing"],
     difficulty: difficulties["beginner"],
     order: 1,
+    status: "completed",
   },
   {
     id: "linking-and-navigating",
@@ -81,6 +85,7 @@ export const routingLessons = [
     category: categories["Routing"],
     difficulty: difficulties["beginner"],
     order: 2,
+    status: "completed",
   },
   {
     id: "loading-ui",
@@ -89,6 +94,7 @@ export const routingLessons = [
     category: categories["Routing"],
     difficulty: difficulties["beginner"],
     order: 3,
+    status: "completed",
   },
   {
     id: "error-boundary",
@@ -97,6 +103,7 @@ export const routingLessons = [
     category: categories["Routing"],
     difficulty: difficulties["beginner"],
     order: 4,
+    status: "upcoming",
   },
   {
     id: "data-streaming",
@@ -106,6 +113,7 @@ export const routingLessons = [
     difficulty: difficulties["intermediate"],
     order: 5,
     featured: true,
+    status: "upcoming",
   },
   {
     id: "dynamic-routing",
@@ -114,6 +122,7 @@ export const routingLessons = [
     category: categories["Routing"],
     difficulty: difficulties["beginner"],
     order: 6,
+    status: "upcoming",
   },
   {
     id: "parallel-routes",
@@ -123,6 +132,7 @@ export const routingLessons = [
     difficulty: difficulties["intermediate"],
     order: 7,
     featured: true,
+    status: "upcoming",
   },
 ];
 
@@ -134,6 +144,7 @@ export const cacheLessons = [
     category: categories["Cache"],
     difficulty: difficulties["intermediate"],
     order: 1,
+    status: "upcoming",
   },
 ];
 
@@ -145,6 +156,7 @@ export const renderingLessons = [
     category: categories["Rendering"],
     difficulty: difficulties["intermediate"],
     order: 1,
+    status: "upcoming",
   },
 ];
 
@@ -156,6 +168,7 @@ export const optimizationsLessons = [
     category: categories["Optimizations"],
     difficulty: difficulties["intermediate"],
     order: 1,
+    status: "upcoming",
   },
   {
     id: "font-optimization",
@@ -164,6 +177,7 @@ export const optimizationsLessons = [
     category: categories["Optimizations"],
     difficulty: difficulties["intermediate"],
     order: 2,
+    status: "upcoming",
   },
 ];
 
@@ -175,6 +189,7 @@ export const seoLessons = [
     category: categories["SEO"],
     difficulty: difficulties["beginner"],
     order: 1,
+    status: "upcoming",
   },
 ];
 
