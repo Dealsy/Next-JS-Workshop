@@ -1,12 +1,17 @@
 "use client";
 
-import { useState } from "react";
-import { CheckCircle, ChevronDown, ChevronUp } from "lucide-react";
+import { CheckCircle } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { categories } from "@/constants";
 import Link from "next/link";
 import { Category, getLessonsByCategory, Lesson } from "@/data/lessons";
 import { getLessonPath } from "@/lib/utils";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 type LessonStatus = "completed" | "upcoming";
 
@@ -54,17 +59,7 @@ const transformLessonsToRoadmap = (): TopicSection[] => {
 };
 
 export default function Roadmap() {
-  const [expandedSections, setExpandedSections] = useState<
-    Record<string, boolean>
-  >({});
   const workshopData = transformLessonsToRoadmap();
-
-  const toggleSection = (sectionTitle: string) => {
-    setExpandedSections((prev) => ({
-      ...prev,
-      [sectionTitle]: !prev[sectionTitle],
-    }));
-  };
 
   const totalLessons = workshopData.reduce(
     (sum, section) => sum + section.lessons.length,
@@ -77,6 +72,9 @@ export default function Roadmap() {
     0
   );
   const progressPercentage = (completedLessons / totalLessons) * 100;
+
+  // Get all section titles to set as default open values
+  const defaultOpenValues = workshopData.map((index) => `item-${index}`);
 
   return (
     <div className="min-h-screen">
@@ -97,23 +95,27 @@ export default function Roadmap() {
           </p>
         </div>
 
-        <div className="space-y-4">
+        <Accordion
+          type="multiple"
+          defaultValue={defaultOpenValues}
+          className="space-y-4"
+        >
           {workshopData.map((section, sectionIndex) => (
-            <div
+            <AccordionItem
               key={sectionIndex}
+              value={`item-${sectionIndex}`}
               className={`border rounded-lg overflow-hidden transition-colors duration-300 ${
                 section.isCompleted
                   ? "border-green-500 dark:border-green-700"
                   : "dark:border-gray-700"
               }`}
             >
-              <button
-                className={`w-full p-4 text-left flex justify-between items-center transition-colors duration-300 ${
+              <AccordionTrigger
+                className={`px-4 transition-colors duration-300 ${
                   section.isCompleted
-                    ? "bg-green-50 dark:bg-green-900/20"
-                    : "bg-gray-100 dark:bg-gray-800"
+                    ? "bg-green-50 dark:bg-green-900/20 hover:bg-green-100 dark:hover:bg-green-900/30"
+                    : "bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700"
                 }`}
-                onClick={() => toggleSection(section.title)}
               >
                 <div className="flex items-center gap-3">
                   <h2 className="text-xl font-semibold text-black dark:text-white">
@@ -123,48 +125,41 @@ export default function Roadmap() {
                     <CheckCircle className="h-5 w-5 text-green-500" />
                   )}
                 </div>
-                {expandedSections[section.title] ? (
-                  <ChevronUp className="h-5 w-5 text-black dark:text-white" />
-                ) : (
-                  <ChevronDown className="h-5 w-5 text-black dark:text-white" />
-                )}
-              </button>
-              {expandedSections[section.title] && (
-                <div className="p-4 space-y-2">
-                  {section.lessons.map((lesson, lessonIndex) => (
-                    <Link
-                      key={lessonIndex}
-                      href={lesson.href}
-                      className={`block p-3 rounded-md transition-all duration-300 ${
-                        lesson.status === "completed"
-                          ? "bg-gray-100 dark:bg-gray-700"
-                          : "bg-white dark:bg-gray-800"
-                      } hover:ring-2 hover:ring-gray-200 dark:hover:ring-gray-600`}
-                    >
-                      <div className="flex items-center">
-                        <CheckCircle
-                          className={`w-5 h-5 mr-3 ${
-                            lesson.status === "completed"
-                              ? "text-green-500"
-                              : "text-gray-300 dark:text-gray-600"
-                          }`}
-                        />
-                        <div>
-                          <h3 className="font-semibold text-black dark:text-white">
-                            {lesson.title}
-                          </h3>
-                          <p className="text-sm text-gray-600 dark:text-gray-300">
-                            {lesson.description}
-                          </p>
-                        </div>
+              </AccordionTrigger>
+              <AccordionContent className="p-4 space-y-2">
+                {section.lessons.map((lesson, lessonIndex) => (
+                  <Link
+                    key={lessonIndex}
+                    href={lesson.href}
+                    className={`block p-3 rounded-md transition-all duration-300 ${
+                      lesson.status === "completed"
+                        ? "bg-gray-100 dark:bg-gray-700"
+                        : "bg-white dark:bg-gray-800"
+                    } hover:ring-2 hover:ring-gray-200 dark:hover:ring-gray-600`}
+                  >
+                    <div className="flex items-center">
+                      <CheckCircle
+                        className={`w-5 h-5 mr-3 ${
+                          lesson.status === "completed"
+                            ? "text-green-500"
+                            : "text-gray-300 dark:text-gray-600"
+                        }`}
+                      />
+                      <div>
+                        <h3 className="font-semibold text-black dark:text-white">
+                          {lesson.title}
+                        </h3>
+                        <p className="text-sm text-gray-600 dark:text-gray-300">
+                          {lesson.description}
+                        </p>
                       </div>
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
+                    </div>
+                  </Link>
+                ))}
+              </AccordionContent>
+            </AccordionItem>
           ))}
-        </div>
+        </Accordion>
       </div>
     </div>
   );
