@@ -1,4 +1,5 @@
-Next.js provides a powerful error handling system through special `error.tsx` files. These files create error boundaries that gracefully catch and display errors while keeping the rest of your application functional.
+Next.js provides a powerful error handling system through special `error.tsx` files.
+These files create error boundaries that gracefully catch and display errors while keeping the rest of your application functional.
 
 ## What are Error Boundaries?
 
@@ -12,14 +13,23 @@ Error boundaries in Next.js are React components that:
 
 When you create an `error.tsx` file, Next.js automatically wraps the page or component in an error boundary. If an error occurs, the error UI is displayed while keeping the rest of the application interactive.
 
+<ThemeImage
+  darkSrc="/images/dark_error.svg"
+  lightSrc="/images/light_error.svg"
+  alt="Error boundary diagram showing how error boundaries work in Next.js"
+  size="large"
+/>
+
+An example of what an `error.tsx` file might look like:
+
 ```tsx
 // app/error.tsx
-"use client";
+'use client'
 
 type ErrorProps = {
-  error: Error;
-  reset: () => void;
-};
+  error: Error
+  reset: () => void
+}
 
 export default function Error({ error, reset }: ErrorProps) {
   return (
@@ -28,59 +38,79 @@ export default function Error({ error, reset }: ErrorProps) {
       <p className="text-red-600 mt-2">{error.message}</p>
       <button
         onClick={reset}
-        className="mt-4 px-4 py-2 bg-red-100 text-red-700 rounded hover:bg-red-200"
-      >
+        className="mt-4 px-4 py-2 bg-red-100 text-red-700 rounded hover:bg-red-200">
         Reload
       </button>
     </div>
-  );
+  )
 }
 ```
 
-<ThemeImage
-  darkSrc="/images/dark_error.svg"
-  lightSrc="/images/light_error.svg"
-  alt="Error boundary diagram showing how error boundaries work in Next.js"
-  size="large"
-/>
+These files can be used to handle errors in any part of the application, this includes things like,
+API calls, database errors, and other unexpected errors.
+
+To put it simply, `error.tsx` files will catch any errors that occur and display a fallback UI.
 
 ## Key Concepts
 
 ### 1. Client Components
 
-- Error components must be Client Components (marked with 'use client')
+- Error components must be Client Components (marked with `'use client'`)
 - They receive `error` and `reset` props automatically
-- The `reset` function allows users to retry the failed operation
+- The `reset` function allows users to retry the failed operation ( This essentially refreshes the page)
 
 ### 2. Error Recovery
 
-```tsx
-"use client";
+You can use something like Sentry or bugsnag to log errors to a service via `error.tsx` files.
 
-export default function ErrorBoundary({ error, reset }: ErrorProps) {
+```tsx
+'use client'
+
+type ErrorProps = {
+  error: Error
+  reset: () => void
+}
+
+export default function Error({ error, reset }: ErrorProps) {
   useEffect(() => {
     // Log the error to an error reporting service
-    console.error(error);
-  }, [error]);
+    logger.error(error)
+  }, [error])
 
   return (
-    <div>
-      <h2>Something went wrong!</h2>
-      <button onClick={reset}>Try again</button>
+    <div className="p-4 rounded-lg bg-red-50 border border-red-200">
+      <h2 className="text-red-800 font-semibold">Something went wrong!</h2>
+      <p className="text-red-600 mt-2">{error.message}</p>
+      <button
+        onClick={reset}
+        className="mt-4 px-4 py-2 bg-red-100 text-red-700 rounded hover:bg-red-200">
+        Reload
+      </button>
     </div>
-  );
+  )
 }
 ```
 
 ### 3. Nested Error Handling
 
-- Error boundaries can be nested
-- Errors are caught by the nearest parent error boundary
-- Different sections can have different error UIs
+Error boundaries can be nested, this means that if an error occurs in a child component, it will be caught by the nearest parent error boundary.
+
+This means if you place a `error.tsx` at the root level of the app folder, and an error occurs in a child component,
+the whole app will render the error UI.
+
+So it is best practice to have multiple `error.tsx` files for different sections in your app, each can have their own
+fallback UI so that if any part fails you can keep the whole app functional.
+
+<ThemeImage
+  darkSrc="/images/dark_errors.svg"
+  lightSrc="/images/light_errors.svg"
+  alt="Error boundary diagram showing how error boundaries work in Next.js"
+  size="medium"
+/>
 
 ## Best Practices
 
-1. **Graceful Degradation**
+1. **Graceful error handling**
 
    - Keep error messages user-friendly
    - Provide clear recovery actions
@@ -92,55 +122,30 @@ export default function ErrorBoundary({ error, reset }: ErrorProps) {
    export default function Error({ error }: ErrorProps) {
      useEffect(() => {
        // Send to your preferred error tracking service
-       reportError(error);
-     }, [error]);
+       reportError(error)
+     }, [error])
 
-     return <ErrorUI />;
+     return <ErrorUI />
    }
    ```
 
-3. **Custom Error States**
-   - Create specific error UIs for different types of errors
-   - Handle expected vs unexpected errors differently
-
 ## Common Patterns
 
-### 1. Error with Retry
+### 1. Contextual Error UI
 
 ```tsx
-"use client";
-
-export default function DataError({ error, reset }: ErrorProps) {
-  return (
-    <div className="text-center py-8">
-      <h2 className="text-xl font-bold">Failed to load data</h2>
-      <p className="text-gray-600 mt-2">{error.message}</p>
-      <button
-        onClick={reset}
-        className="mt-4 px-6 py-2 bg-blue-500 text-white rounded-lg"
-      >
-        Retry
-      </button>
-    </div>
-  );
-}
-```
-
-### 2. Contextual Error UI
-
-```tsx
-"use client";
+'use client'
 
 export default function ContextualError({ error }: ErrorProps) {
   if (error instanceof NetworkError) {
-    return <NetworkErrorUI />;
+    return <NetworkErrorUI />
   }
 
   if (error instanceof ValidationError) {
-    return <ValidationErrorUI />;
+    return <ValidationErrorUI />
   }
 
-  return <GenericErrorUI />;
+  return <GenericErrorUI />
 }
 ```
 
@@ -151,18 +156,17 @@ Error boundaries work seamlessly with Server Components:
 ```tsx
 // page.tsx
 export default async function Page() {
-  const data = await fetchData(); // If this throws, error.tsx handles it
-  return <DataDisplay data={data} />;
+  const data = await fetchData() // If this throws, error.tsx handles it
+  return <DataDisplay data={data} />
 }
 ```
 
-## Exercise
+<InteractiveExercises href="/error-handling">
+Ready to try it yourself? Head over to the Error Handling Exercise where you'll:
 
-Head over to the exercise section to practice implementing error handling in a real-world scenario. You'll learn how to:
+- Create error boundaries for different route segments
+- Handle different types of errors
+- Implement retry logic
+- Log errors appropriately
 
-1. Create error boundaries for different route segments
-2. Handle different types of errors
-3. Implement retry logic
-4. Log errors appropriately
-
-[Start Exercise →](/exercises/routing/error-handling)
+</InteractiveExercises>

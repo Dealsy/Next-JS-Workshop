@@ -1,80 +1,73 @@
-"use client";
+'use client'
 
-import { CheckCircle } from "lucide-react";
-import { Progress } from "@/components/ui/progress";
-import { categories } from "@/constants";
-import Link from "next/link";
-import { Category, getLessonsByCategory, Lesson } from "@/data/lessons";
-import { getLessonPath } from "@/lib/utils";
+import { CheckCircle } from 'lucide-react'
+import { Progress } from '@/components/ui/progress'
+import { categories, statuses } from '@/constants'
+import Link from 'next/link'
+import { Category, getLessonsByCategory, Lesson } from '@/data/lessons'
+import { getLessonPath } from '@/lib/utils'
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion";
+} from '@/components/ui/accordion'
 
-type LessonStatus = "completed" | "upcoming";
+type LessonStatus = 'completed' | 'upcoming'
 
 type LessonWithStatus = Lesson & {
-  status?: LessonStatus;
-};
+  status?: LessonStatus
+}
 
 type LessonItem = {
-  title: string;
-  description: string;
-  status: LessonStatus;
-  href: string;
-};
+  title: string
+  description: string
+  status: LessonStatus
+  href: string
+}
 
 type TopicSection = {
-  title: string;
-  lessons: LessonItem[];
-  isCompleted: boolean;
-};
+  title: string
+  lessons: LessonItem[]
+  isCompleted: boolean
+}
 
 // Transform the lessons data into the roadmap format
 const transformLessonsToRoadmap = (): TopicSection[] => {
   return Object.entries(categories).map(([key, title]) => {
-    const categoryLessons = getLessonsByCategory(
-      key as Category
-    ) as LessonWithStatus[];
+    const categoryLessons = getLessonsByCategory(key as Category) as LessonWithStatus[]
 
-    const lessons = categoryLessons.map((lesson) => ({
+    const lessons = categoryLessons.map(lesson => ({
       title: lesson.title,
       description: lesson.description,
-      status: lesson.status || "upcoming",
+      status: lesson.status || statuses.upcoming,
       href: getLessonPath(lesson),
-    }));
+    }))
 
     const isCompleted =
-      lessons.length > 0 &&
-      lessons.every((lesson) => lesson.status === "completed");
+      lessons.length > 0 && lessons.every(lesson => lesson.status === statuses.completed)
 
     return {
       title,
       lessons,
       isCompleted,
-    };
-  });
-};
+    }
+  })
+}
 
 export default function Roadmap() {
-  const workshopData = transformLessonsToRoadmap();
+  const workshopData = transformLessonsToRoadmap()
 
-  const totalLessons = workshopData.reduce(
-    (sum, section) => sum + section.lessons.length,
-    0
-  );
+  const totalLessons = workshopData.reduce((sum, section) => sum + section.lessons.length, 0)
   const completedLessons = workshopData.reduce(
     (sum, section) =>
-      sum +
-      section.lessons.filter((lesson) => lesson.status === "completed").length,
-    0
-  );
-  const progressPercentage = (completedLessons / totalLessons) * 100;
+      sum + section.lessons.filter(lesson => lesson.status === statuses.completed).length,
+    0,
+  )
+  const progressPercentage = (completedLessons / totalLessons) * 100
 
   // Get all section titles to set as default open values
-  const defaultOpenValues = workshopData.map((index) => `item-${index}`);
+  const defaultOpenValues = workshopData.map((_, index) => `item-${index}`)
 
   return (
     <div className="min-h-screen">
@@ -95,35 +88,27 @@ export default function Roadmap() {
           </p>
         </div>
 
-        <Accordion
-          type="multiple"
-          defaultValue={defaultOpenValues}
-          className="space-y-4"
-        >
+        <Accordion type="multiple" defaultValue={defaultOpenValues} className="space-y-4">
           {workshopData.map((section, sectionIndex) => (
             <AccordionItem
               key={sectionIndex}
               value={`item-${sectionIndex}`}
               className={`border rounded-lg overflow-hidden transition-colors duration-300 ${
                 section.isCompleted
-                  ? "border-green-500 dark:border-green-700"
-                  : "dark:border-gray-700"
-              }`}
-            >
+                  ? 'border-green-500 dark:border-green-700'
+                  : 'dark:border-gray-700'
+              }`}>
               <AccordionTrigger
                 className={`px-4 transition-colors duration-300 ${
                   section.isCompleted
-                    ? "bg-green-50 dark:bg-green-900/20 hover:bg-green-100 dark:hover:bg-green-900/30"
-                    : "bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700"
-                }`}
-              >
+                    ? 'bg-green-50 dark:bg-green-900/20 hover:bg-green-100 dark:hover:bg-green-900/30'
+                    : 'bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700'
+                }`}>
                 <div className="flex items-center gap-3">
                   <h2 className="text-xl font-semibold text-black dark:text-white">
                     {section.title}
                   </h2>
-                  {section.isCompleted && (
-                    <CheckCircle className="h-5 w-5 text-green-500" />
-                  )}
+                  {section.isCompleted && <CheckCircle className="h-5 w-5 text-green-500" />}
                 </div>
               </AccordionTrigger>
               <AccordionContent className="p-4 space-y-2">
@@ -132,23 +117,20 @@ export default function Roadmap() {
                     key={lessonIndex}
                     href={lesson.href}
                     className={`block p-3 rounded-md transition-all duration-300 ${
-                      lesson.status === "completed"
-                        ? "bg-gray-100 dark:bg-gray-700"
-                        : "bg-white dark:bg-gray-800"
-                    } hover:ring-2 hover:ring-gray-200 dark:hover:ring-gray-600`}
-                  >
+                      lesson.status === statuses.completed
+                        ? 'bg-gray-100 dark:bg-gray-700'
+                        : 'bg-white dark:bg-gray-800'
+                    } hover:ring-2 hover:ring-gray-200 dark:hover:ring-gray-600`}>
                     <div className="flex items-center">
                       <CheckCircle
                         className={`w-5 h-5 mr-3 ${
-                          lesson.status === "completed"
-                            ? "text-green-500"
-                            : "text-gray-300 dark:text-gray-600"
+                          lesson.status === statuses.completed
+                            ? 'text-green-500'
+                            : 'text-gray-300 dark:text-gray-600'
                         }`}
                       />
                       <div>
-                        <h3 className="font-semibold text-black dark:text-white">
-                          {lesson.title}
-                        </h3>
+                        <h3 className="font-semibold text-black dark:text-white">{lesson.title}</h3>
                         <p className="text-sm text-gray-600 dark:text-gray-300">
                           {lesson.description}
                         </p>
@@ -162,5 +144,5 @@ export default function Roadmap() {
         </Accordion>
       </div>
     </div>
-  );
+  )
 }

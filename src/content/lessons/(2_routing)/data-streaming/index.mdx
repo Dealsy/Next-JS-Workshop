@@ -1,0 +1,107 @@
+Data streaming is a concept in Next JS the allows you to stream data into to the client as it is generated,
+this is great for applications that have large dynamic datasets that may take time to load.
+
+With Data steaming you can render all of the static content first, and then stream in the dynamic data whilst
+displaying a loading state for that dynamic content, once the data is fully loaded the loading state is
+removed and the data is displayed.
+
+## How it works
+
+Data streaming uses the `<Suspense>` component from React to wrap the dynamic content, Suspense then gives us
+a fallback UI which can be anything you want.
+
+In the loading.tsx lesson, we talked about how the loading screens happen when data is loading, and behind the scences the
+`loading.tsx` is using the `<Suspense>` component to display a loading states.
+
+A visual break down of data streaming looks like this:
+
+<ThemeImage
+  darkSrc="/images/dark_streaming.svg"
+  lightSrc="/images/light_streaming.svg"
+  alt="Data streaming diagram showing how data streaming works in Next.js"
+  size="large"
+/>
+
+In this diagram above, you can see that we are representing a dashboard, and in this case there is a circle component
+, you could think of this as a prodile picture, where the picutre its self is being fetched from an API or Database,
+the grey circle is the fallback UI, and the blue circle is the data that is being streamed in.
+
+Similairly with the content at the bottom of the diagram.
+
+The rest of the componet is static and so is loaded instantly for the user.
+
+By making use of data streaming, we actually eleminate that weird user experience where you click a link
+and the page is blank for a few seconds before the data is loaded.
+
+This allows us to give immediate feedback to the user, and then stream in the data as it is generated.
+
+Here is an example of how you can implement data streaming in your application:
+
+```tsx
+import { Suspense } from 'react'
+
+export default function Dashboard() {
+  return (
+    <div>
+      <Suspense fallback={<div>Loading...</div>}>
+        <ProfilePicture />
+      </Suspense>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Content />
+      </Suspense>
+      <Footer />
+    </div>
+  )
+}
+```
+
+The important thing to note here is, that the data being called, must be called inside of the wrapped `<Suspense>` component.
+
+For example inside of ProfilePicture above you would see:
+
+```tsx
+export default async function ProfilePicture() {
+  const profilePicture = await fetchProfilePicture()
+  return <Image src={profilePicture} alt="Profile Picture" />
+}
+```
+
+<Alert type='warning'>
+    If you call data above the `<Suspense>` component and pass it in as a prop, it will not be streamed,
+    and you will not get the loading UI or that instant feedback.
+
+    Don't do this:
+
+
+    ```tsx
+    export default function Dashboard() {
+        const profilePicture = await fetchProfilePicture()
+        return (
+        <div>
+        <Suspense fallback={<div>Loading...</div>}>
+            <ProfilePicture profilePicture={profilePicture} />
+        </Suspense>
+        </div>
+    )
+    }
+    ```
+
+</Alert>
+
+## Pitfalls
+
+- Data streaming is only supported in the App Router
+- Data streaming is a server side only feature, you can't use it in client components
+
+<div className="mt-10">
+
+<InteractiveExercises href="/data-streaming">
+Ready to try it yourself? Head over to the Data Streaming Exercise where you'll:
+
+- Create a data streaming component
+- Implement a loading state
+- Stream in the data as it is generated
+
+</InteractiveExercises>
+
+</div>
