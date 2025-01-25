@@ -72,7 +72,7 @@ export default async function CodeBlock({
       </div>
       <div
         dangerouslySetInnerHTML={{ __html: highlightedCode }}
-        className="p-4 bg-[#011627] [&_.highlighted]:bg-blue-500/20 [&_.diff.add]:bg-green-500/20 [&_.diff.remove]:bg-red-500/20 [&_[data-highlighted]]:bg-blue-500/20"
+        className="p-4 bg-[#011627] [&_.highlighted]:bg-blue-500/20 [&_.diff.add]:bg-green-500/20 [&_.diff.remove]:bg-red-500/20 **:data-highlighted:bg-blue-500/20"
       />
     </div>
   );

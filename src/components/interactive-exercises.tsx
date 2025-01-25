@@ -23,7 +23,7 @@ export function InteractiveExercises({
         <div
           className={cn(
             "absolute inset-0",
-            "bg-gradient-to-r from-primary/0 via-primary/20 to-primary/0",
+            "bg-linear-to-r from-primary/0 via-primary/20 to-primary/0",
             "dark:from-primary/0 dark:via-primary/10 dark:to-primary/0",
             "opacity-0 group-hover:opacity-100",
             "transition-opacity duration-300 ease-in-out"

@@ -48,7 +48,7 @@ export default function Page() {
       </nav>
 
       {/* This is interactive content, so it must be rendered on the client */}
-      <main className="flex-grow flex flex-col items-center justify-center">
+      <main className="grow flex flex-col items-center justify-center">
         <div className="flex flex-row gap-2 items-center justify-center">
           <button
             className="bg-blue-500 text-white p-2 rounded-md"

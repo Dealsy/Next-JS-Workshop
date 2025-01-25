@@ -17,7 +17,7 @@ export default function Home() {
   return (
     <AuroraBackground>
       <main className="flex flex-col min-h-screen p-8">
-        <div className="container mx-auto px-4 py-12 flex-grow">
+        <div className="container mx-auto px-4 py-12 grow">
           <section className="text-center mb-16">
             <h1 className="text-4xl font-bold mb-4 text-muted-foreground">
               Welcome to Next.js Learning Workshop
@@ -49,8 +49,8 @@ export default function Home() {
             </div>
           </section>
 
-          <section className="mb-16 justify-center flex flex-col items-center max-w-3xl mx-auto bg-card/50 rounded-lg p-8 backdrop-blur-sm border">
-            <h2 className="text-3xl font-bold mb-8 text-muted-foreground bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text">
+          <section className="mb-16 justify-center flex flex-col items-center max-w-3xl mx-auto bg-card/50 rounded-lg p-8 backdrop-blur-xs border">
+            <h2 className="text-3xl font-bold mb-8 text-muted-foreground bg-linear-to-r from-foreground to-muted-foreground bg-clip-text">
               How to use this workshop?
             </h2>
             <div className="space-y-6">
@@ -94,7 +94,7 @@ export default function Home() {
                         {lesson.title}
                       </CardTitle>
                     </CardHeader>
-                    <CardContent className="flex-grow">
+                    <CardContent className="grow">
                       <p className="text-muted-foreground">
                         {lesson.description}
                       </p>

@@ -19,7 +19,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <div className="min-h-screen bg-white dark:bg-slate-900 p-8">
       <div className="max-w-4xl mx-auto space-y-8">
         <Profile />
-        <main className="bg-slate-50 dark:bg-slate-800 p-6 rounded-xl shadow-sm">
+        <main className="bg-slate-50 dark:bg-slate-800 p-6 rounded-xl shadow-xs">
           {children}
         </main>
       </div>

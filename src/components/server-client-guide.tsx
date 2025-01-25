@@ -76,7 +76,7 @@ export default function ServerClientGuide() {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-[1fr,auto,auto] gap-4">
+        <div className="grid grid-cols-[1fr_auto_auto] gap-4">
           <div className="font-medium text-sm text-muted-foreground">
             WHAT DO YOU NEED TO DO?
           </div>
