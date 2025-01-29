@@ -1,0 +1,144 @@
+Parallel Routes allow simultaneous rendering of multiple pages in the same layout view. Ideal for complex interfaces like dashboards where independent sections need simultaneous updates.
+
+## Core Concepts
+
+### 1. Named Slots
+
+Create parallel routes using the `@folder` convention:
+
+```bash
+app/
+└── dashboard/
+    ├── @analytics/
+    │   └── page.tsx
+    ├── @team/
+    │   └── page.tsx
+    └── layout.tsx
+```
+
+### 2. Slot Props
+
+Slots are passed as props to the layout:
+
+```typescript:app/dashboard/layout.tsx
+export default function DashboardLayout({
+  children,
+  analytics,
+  team,
+}: {
+  children: React.ReactNode
+  analytics: React.ReactNode
+  team: React.ReactNode
+}) {
+  return (
+    <div className="grid grid-cols-3 gap-4">
+      <div className="col-span-2">{children}</div>
+      <aside className="space-y-4">
+        {analytics}
+        {team}
+      </aside>
+    </div>
+  )
+}
+```
+
+### 3. Default Fallback
+
+Create `default.tsx` for unmatched routes:
+
+```typescript:app/dashboard/@analytics/default.tsx
+export default function DefaultAnalytics() {
+  return <div>Select an analytics view</div>
+}
+```
+
+### 4. Conditional Rendering
+
+Show/hide slots based on state:
+
+```typescript:app/dashboard/layout.tsx
+export default function DashboardLayout({
+  analytics,
+  team,
+}: {
+  analytics: React.ReactNode
+  team: React.ReactNode
+}) {
+  const { user } = useAuth()
+
+  if (!user) return <LoginPage />
+
+  return (
+    <div className="grid grid-cols-3 gap-4">
+      <main>{/* Main content */}</main>
+      <aside>
+        {user.isAdmin && analytics}
+        {team}
+      </aside>
+    </div>
+  )
+}
+```
+
+## Common Use Cases
+
+1. **Dashboard Layouts**
+
+```bash
+app/dashboard/
+├── @notifications/
+├── @reports/
+└── @activity/
+```
+
+2. **Modal Systems**
+
+```bash
+app/
+├── @auth-modal/
+└── layout.tsx
+```
+
+3. **Split Views**
+
+```bash
+app/docs/
+├── @code-preview/
+└── @content/
+```
+
+<Alert type="warning">
+  Always include default.tsx files for slots that might not have matching routes
+</Alert>
+
+## Best Practices
+
+- Use clear slot names (`@analytics` vs `@chart`)
+- Keep parallel routes independent
+- Use TypeScript for slot props
+- Implement loading states per slot
+- Handle errors at slot level
+- Prefer client-side navigation between slots
+
+```typescript:app/dashboard/@analytics/loading.tsx
+export default function AnalyticsLoading() {
+  return <div className="animate-pulse">Loading analytics...</div>
+}
+```
+
+## Exercise
+
+Implement a dashboard layout with:
+
+- Main content area
+- Independent analytics sidebar
+- Team activity feed
+- Conditional admin section
+
+```typescript:app/dashboard/layout.tsx
+// Implement a layout that shows analytics and team slots side-by-side
+// Add conditional rendering for admin users
+// Create default fallback components
+```
+
+> Next.js Documentation Reference: [Parallel Routes](https://nextjs.org/docs/app/building-your-application/routing/parallel-routes)

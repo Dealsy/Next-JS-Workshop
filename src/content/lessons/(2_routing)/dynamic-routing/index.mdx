@@ -7,31 +7,85 @@ Next.js provides a powerful dynamic routing system that allows you to create rou
 In Next.js, you can create dynamic routes by wrapping a folder name in square brackets. For example:
 
 ```tsx
-app / blog / [slug] / page.tsx; // Matches: /blog/hello-world
-app / shop / [categoryId] / [productId] / page.tsx; // Matches: /shop/electronics/123
+app / blog / [slug] / page.tsx // Matches: /blog/hello-world
+app / shop / [categoryId] / [productId] / page.tsx // Matches: /shop/electronics/123
 ```
+
+As of Next.js 15, Dynamic routes must be async functions, and the params values must be awaited before
+being use.
 
 The values captured from the URL are passed as props to your page component:
 
 ```tsx
 // app/blog/[slug]/page.tsx
-export default function BlogPost({ params }: { params: { slug: string } }) {
-  return <h1>Post: {params.slug}</h1>;
+export default async function BlogPost({ params }: { params: Promise<{ slug: string }> }) {
+  const parameters = await params
+
+  return <h1>Post: {parameters.slug}</h1>
 }
 ```
 
 ### Catch-all Segments
 
-For more flexible routing, you can use catch-all segments with [...folderName]:
+For more flexible routing, you can use catch-all segments with `[...folderName]`. These are particularly useful when:
+
+1. Creating nested routing structures that mirror content hierarchy
+2. Building documentation systems with variable depth
+3. Implementing complex filtering systems with multiple parameters
+4. Creating CMS-powered pages with dynamic content paths
+
+**Real-world URL patterns and corresponding routes:**
 
 ```tsx
-app / docs / [...slug] / page.tsx; // Matches: /docs/a/b/c
+# Documentation hierarchy
+URL: /docs/react/hooks/use-state
+Route: app/docs/[...slug]/page.tsx
+Params: { slug: ['react', 'hooks', 'use-state'] }
+
+# E-commerce filtering
+URL: /shop/men/shoes/running/nike
+Route: app/shop/[...filters]/page.tsx
+Params: { filters: ['men', 'shoes', 'running', 'nike'] }
+
+# Blog category system
+URL: /blog/2024/react/nextjs
+Route: app/blog/[...categories]/page.tsx
+Params: { categories: ['2024', 'react', 'nextjs'] }
 ```
 
-Or optional catch-all segments with [[...folderName]]:
+**Implementation example:**
 
 ```tsx
-app / docs / [[...slug]] / page.tsx; // Matches: /docs AND /docs/a/b/c
+// app/docs/[...slug]/page.tsx
+export default async function Page({ params }: { params: Promise<{ slug: string[] }> }) {
+  const slug = (await params).slug
+
+  // Destructure the slug array
+  const [hook] = slug
+
+  return (
+    <div>
+      <Breadcrumb path={slug} />
+      <h1>{hook} Documentation</h1>
+      <ContentRenderer path={slug} />
+    </div>
+  )
+}
+```
+
+**Validation example:**
+
+```tsx
+import { notFound } from 'next/navigation'
+
+export default async function DocsPage({ params }: { params: Promise<{ slug: string[] }> }) {
+  const slug = (await params).slug
+
+  if (!slug?.length) {
+    notFound() // Proper Next.js 15 pattern
+  }
+  // ... rest of component
+}
 ```
 
 ### Generating Static Params
@@ -40,11 +94,11 @@ For static site generation, you'll want to define which dynamic routes to pre-re
 
 ```tsx
 export async function generateStaticParams() {
-  const posts = await getPosts();
+  const posts = await getPosts()
 
-  return posts.map((post) => ({
+  return posts.map(post => ({
     slug: post.slug,
-  }));
+  }))
 }
 ```
 
@@ -55,11 +109,11 @@ export async function generateStaticParams() {
 ```tsx
 interface BlogPostParams {
   params: {
-    slug: string;
-  };
+    slug: string
+  }
 }
 
-export default function BlogPost({ params }: BlogPostParams) {
+export default async function BlogPost({ params }: BlogPostParams) {
   // ...
 }
 ```
@@ -67,11 +121,11 @@ export default function BlogPost({ params }: BlogPostParams) {
 2. **Validation**: Always validate dynamic parameters before using them:
 
 ```tsx
-import { notFound } from "next/navigation";
+import { notFound } from 'next/navigation'
 
-export default function BlogPost({ params }: BlogPostParams) {
+export default async function BlogPost({ params }: BlogPostParams) {
   if (!isValidSlug(params.slug)) {
-    notFound();
+    notFound()
   }
   // ...
 }
@@ -82,6 +136,8 @@ export default function BlogPost({ params }: BlogPostParams) {
 1. **Forgetting to Handle Invalid Parameters**: Always implement error handling for invalid routes
 2. **Mixing Dynamic and Static Segments**: Be careful when combining dynamic segments with static segments
 3. **Not Implementing Loading States**: Users might see a blank page without proper loading states
+4. **Incorrectly Accessing Params**: Always await params before accessing them
+5. **Not Using Async Functions**: Dynamic routes must be async functions
 
 <InteractiveExercises href="/dynamic_routing">
 Ready to try it yourself? Head over to the Dynamic Routing Exercise where you'll:

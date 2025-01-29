@@ -1,4 +1,4 @@
-The `'use server'` directive in Next.js is used to create a door between the client and the server.
+The `'use server'` directive in Next.js is used to create a door between the client and the server, this is called a server action.
 
 `'use server'` is not saying that this is a server component,
 it is actually saying that the client can use the server to do something.
@@ -40,25 +40,29 @@ this is the typical way that you would use server actions.
 
 ```tsx
 // action.ts
-"use server";
+'use server'
 // This code only runs on the server
-import { db } from "@/lib/db";
+import { db } from '@/lib/db'
 
 export async function createTodo(title: string) {
-  const user = await getCurrentUser();
+  const user = await getCurrentUser()
 
   if (!user.id) {
-    throw new Error("Unauthorized");
+    throw new Error('Unauthorized')
   }
 
   await db.todo.create({
     data: { title },
-  });
+  })
+
+  revalidatePath('/') // revalidates the page
+
+  return { success: true }
 }
 
 // In a separate file using the server action
 
-import { createTodo } from "./action";
+import { createTodo } from './action'
 
 export default function TodoForm() {
   return (
@@ -66,7 +70,7 @@ export default function TodoForm() {
       <input type="text" name="title" />
       <button type="submit">Add Todo</button>
     </form>
-  );
+  )
 }
 ```
 
@@ -84,25 +88,29 @@ Here is an example:
 ```tsx
 export default function TodoList() {
   async function deleteTodo(formData: FormData) {
-    "use server"; // Opens a door to the server
+    'use server' // Opens a door to the server
 
     // This code only runs on the server
-    const user = await getCurrentUser();
+    const user = await getCurrentUser()
 
     if (!user.id) {
-      throw new Error("Unauthorized");
+      throw new Error('Unauthorized')
     }
 
-    const id = Number(formData.get("id"));
-    todos = todos.filter((t) => t.id !== id);
-    revalidatePath("/");
+    const id = Number(formData.get('id'))
+    await db.todo.delete({
+      where: { id },
+    })
+    revalidatePath('/')
+
+    return { success: true }
   }
 
   return (
     <form action={deleteTodo}>
       <button type="submit">Delete Todo</button>
     </form>
-  );
+  )
 }
 ```
 
@@ -118,15 +126,42 @@ export default function TodoList() {
    - Return meaningful error messages
    - Validate input data server-side ( You can use Zod to validate input data server-side)
 
+   An example of this is using Zod to validate the input data server-side.
+
+   ```tsx
+   'use server'
+
+   import { z } from 'zod'
+
+   // Define the schema for the input data
+   const schema = z.object({
+     title: z.string().min(1),
+     description: z.string().min(1),
+     completed: z.boolean(),
+   })
+
+   export async function createTodo(formData: FormData) {
+     // Parse the input data using the schema
+     const { title, description, completed } = schema.parse(Object.fromEntries(formData.entries()))
+
+     await db.todo.create({
+       // Create the todo item in the database
+       data: { title, description, completed },
+     })
+
+     return { success: true }
+   }
+   ```
+
 3. Security Considerations
    - Never expose sensitive data or credentials
    - Always validate and sanitize inputs
-   - Use proper authentication checks
+   - Use proper authentication and authorization checks
 
 ## Common Gotchas
 
 - Server Actions must be async functions
-- Can't mix client and server code in the same file
+- You can call `'use server'` in a client component, but you cannot call `'use client'` in a server component
 - Server Actions can't access client-side APIs
 - Server Actions are API calls and will cause a network request
 
