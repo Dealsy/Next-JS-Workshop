@@ -4,6 +4,13 @@ Next.js 13+ introduced a powerful convention for handling loading states in your
 
 Loading UI is a built-in solution in Next.js that shows a loading state while a route segment's content is being loaded. It works automatically with React Suspense to provide instant loading states.
 
+<ThemeImage
+  darkSrc="/images/dark_loading_ui.svg"
+  lightSrc="/images/light_loading_ui.svg"
+  alt="Loading UI diagram showing how loading UI works in Next.js"
+  size="large"
+/>
+
 ## How Loading UI Works
 
 When you create a `loading.tsx` file, Next.js automatically wraps the page in a React Suspense boundary. While the content is loading, the loading UI is shown as a fallback, creating a seamless experience for users.
@@ -11,7 +18,7 @@ When you create a `loading.tsx` file, Next.js automatically wraps the page in a 
 ```tsx
 // app/loading.tsx
 export default function Loading() {
-  return <div>Loading...</div>;
+  return <div>Loading...</div>
 }
 ```
 
@@ -61,7 +68,7 @@ Additionally, placing a `loading.tsx` file in a parent folder allows you to shar
          <div className="h-8 bg-gray-200 rounded animate-pulse" />
          <div className="h-8 bg-gray-200 rounded animate-pulse" />
        </div>
-     );
+     )
    }
    ```
 

@@ -1,6 +1,6 @@
 import { AlertCircle, Info, AlertTriangle } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { Card, CardHeader, CardContent } from '@/components/ui/card'
+import { Card, CardContent } from '@/components/ui/card'
 
 const alertTypes = {
   info: {
@@ -41,11 +41,11 @@ export default function Alert({
 
   return (
     <Card className={cn(styles, 'border', className)}>
-      <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-2">
+      <div className="flex flex-row items-center gap-2 space-y-0 px-6 py-2">
         <Icon className={cn('h-6 w-6 items-center', iconColor)} />
-        <p className={cn('text-base font-medium', textColor)}>{header}</p>
-      </CardHeader>
-      <CardContent className={cn('text-sm', textColor)}>{children}</CardContent>
+        <p className={cn('text-lg font-medium', textColor)}>{header}</p>
+      </div>
+      <CardContent className={cn('text-base', textColor)}>{children}</CardContent>
     </Card>
   )
 }
