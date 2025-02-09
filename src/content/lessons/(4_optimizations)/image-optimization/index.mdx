@@ -1,0 +1,250 @@
+Next.js provides built-in Image Optimization through its powerful `next/image` component. This feature automatically optimizes images
+for performance while maintaining visual quality, making it a crucial part of building performant Next.js applications.
+
+<Alert type="info">
+  Image optimization in Next.js works out of the box and doesn't require any additional
+  configuration. However, you can customize the behavior through the `next.config.ts` file if
+  needed.
+</Alert>
+
+## Understanding Image Optimization
+
+Images play a crucial role in modern web applications, but they often come with significant performance costs. When a user visits your website,
+unoptimized images can consume excessive bandwidth and slow down page load times, especially on slower connections. This directly impacts your
+Core Web Vitals and ultimately, your user experience.
+
+Next.js solves this problem with its Image component, which automatically handles many complex optimizations that would typically require
+significant manual effort or additional services.
+
+## The Image Component
+
+The foundation of image optimization in Next.js is the `next/image` component. Unlike a standard HTML `<img>` tag, this component
+automatically handles optimization, lazy loading, and prevents layout shifts. Here's how to use it:
+
+```tsx
+import Image from 'next/image'
+
+export default function Profile() {
+  return <Image src="/profile.jpg" alt="Profile picture" width={500} height={300} priority />
+}
+```
+
+When you use this component, Next.js automatically optimizes your images on-demand. This means the optimization happens when the image
+is first requested, and the result is cached for subsequent requests. The component also converts images to modern formats like WebP
+and AVIF when the browser supports them, significantly reducing file size while maintaining quality.
+
+## Preventing Layout Shifts
+
+One of the most common issues with images on the web is layout shift - that jarring moment when an image loads and pushes other content
+around on the page. This is such a significant problem that it's part of Google's Core Web Vitals metric called Cumulative Layout Shift (CLS).
+
+Next.js helps prevent this through a simple but effective approach. The Image component requires you to specify dimensions, which allows
+it to reserve the correct space before the image loads. You can do this in two ways:
+
+For fixed-size images, provide the dimensions directly:
+
+```tsx
+export default function DucatiImage() {
+  return <Image src="/v4.webp" alt="Ducati V4 S example image" width={400} height={511} />
+}
+```
+
+<Image
+  src="/images/webp/v4.webp"
+  alt="Image optimization diagram showing how Next.js optimizes images"
+  width={400}
+  height={511}
+/>
+
+For responsive images that need to fill their container, use the `fill` property along with CSS positioning:
+
+```tsx
+export default function HeroImage() {
+  return (
+    <div className="relative w-full h-[800px]">
+      <Image src="/hero.jpg" alt="Hero image" fill className="object-cover" />
+    </div>
+  )
+}
+```
+
+<div className="relative w-full h-[400px]">
+  <Image
+    src="/images/webp/ducati.webp"
+    alt="Image optimization diagram showing how Next.js optimizes images"
+    fill
+    sizes="100vw"
+    priority
+    className="object-cover"
+  />
+</div>
+
+## Loading Strategies
+
+Next.js provides several strategies for loading images efficiently. By default, images are lazy loaded - they only start loading when
+they're about to enter the viewport. This saves bandwidth and speeds up the initial page load.
+
+However, for important above-the-fold images (like heroes or banners), you'll want them to load immediately. This is where the `priority`
+property comes in:
+
+```tsx
+export default function Hero() {
+  return <Image src="/hero.jpg" alt="Hero image" width={1200} height={600} priority />
+}
+```
+
+When you add `priority`, Next.js will preload the image, ensuring it's available as soon as possible. This is particularly important
+for your Largest Contentful Paint (LCP) element, which is often a hero image.
+
+<Image src="/images/jpg/r6.jpg" alt="Hero image" width={729} height={1090} priority />
+
+## Working with Remote Images
+
+In many applications, you'll need to work with images from external sources like a CMS or CDN. Next.js requires you to explicitly
+configure which domains can serve images through the Image component. This is a security measure to prevent malicious image sources.
+
+Add the configuration to your `next.config.ts`:
+
+```ts
+import type { NextConfig } from 'next'
+
+const nextConfig: NextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+        pathname: '/**',
+      },
+    ],
+  },
+}
+
+export default nextConfig
+```
+
+Now you can safely use images from the configured domain:
+
+```tsx
+export default function RemoteImage() {
+  return (
+    <Image
+      src="https://images.unsplash.com/photo-1614825747811-306e5281f3bd"
+      alt="Ducati Streetfighter V4"
+      width={500}
+      height={300}
+    />
+  )
+}
+```
+
+<Image
+  src="https://images.unsplash.com/photo-1614825747811-306e5281f3bd"
+  alt="Ducati Streetfighter V4"
+  width={800}
+  height={500}
+  priority
+/>
+
+## Enhancing User Experience
+
+Next.js provides several features to enhance the image loading experience. One of the most effective is the blur-up placeholder.
+This shows a blurred version of the image while the full version loads:
+
+```tsx
+export default function BMWImage() {
+  return (
+    <Image
+      src="https://images.unsplash.com/photo-1614826380482-584247564bde"
+      alt="BMW S1000RR"
+      width={800}
+      height={1000}
+      placeholder="blur"
+    />
+  )
+}
+```
+
+Do a hard refresh here to see a blur effect.
+
+<Image
+  src="https://images.unsplash.com/photo-1614826380482-584247564bde"
+  alt="BMW S1000RR"
+  width={800}
+  height={1000}
+  placeholder="blur"
+  blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDABQODxIPDRQSEBIXFRQdHx4eHRoaHSQtJSAyVC08MTAxMTIwPURCNz5GPjIxTkdFRVdYWVxcMkVJSUBYWENYV0z/2wBDAR0XFx0aHR4eHUBCNkI2QkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkL/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAb/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAP/xAAYEQACAwAAAAAAAAAAAAAAAAAAARESMf/aAAwDAQACEQMRAD8CdABmX//Z"
+/>
+
+You can also adjust the quality of the optimized images. The default quality is 75, which provides a
+good balance between file size and visual quality, but you can adjust this based on your needs:
+
+```tsx
+export default function HighQualityImage() {
+  return (
+    <Image src="/high-quality.jpg" alt="High quality image" width={800} height={600} quality={90} />
+  )
+}
+```
+
+<div className="flex flex-row gap-8">
+  <div className="flex-1">
+    <p>High quality: 100%</p>
+    <Image
+      src="/images/webp/clutch-cover.webp"
+      alt="Clutch cover with high quality"
+      width={400}
+      height={600}
+      quality={100}
+      className="object-contain"
+    />
+  </div>
+  <div className="flex-1">
+    <p>Low quality: 1%</p>
+    <Image
+      src="/images/webp/clutch-cover.webp"
+      alt="Clutch cover with low quality"
+      width={400}
+      height={600}
+      quality={1}
+      className="object-contain"
+    />
+  </div>
+</div>
+
+## Custom Image Services
+
+If you're using an image service like Cloudinary or Imgix, Next.js allows you to configure a custom loader. This means you can
+leverage these services' advanced features while still getting the benefits of the Next.js Image component:
+
+```ts
+import type { NextConfig } from 'next'
+
+const nextConfig: NextConfig = {
+  images: {
+    loader: 'cloudinary',
+    path: 'https://example.cloudinary.com/your-account',
+  },
+}
+
+export default nextConfig
+```
+
+<Alert type='alert'>
+  Be careful using the Next JS Image component if hosting on Vercel.
+
+This is because Vercel actually will charge you for the image optimization after a certain limit is reached.
+
+You can find out more [here](https://vercel.com/docs/image-optimization/limits-and-pricing).
+
+</Alert>
+
+<InteractiveExercises href="/image-optimization">
+Ready to try it yourself? Head over to the Image Optimization Exercise where you'll:
+
+- Implement responsive images
+- Configure remote image domains
+- Add blur-up placeholders
+- Optimize above-the-fold images
+
+</InteractiveExercises>
