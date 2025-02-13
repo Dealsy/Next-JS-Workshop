@@ -20,13 +20,11 @@
  * - Remember to revalidate the path after mutations
  */
 
-import { ExercisesUrl } from "@/components/exercises-url";
-import { EXERCISE_URLS } from "@/constants";
-import { ExercisesContainer } from "@/components/exerciseContainer";
+import { ExercisesContainer } from '@/components/exerciseContainer'
 
 // This simulates a database
-let todos: { id: number; title: string; completed: boolean }[] = [];
-let todoIdCounter = 1;
+let todos: { id: number; title: string; completed: boolean }[] = []
+let todoIdCounter = 1
 
 // Add 'use server' directive here and implement the createTodo action
 async function createTodo(formData: FormData) {
@@ -40,7 +38,6 @@ async function deleteTodo(formData: FormData) {
 export default function UseServerExercise() {
   return (
     <ExercisesContainer>
-      <ExercisesUrl url={EXERCISE_URLS.use_server} />
       <div className="space-y-4">
         <form className="flex gap-2">
           <input
@@ -51,14 +48,13 @@ export default function UseServerExercise() {
           />
           <button
             type="submit"
-            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-          >
+            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
             Add Todo
           </button>
         </form>
 
         <ul className="divide-y">
-          {todos.map((todo) => (
+          {todos.map(todo => (
             <li key={todo.id} className="py-2">
               {todo.title}
             </li>
@@ -66,5 +62,5 @@ export default function UseServerExercise() {
         </ul>
       </div>
     </ExercisesContainer>
-  );
+  )
 }

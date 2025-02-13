@@ -5,6 +5,7 @@ import { useState } from 'react'
 import * as React from 'react'
 import { format } from 'date-fns'
 import { CalendarIcon, Plane } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 
 import { cn } from '@/lib/utils'
 import { Calendar } from '@/components/ui/calendar'
@@ -26,26 +27,8 @@ import {
   EXERCISE_ROUTES,
 } from '@/constants'
 
-/*
- * 🎉 Congratulations! You've made it to the second part of the exercise.
- *
- * 📚 Exercise 2: Programmatic Navigation with useRouter
- * --------------------------------------------------
- * Let's create a flight booking UI that redirects to a special offer page after attempting to book.
- *
- * Tasks:
- * 1. Import useRouter from 'next/navigation'
- * 2. Initialize the router using the useRouter hook
- * 3. Implement the handleNavigation function:
- *    - Set the loading state to true.
- *    - After a 2-second delay:
- *      - Set the loading state to false.
- *      - Redirect to EXERCISE_ROUTES.redirect using router.push().
- * 4. The button should display "Booking..." while loading is true, and "Book Flight" otherwise. The button should be disabled while loading is true.
- */
-
 export default function Page() {
-  // TODO: Initialize the router
+  const router = useRouter()
 
   const [departure, setDeparture] = useState<DepartureCities>(DEPARTURE_CITIES[0])
   const [destination, setDestination] = useState<DestinationCities>(DESTINATION_CITIES[0])
@@ -53,9 +36,11 @@ export default function Page() {
   const [date, setDate] = React.useState<Date>()
 
   const handleNavigation = () => {
-    // TODO: Implement the navigation logic here
-    // 1. Set loading to true
-    // 2. After 2 seconds, set loading to false and redirect to EXERCISE_ROUTES.redirect
+    setLoading(true)
+    setTimeout(() => {
+      setLoading(false)
+      router.push(EXERCISE_ROUTES.redirect)
+    }, 2000)
   }
 
   return (

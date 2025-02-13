@@ -1,25 +1,28 @@
-"use server";
+'use server'
+
+import { EXERCISE_ROUTES } from '@/constants'
+import { redirect } from 'next/navigation'
 
 /*
- * 📚 Exercise 3: Server-Side Redirects
+ * 🔐 Exercise 3: Server-Side Redirects
  * --------------------------------------------
- * In this exercise, you'll learn how to redirect users to a different page using server actions.
+ * Continuing from the useRouter exercise, let's implement a premium code check.
  *
  * Tasks:
- * 1. Import the redirect function from 'next/navigation'
- * 2. Create a server action that redirects, you can redirect to anywhere
- *
- *  Extra Credit:
- *  - Create a success page in redirect/success/page.tsx and redirect to it. - You'll need to setup the folder
+ * 1. Import the `redirect` function from 'next/navigation'.
+ * 2. In the `submitForm` function, check if the `code` is equal to "premium".
+ * 4. If the code is "premium", redirect to `EXERCISE_ROUTES.redirectSuccess`.
+ * 5. If the code is not "premium", return an error message.
  *
  */
 
 export async function submitForm(formData: FormData) {
-  const code = formData.get("code");
+  const code = formData.get('code')
 
-  if (code === "nextjs") {
-    // setup the redirect function here, you can redirect to anywhere
-  }
+  // use this as the redirect path
+  const success = EXERCISE_ROUTES.redirect_success
 
-  return { error: "Invalid code" };
+  // TODO: Implement the redirect logic here
+  // If code is "premium", redirect to EXERCISE_ROUTES.redirectSuccess
+  // Otherwise, return an error
 }

@@ -1,6 +1,4 @@
-import { ExercisesContainer } from "@/components/exerciseContainer";
-import { ExercisesUrl } from "@/components/exercises-url";
-import { EXERCISE_URLS } from "@/constants";
+import { ExercisesContainer } from '@/components/exerciseContainer'
 
 /*
  * Exercise: Dynamic Routing in Next.js
@@ -32,16 +30,15 @@ import { EXERCISE_URLS } from "@/constants";
 export default function DynamicRoutingExercise() {
   return (
     <ExercisesContainer>
-      <ExercisesUrl url={EXERCISE_URLS.dynamic_routing} />
       <div>
         <h1>TODO: Show blog post here</h1>
       </div>
     </ExercisesContainer>
-  );
+  )
 }
 
 export function generateStaticParams() {
   // 🔧 TODO: Implement static params generation
   // Return an array of params for static generation
-  return [];
+  return []
 }

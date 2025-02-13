@@ -1,24 +1,18 @@
-import { ExercisesUrl } from "@/components/exercises-url";
-import { EXERCISE_URLS } from "@/constants";
-import Link from "next/link";
+import { EXERCISE_ROUTES } from '@/constants'
+import Link from 'next/link'
 
-export default function LinkingAndNavigationSolution() {
-  const link = "linking-and-navigation/useRouter";
+export default function LinkingAndNavigation() {
+  const link = EXERCISE_ROUTES.use_router
 
   return (
     <div className="space-y-8 p-20">
-      <ExercisesUrl url={EXERCISE_URLS.linking_and_navigation} />
-
       <h1 className="text-2xl font-bold">Exercise 1: Link Component</h1>
 
       <div className="space-y-4">
-        <Link
-          href={link}
-          className="inline-block px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
-        >
-          Go to Exercise 2
+        <Link href={link} className="bg-blue-500 text-white px-4 py-2 rounded-md">
+          Go to useRouter
         </Link>
       </div>
     </div>
-  );
+  )
 }

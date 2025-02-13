@@ -1,9 +1,7 @@
-"use client";
+'use client'
 
-import { ExercisesUrl } from "@/components/exercises-url";
-import { EXERCISE_URLS } from "@/constants";
-import { MinusIcon, PlusIcon } from "lucide-react";
-import { useState } from "react";
+import { MinusIcon, PlusIcon } from 'lucide-react'
+import { useState } from 'react'
 
 /*
  *  🚀 Exercise: Understanding Server Components
@@ -29,19 +27,20 @@ import { useState } from "react";
 export default function Page() {
   // 💡 Basic counter state - You'll need to move this state and logic to
   // a client component
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(0)
 
   const handleIncrement = () => {
-    setCount(count + 1);
-  };
+    setCount(count + 1)
+  }
 
   const handleDecrement = () => {
-    setCount(count - 1);
-  };
+    setCount(count - 1)
+  }
 
   return (
     <div className="flex flex-col min-h-screen">
-      <ExercisesUrl url={EXERCISE_URLS.server_components} />
+      {/* This component is to tell you where the exercise is located. you may remove it for the exercise. */}
+
       {/* This is static conent, so it could be rednered on the server  */}
       <nav className="bg-gray-800 text-white p-4 flex justify-between items-center">
         <h1 className="text-2xl font-bold">Page Title</h1>
@@ -50,24 +49,19 @@ export default function Page() {
       {/* This is interactive content, so it must be rendered on the client */}
       <main className="grow flex flex-col items-center justify-center">
         <div className="flex flex-row gap-2 items-center justify-center">
-          <button
-            className="bg-blue-500 text-white p-2 rounded-md"
-            onClick={handleDecrement}
-          >
+          <button className="bg-blue-500 text-white p-2 rounded-md" onClick={handleDecrement}>
             <MinusIcon className="w-4 h-4" />
           </button>
           <p className="text-2xl font-bold">Count: {count}</p>
-          <button
-            className="bg-blue-500 text-white p-2 rounded-md"
-            onClick={handleIncrement}
-          >
+          <button className="bg-blue-500 text-white p-2 rounded-md" onClick={handleIncrement}>
             <PlusIcon className="w-4 h-4" />
           </button>
         </div>
       </main>
+      {/* This is static content, so it could be rendered on the server */}
       <footer className="bg-gray-800 text-white p-4 flex justify-between items-center">
         <p>Footer</p>
       </footer>
     </div>
-  );
+  )
 }

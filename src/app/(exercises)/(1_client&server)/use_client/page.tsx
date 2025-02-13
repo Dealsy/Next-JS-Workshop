@@ -1,8 +1,6 @@
-"use client";
+'use client'
 
-import { ExercisesUrl } from "@/components/exercises-url";
-import { EXERCISE_URLS } from "@/constants";
-import { ExercisesContainer } from "@/components/exerciseContainer";
+import { ExercisesContainer } from '@/components/exerciseContainer'
 
 /*
  * 🚀 Exercise: Understanding the 'use client' Directive
@@ -39,7 +37,7 @@ function Counter() {
 
       {/* 💯 Extra Credit: Add reset button and custom increment */}
     </div>
-  );
+  )
 }
 
 // 🚨 This is what the error will look like without 'use client':
@@ -48,8 +46,7 @@ function Counter() {
 export default function UseClientExercise() {
   return (
     <ExercisesContainer>
-      <ExercisesUrl url={EXERCISE_URLS.use_client} />
       <Counter />
     </ExercisesContainer>
-  );
+  )
 }

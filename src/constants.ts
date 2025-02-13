@@ -6,8 +6,25 @@ export const EXERCISE_URLS = {
   server_components: 'src/app/(exercises)/(1_client&server)/server_components/page.tsx',
   dynamic_routing: 'src/app/(exercises)/(2_routing)/dynamic_routing/page.tsx',
   layouts: 'src/app/(exercises)/(2_routing)/layouts/layout.tsx',
-  linking_and_navigation: 'src/app/(exercises)/(2_routing)/linking-and-navigating/page.tsx',
-  loading: 'src/app/(exercises)/(2_routing)/loading/page.tsx',
+  linking_and_navigation: 'src/app/(exercises)/(2_routing)/linking-and-navigation/page.tsx',
+  use_router: 'src/app/(exercises)/(2_routing)/linking-and-navigation/useRouter/page.tsx',
+  redirect: 'src/app/(exercises)/(2_routing)/linking-and-navigation/redirect/page.tsx',
+  redirect_success: 'src/app/(exercises)/(2_routing)/linking-and-navigation/success/page.tsx',
+  loading_ui: 'src/app/(exercises)/(2_routing)/loading-ui/page.tsx',
+} as const
+
+export const EXERCISE_ROUTES = {
+  use_server: '/use_server',
+  use_client: '/use_client',
+  server_components: '/server_components',
+  dynamic_routing: '/dynamic_routing',
+  layouts: '/layouts',
+  linking_and_navigation: '/linking-and-navigation',
+  use_router: '/linking-and-navigation/useRouter',
+  redirect: '/linking-and-navigation/redirect',
+  redirect_success: '/linking-and-navigation/success',
+
+  loading_ui: '/loading-ui',
 } as const
 
 export const categories = {
@@ -30,6 +47,11 @@ export const statuses = {
   upcoming: 'upcoming',
 } as const
 
+export const isDisplayed = {
+  true: true,
+  false: false,
+} as const
+
 export const clientServerLessons = [
   {
     id: 'server-components',
@@ -40,6 +62,7 @@ export const clientServerLessons = [
     order: 1,
     featured: true,
     status: statuses.completed,
+    isDisplayed: isDisplayed.true,
   },
   {
     id: 'use-client',
@@ -49,6 +72,7 @@ export const clientServerLessons = [
     difficulty: difficulties['beginner'],
     order: 2,
     status: statuses.completed,
+    isDisplayed: isDisplayed.true,
   },
   {
     id: 'use-server',
@@ -59,6 +83,7 @@ export const clientServerLessons = [
     order: 3,
     featured: true,
     status: statuses.completed,
+    isDisplayed: isDisplayed.true,
   },
   {
     id: 'composition-patterns',
@@ -68,6 +93,7 @@ export const clientServerLessons = [
     difficulty: difficulties['beginner'],
     order: 4,
     status: statuses.completed,
+    isDisplayed: isDisplayed.true,
   },
 ]
 
@@ -80,6 +106,7 @@ export const routingLessons = [
     difficulty: difficulties['beginner'],
     order: 1,
     status: statuses.completed,
+    isDisplayed: isDisplayed.true,
   },
   {
     id: 'linking-and-navigating',
@@ -89,6 +116,7 @@ export const routingLessons = [
     difficulty: difficulties['beginner'],
     order: 2,
     status: statuses.completed,
+    isDisplayed: isDisplayed.true,
   },
   {
     id: 'loading-ui',
@@ -98,6 +126,7 @@ export const routingLessons = [
     difficulty: difficulties['beginner'],
     order: 3,
     status: statuses.completed,
+    isDisplayed: isDisplayed.true,
   },
   {
     id: 'error-boundary',
@@ -107,6 +136,7 @@ export const routingLessons = [
     difficulty: difficulties['beginner'],
     order: 4,
     status: statuses.upcoming,
+    isDisplayed: isDisplayed.true,
   },
   {
     id: 'data-streaming',
@@ -117,6 +147,7 @@ export const routingLessons = [
     order: 5,
     featured: true,
     status: statuses.upcoming,
+    isDisplayed: isDisplayed.true,
   },
   {
     id: 'dynamic-routing',
@@ -126,6 +157,7 @@ export const routingLessons = [
     difficulty: difficulties['beginner'],
     order: 6,
     status: statuses.upcoming,
+    isDisplayed: isDisplayed.true,
   },
   {
     id: 'parallel-routes',
@@ -136,6 +168,7 @@ export const routingLessons = [
     order: 7,
     featured: true,
     status: statuses.upcoming,
+    isDisplayed: isDisplayed.true,
   },
 ]
 
@@ -148,6 +181,7 @@ export const cacheLessons = [
     difficulty: difficulties['intermediate'],
     order: 1,
     status: statuses.upcoming,
+    isDisplayed: isDisplayed.true,
   },
 ]
 
@@ -160,6 +194,7 @@ export const renderingLessons = [
     difficulty: difficulties['intermediate'],
     order: 1,
     status: statuses.upcoming,
+    isDisplayed: isDisplayed.false,
   },
 ]
 
@@ -172,6 +207,7 @@ export const optimizationsLessons = [
     difficulty: difficulties['intermediate'],
     order: 1,
     status: statuses.upcoming,
+    isDisplayed: isDisplayed.true,
   },
   {
     id: 'font-optimization',
@@ -181,6 +217,7 @@ export const optimizationsLessons = [
     difficulty: difficulties['intermediate'],
     order: 2,
     status: statuses.upcoming,
+    isDisplayed: isDisplayed.false,
   },
 ]
 
@@ -193,6 +230,7 @@ export const seoLessons = [
     difficulty: difficulties['beginner'],
     order: 1,
     status: statuses.upcoming,
+    isDisplayed: isDisplayed.false,
   },
 ]
 
@@ -219,3 +257,9 @@ export const features = [
     description: 'Learn from carefully crafted lessons and compare with reference solutions.',
   },
 ] as const
+
+export const DEPARTURE_CITIES = ['Melbourne', 'Sydney', 'Brisbane', 'Perth'] as const
+export type DepartureCities = (typeof DEPARTURE_CITIES)[number]
+
+export const DESTINATION_CITIES = ['London', 'Paris', 'Tokyo', 'Sydney'] as const
+export type DestinationCities = (typeof DESTINATION_CITIES)[number]

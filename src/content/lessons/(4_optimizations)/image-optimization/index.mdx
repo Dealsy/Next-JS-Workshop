@@ -45,7 +45,7 @@ For fixed-size images, provide the dimensions directly:
 
 ```tsx
 export default function DucatiImage() {
-  return <Image src="/v4.webp" alt="Ducati V4 S example image" width={400} height={511} />
+  return <Image src="/v4.webp" alt="Ducati V4 S example image" width={400} height={600} />
 }
 ```
 
@@ -53,7 +53,7 @@ export default function DucatiImage() {
   src="/images/webp/v4.webp"
   alt="Image optimization diagram showing how Next.js optimizes images"
   width={400}
-  height={511}
+  height={600}
 />
 
 For responsive images that need to fill their container, use the `fill` property along with CSS positioning:
@@ -61,7 +61,7 @@ For responsive images that need to fill their container, use the `fill` property
 ```tsx
 export default function HeroImage() {
   return (
-    <div className="relative w-full h-[800px]">
+    <div className="relative w-full h-[400px]">
       <Image src="/hero.jpg" alt="Hero image" fill className="object-cover" />
     </div>
   )
@@ -149,7 +149,11 @@ export default function RemoteImage() {
 ## Enhancing User Experience
 
 Next.js provides several features to enhance the image loading experience. One of the most effective is the blur-up placeholder.
-This shows a blurred version of the image while the full version loads:
+This shows a blurred version of the image while the full version loads.
+
+You can do this in two ways, one if you're using a remote image, then you will need to pass in a blurDataURL.
+
+the blurDataURL is a base64 encoded string of the image, you can use something like [blurhash](https://blurha.sh/) to generate one.
 
 ```tsx
 export default function BMWImage() {
@@ -160,21 +164,32 @@ export default function BMWImage() {
       width={800}
       height={1000}
       placeholder="blur"
+      blurDataURL="data:image/svg+xml;base64,CiAgICA8c3ZnIHhtbG5zP..."
     />
   )
 }
 ```
 
+The second way is to use a local image, you must import this image, you cannot use a relative path.
+
+```tsx
+import bwm from './../../public/images/jpg/bmw.jpg'
+
+export default function ImageImport() {
+  return <Image src={bwm} alt="BMW S1000RR" width={800} height={1000} placeholder="blur" />
+}
+```
+
 Do a hard refresh here to see a blur effect.
 
-<Image
-  src="https://images.unsplash.com/photo-1614826380482-584247564bde"
-  alt="BMW S1000RR"
-  width={800}
-  height={1000}
-  placeholder="blur"
-  blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDABQODxIPDRQSEBIXFRQdHx4eHRoaHSQtJSAyVC08MTAxMTIwPURCNz5GPjIxTkdFRVdYWVxcMkVJSUBYWENYV0z/2wBDAR0XFx0aHR4eHUBCNkI2QkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkL/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAb/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAP/xAAYEQACAwAAAAAAAAAAAAAAAAAAARESMf/aAAwDAQACEQMRAD8CdABmX//Z"
-/>
+<span className="text-xs text-gray-400">
+  Depending on your internet speed, you may need to set a throttle in the network tab in order to
+  see the blur effect.
+</span>
+
+<ImageImport />
+
+## Adjusting Image Quality
 
 You can also adjust the quality of the optimized images. The default quality is 75, which provides a
 good balance between file size and visual quality, but you can adjust this based on your needs:
@@ -193,8 +208,8 @@ export default function HighQualityImage() {
     <Image
       src="/images/webp/clutch-cover.webp"
       alt="Clutch cover with high quality"
-      width={400}
-      height={600}
+      width={600}
+      height={980}
       quality={100}
       className="object-contain"
     />
@@ -204,8 +219,8 @@ export default function HighQualityImage() {
     <Image
       src="/images/webp/clutch-cover.webp"
       alt="Clutch cover with low quality"
-      width={400}
-      height={600}
+      width={600}
+      height={980}
       quality={1}
       className="object-contain"
     />
@@ -231,11 +246,17 @@ export default nextConfig
 ```
 
 <Alert type='alert' className='my-8'>
-  Be careful using the Next JS Image component if hosting on Vercel.
+
+If you are building an app that will heavily use images, be careful using the Next JS Image component if hosting on Vercel.
 
 This is because Vercel actually will charge you for the image optimization after a certain limit is reached.
 
 You can find out more [here](https://vercel.com/docs/image-optimization/limits-and-pricing).
+
+To avoid this, you can use a custom image service like Cloudinary or Imgix.
+
+This should only be a concern if you're using 100s of images, Vercels limits are
+fairly generous, and for most apps, you'll be fine.
 
 </Alert>
 

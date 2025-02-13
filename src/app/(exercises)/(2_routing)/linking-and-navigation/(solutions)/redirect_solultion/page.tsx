@@ -2,21 +2,7 @@
 
 import { submitForm } from './action'
 
-/*
- * 🔐 Exercise 3: Server-Side Redirects
- * --------------------------------------------
- * This is the special offer page. Users are redirected here after attempting to book a flight.
- *
- * Tasks:
- * 1. Create a form with an input field for the "premium code".
- * 2. Use the handleSubmit function in the action property of the form.
- * 3. Head to the action.ts file in the redirect folder to implement the redirect logic.
- *
- * 💡 Tips:
- * - Use the `formAction` prop on the `<form>` element to bind the server action.
- * - You'll need to manage the error state in the component using `useState`.
- */
-
+import { Button } from '@/components/ui/button'
 import { useState } from 'react'
 
 export default function Redirect() {
@@ -40,7 +26,15 @@ export default function Redirect() {
           Enter the premium code to unlock exclusive benefits!
         </p>
 
-        {/* Create your form here */}
+        <form action={handleSubmit}>
+          <input
+            type="text"
+            name="code"
+            placeholder="Premium Code"
+            className="border p-2 rounded"
+          />
+          <Button type="submit">Unlock</Button>
+        </form>
 
         {error && <p className="text-red-500">{error}</p>}
       </div>
