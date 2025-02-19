@@ -193,7 +193,8 @@ export const renderingLessons = [
     category: categories['Rendering'],
     difficulty: difficulties['intermediate'],
     order: 1,
-    status: statuses.upcoming,
+    featured: true,
+    status: statuses.completed,
     isDisplayed: isDisplayed.false,
   },
 ]

@@ -5,36 +5,14 @@ import { createTodo, deleteTodo, getTodos } from './actions'
 import { useEffect, useState } from 'react'
 
 /*
- * 🚀 Exercise: Understanding the 'use server' Directive
+ * 💡 Solution: Understanding the 'use server' Directive
  *
- * 🎯 Goal: Create a todo list application using Server Actions
- *
- * 🏋️‍♂️ Tasks:
- * 1. Open actions.ts and implement the createTodo server action
- *    - Extract the title from formData
- *    - Create a new todo with a unique ID
- *    - Add proper error handling and validation with Zod
- *
- * 2. Implement the deleteTodo server action
- *    - Extract the todo ID from formData
- *    - Remove the todo from the array
- *    - Add error handling
- *
- * 3. Update this component to:
- *    - Use the server actions in the forms
- *    - Display the current todos
- *    - Show loading and error states
- *
- *  🧩 Extra Credit:
- *   - Add revalidatePath to the server actions so the UI updates when a todo is created or deleted
- *
- * 💡 Tips:
- * - Check the Result type in actions.ts for proper error handling
- * - Use formData.get('title') to get form input values
- * - Remember to handle both success and error cases
- *
- *
- *
+ * Key Points:
+ * 1. Server Actions are defined in a separate file (actions.ts)
+ * 2. They run exclusively on the server
+ * 3. Forms can directly use server actions
+ * 4. UI is automatically revalidated after mutations
+ * 5. Components stay focused on presentation
  */
 
 type Todo = {
@@ -43,12 +21,19 @@ type Todo = {
   completed: boolean
 }
 
-// TODO: Implement this component to handle form submissions
-// Hint: Use the form action prop to call the createTodo server action
 function TodoForm({ onSuccess }: { onSuccess: () => void }) {
   return (
     <div>
-      <form className="flex gap-2">
+      <form
+        action={async (formData: FormData) => {
+          const result = await createTodo(formData)
+          if (result.error) {
+            console.error(result.error)
+          } else {
+            onSuccess()
+          }
+        }}
+        className="flex gap-2">
         <input
           type="text"
           name="title"
@@ -66,12 +51,19 @@ function TodoForm({ onSuccess }: { onSuccess: () => void }) {
   )
 }
 
-// TODO: Implement this component to handle todo deletion
-// Hint: Use a hidden input to pass the todo ID to the server action
 function DeleteButton({ id, onSuccess }: { id: number; onSuccess: () => void }) {
   return (
     <div>
-      <form>
+      <form
+        action={async (formData: FormData) => {
+          const result = await deleteTodo(formData)
+          if (result.error) {
+            console.error(result.error)
+          } else {
+            onSuccess()
+          }
+        }}>
+        <input type="hidden" name="id" value={id} />
         <button
           type="submit"
           className="px-3 py-1 text-sm bg-red-500 text-white rounded hover:bg-red-600">
@@ -82,11 +74,12 @@ function DeleteButton({ id, onSuccess }: { id: number; onSuccess: () => void }) 
   )
 }
 
-export default function UseServerExercise() {
+export default function UseServerSolution() {
   const [todos, setTodos] = useState<Todo[]>([])
 
   const refreshTodos = async () => {
-    // TODO: Fetch todos using the getTodos server action
+    const updatedTodos = await getTodos()
+    setTodos(updatedTodos)
   }
 
   useEffect(() => {

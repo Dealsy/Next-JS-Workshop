@@ -1,0 +1,62 @@
+Partial Prerendering (PPR) is a new rendering model in Next.js that combines static and dynamic rendering in a single render. It allows you to show instant static content while streaming in dynamic content in parallel.
+
+## How PPR Works
+
+PPR creates a hybrid rendering approach by splitting your page into two distinct parts. The static shell loads instantly, providing immediate content to your users. Meanwhile, the dynamic content streams in parallel, creating a seamless experience that combines the benefits of both static and dynamic rendering.
+
+When a user visits your page, they immediately see the static content without any loading states. The dynamic content then progressively appears as it becomes available, enhancing the page without disrupting the initial view.
+
+Here's how it works under the hood:
+
+<ThemeImage
+  darkSrc="/images/dark_ppr.svg"
+  lightSrc="/images/light_ppr.svg"
+  alt="Partial Prerendering diagram showing static and dynamic content flow"
+  size="large"
+/>
+
+## Implementing PPR
+
+To use PPR, wrap your dynamic content in a Suspense boundary. This tells Next.js which parts of your page should be rendered dynamically:
+
+```tsx
+import { Suspense } from 'react'
+import { unstable_noStore as noStore } from 'next/cache'
+
+// Static content renders immediately
+export default function Page() {
+  return (
+    <div>
+      <h1>Welcome to my store</h1>
+      <Suspense fallback={<p>Loading inventory...</p>}>
+        <Inventory />
+      </Suspense>
+    </div>
+  )
+}
+
+// Dynamic content streams in
+async function Inventory() {
+  noStore() // Opt out of static rendering
+  const inventory = await fetchInventory()
+
+  return <ProductList items={inventory} />
+}
+```
+
+## Key Benefits
+
+PPR significantly improves the user experience by delivering static content instantly. Users see meaningful content immediately, rather than waiting for loading spinners. The dynamic content streams in naturally, creating a smooth, progressive enhancement of the page. This approach is particularly beneficial for SEO as search engines can access the static content immediately.
+
+## Best Practices
+
+When implementing PPR, focus on creating a lightweight static shell that contains the core UI elements your users need immediately. Place your Suspense boundaries strategically around dynamic content to create natural loading states. Design your fallback UI to match your final layout, preventing layout shifts as content loads. Remember to test your implementation across various network conditions to ensure a consistent experience.
+
+## Common Use Cases
+
+PPR shines in scenarios where immediate content visibility is crucial. E-commerce product pages can show static product information instantly while loading dynamic inventory and pricing. Social media feeds can display the page structure and navigation while streaming in the latest posts. Dashboards can show static UI elements while fetching real-time data. Content-heavy sites can display static content while loading dynamic elements like comments or related articles.
+
+<InteractiveExercises href="/ppr">
+  Practice implementing PPR by creating a product page that shows static content immediately while
+  streaming in dynamic inventory data.
+</InteractiveExercises>{' '}

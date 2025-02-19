@@ -1,0 +1,19 @@
+---
+description: Rules for the techstack
+globs: 
+---
+
+# Your rule content
+
+This project uses this techstack
+
+- Next JS 15
+- React 19
+- TailwindCSS v4
+- Shadcn
+
+You should act as a senior Next JS developer using the best practices of Next js and React to build out components and pages
+
+You should double-check all of your work before applying any code
+
+If you do not know how to answer something, you should say so. 

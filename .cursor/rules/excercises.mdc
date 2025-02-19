@@ -1,0 +1,16 @@
+---
+description: Rules for excercises
+globs: 
+---
+
+# Your rule content
+
+In this project, we have exercises located at src/app/(exercises)
+
+In this folder group you will find exercises folders for each lesson, when creating excercises we should do it in a similar format to Kent C Dodds Epic React course, where we use JS Doc at the top of the file to explaint o the user what they need to do and any extra credits / resources, and we should also guide the user with comments on where they should do things
+
+Each exercise will contain partially built out pages where the users will have to edit them to learn how to get to the solution. 
+
+We should also create a solutions file called solutions.tsx that sits in the same folder as the exercise, this is a completed version of the exercise with no comments, the idea is that if a user is stuck or just wants to compare their solution with the correct one, they can open the solutions file to compare
+
+

@@ -3,11 +3,14 @@ The `'use server'` directive in Next.js is used to create a door between the cli
 `'use server'` is not saying that this is a server component,
 it is actually saying that the client can use the server to do something.
 
-Server actions should be used to perform an action, such as creating a todo item, updating a user's profile, or deleting a comment.
-You should not use server actions to perform a query, such as fetching data from a database.
+Server actions should be used to perform an action, such as:
 
-This is because server actions are not reactive, they will not update when data changes, they require
-an action to be performed in order to update or mutate data.
+- Creating a todo item
+- Updating a user's profile
+- Deleting a comment
+- Processing form submissions
+
+You should not use server actions to perform a query, such as fetching data from a database. This is because server actions are not reactive, they will not update when data changes, they require an action to be performed in order to update or mutate data.
 
 <Alert type="warning">
 You should think of server actions as a public API that you can call from your client components.
@@ -17,19 +20,13 @@ So it is important that you implement these checks in your server actions.
 
 </Alert>
 
-## When to Use Server Actions
+## Understanding Server Actions
 
-Use the `'use server'` directive when you need to:
+Server actions serve as a bridge for performing server-side operations from client components. They're particularly valuable when you need to mutate data in your database, process form submissions securely, or handle any server-side CRUD operations that require authentication or data validation. By keeping these operations on the server, you maintain better security and data integrity while reducing the amount of sensitive logic exposed to the client.
 
-- Mutate data in your database
-- Perform server-only operations
-- Handle form submissions securely
-- Handle any server-side CRUD operations
+## Implementation Patterns
 
-## Example
-
-In this example, the server action is defined in a separate file and imported into the component.
-this is the typical way that you would use server actions.
+There are two main patterns for implementing server actions in Next.js. The first and most common approach is to define your server actions in a separate file. This pattern promotes better code organization and reusability.
 
 <ThemeImage
   darkSrc="/images/sep_dark_use_server.svg"
@@ -37,6 +34,8 @@ this is the typical way that you would use server actions.
   alt="Diagram showing how use server works in Next.js"
   size="large"
 />
+
+Here's how you can implement this pattern:
 
 ```tsx
 // action.ts
@@ -61,7 +60,6 @@ export async function createTodo(title: string) {
 }
 
 // In a separate file using the server action
-
 import { createTodo } from './action'
 
 export default function TodoForm() {
@@ -74,7 +72,7 @@ export default function TodoForm() {
 }
 ```
 
-You can also use `'use server'` in a component to open a door to the server.
+The second pattern involves defining server actions directly within your components. This approach can be useful for simpler operations or when the server action is specific to a single component.
 
 <ThemeImage
   darkSrc="/images/dark_use_server.svg"
@@ -83,7 +81,7 @@ You can also use `'use server'` in a component to open a door to the server.
   size="medium"
 />
 
-Here is an example:
+Here's an example of this inline pattern:
 
 ```tsx
 export default function TodoList() {
@@ -114,59 +112,54 @@ export default function TodoList() {
 }
 ```
 
-## Best Practices
+## Building Robust Server Actions
 
-1. Keep Server Actions Focused
+When implementing server actions, it's crucial to build them with security and reliability in mind. Here are key principles to follow:
 
-   - One action should do one thing
-   - Return minimal necessary data
+- Keep actions focused on a single responsibility
+- Return only necessary data to minimize exposure
+- Implement proper error handling
+- Validate input data server-side
 
-2. Error Handling
+Input validation is a critical aspect of server actions. Using a schema validation library like Zod can help ensure your server actions receive and process the expected data format. Here's how you can implement robust validation:
 
-   - Return meaningful error messages
-   - Validate input data server-side ( You can use Zod to validate input data server-side)
+```tsx
+'use server'
 
-   An example of this is using Zod to validate the input data server-side.
+import { z } from 'zod'
 
-   ```tsx
-   'use server'
+// Define the schema for the input data
+const schema = z.object({
+  title: z.string().min(1),
+  description: z.string().min(1),
+  completed: z.boolean(),
+})
 
-   import { z } from 'zod'
+export async function createTodo(formData: FormData) {
+  // Parse the input data using the schema
+  const { title, description, completed } = schema.parse(Object.fromEntries(formData.entries()))
 
-   // Define the schema for the input data
-   const schema = z.object({
-     title: z.string().min(1),
-     description: z.string().min(1),
-     completed: z.boolean(),
-   })
+  await db.todo.create({
+    // Create the todo item in the database
+    data: { title, description, completed },
+  })
 
-   export async function createTodo(formData: FormData) {
-     // Parse the input data using the schema
-     const { title, description, completed } = schema.parse(Object.fromEntries(formData.entries()))
+  return { success: true }
+}
+```
 
-     await db.todo.create({
-       // Create the todo item in the database
-       data: { title, description, completed },
-     })
+## Important Considerations
 
-     return { success: true }
-   }
-   ```
+When working with server actions, keep these key points in mind:
 
-3. Security Considerations
-   - Never expose sensitive data or credentials
-   - Always validate and sanitize inputs
-   - Use proper authentication and authorization checks
-
-## Common Gotchas
-
-- Server Actions must be async functions
-- You can call `'use server'` in a client component, but you cannot call `'use client'` in a server component
-- Server Actions can't access client-side APIs
-- Server Actions are API calls and will cause a network request
+- Server actions must be async functions
+- You can use server actions in client components, but not vice versa
+- Server actions can't access client-side APIs
+- Each server action call results in a network request
+- Always implement proper security checks
+- Validate and sanitize all inputs
 
 <InteractiveExercises href="/use_server">
-
 Ready to try it yourself? Head over to the Use Server Exercise where you'll:
 
 - Create a server action to handle form submission
@@ -175,8 +168,10 @@ Ready to try it yourself? Head over to the Use Server Exercise where you'll:
 - Handle loading and success states
 
 </InteractiveExercises>
+
 ## Additional Resources
 
 - [Next.js Server Actions Documentation](https://nextjs.org/docs/app/api-reference/functions/server-actions)
 - [Server Actions Security](https://nextjs.org/docs/app/building-your-application/data-fetching/forms-and-mutations#security)
 - [Revalidate Path](https://nextjs.org/docs/app/api-reference/functions/revalidatePath)
+- [Zod](https://zod.dev/)
