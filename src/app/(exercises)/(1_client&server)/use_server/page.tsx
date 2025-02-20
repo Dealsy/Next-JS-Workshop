@@ -46,6 +46,8 @@ type Todo = {
 // TODO: Implement this component to handle form submissions
 // Hint: Use the form action prop to call the createTodo server action
 function TodoForm({ onSuccess }: { onSuccess: () => void }) {
+  // onSuccess is a function that will be called when the form is submitted
+
   return (
     <div>
       <form className="flex gap-2">

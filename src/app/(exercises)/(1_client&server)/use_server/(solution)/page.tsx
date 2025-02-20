@@ -4,17 +4,6 @@ import { ExercisesContainer } from '@/components/exerciseContainer'
 import { createTodo, deleteTodo, getTodos } from './actions'
 import { useEffect, useState } from 'react'
 
-/*
- * 💡 Solution: Understanding the 'use server' Directive
- *
- * Key Points:
- * 1. Server Actions are defined in a separate file (actions.ts)
- * 2. They run exclusively on the server
- * 3. Forms can directly use server actions
- * 4. UI is automatically revalidated after mutations
- * 5. Components stay focused on presentation
- */
-
 type Todo = {
   id: number
   title: string

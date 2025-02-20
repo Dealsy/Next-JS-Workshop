@@ -1,7 +1,5 @@
 'use client'
 
-import { ExercisesContainer } from '@/components/exerciseContainer'
-
 /*
  * 🚀 Exercise: Understanding the 'use client' Directive
  *
@@ -11,7 +9,7 @@ import { ExercisesContainer } from '@/components/exerciseContainer'
  * 1. Update the counter function by creating a counter button and counter display
  * 2. Remove the 'use client' directive from the top of this file and
  *    take notice of the errors
- * 2. Fix the errors by adding the 'use client' directive  the top of this file
+ * 2. Fix the errors by adding the 'use client' directive back to the top of this file
  *
  * 🧩 Extra Credit:
  * 1. Add a reset button
@@ -23,7 +21,6 @@ import { ExercisesContainer } from '@/components/exerciseContainer'
  * - Event handlers
  * - React hooks
  * - Browser APIs
- * - Try to keep client components as small as possible
  */
 
 function Counter() {
@@ -40,13 +37,6 @@ function Counter() {
   )
 }
 
-// 🚨 This is what the error will look like without 'use client':
-// Error: useState can only be used in Client Components. Add the "use client" directive at the top of the file to use it.
-
 export default function UseClientExercise() {
-  return (
-    <ExercisesContainer>
-      <Counter />
-    </ExercisesContainer>
-  )
+  return <Counter />
 }

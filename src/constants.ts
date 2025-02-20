@@ -61,7 +61,7 @@ export const clientServerLessons = [
     difficulty: difficulties['intermediate'],
     order: 1,
     featured: true,
-    status: statuses.completed,
+    status: statuses.upcoming,
     isDisplayed: isDisplayed.true,
   },
   {
@@ -125,7 +125,7 @@ export const routingLessons = [
     category: categories['Routing'],
     difficulty: difficulties['beginner'],
     order: 3,
-    status: statuses.completed,
+    status: statuses.upcoming,
     isDisplayed: isDisplayed.true,
   },
   {
@@ -156,7 +156,7 @@ export const routingLessons = [
     category: categories['Routing'],
     difficulty: difficulties['beginner'],
     order: 6,
-    status: statuses.upcoming,
+    status: statuses.completed,
     isDisplayed: isDisplayed.true,
   },
   {
@@ -194,7 +194,7 @@ export const renderingLessons = [
     difficulty: difficulties['intermediate'],
     order: 1,
     featured: true,
-    status: statuses.completed,
+    status: statuses.upcoming,
     isDisplayed: isDisplayed.false,
   },
 ]
