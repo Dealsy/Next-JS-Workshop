@@ -2,75 +2,31 @@
 description: Rules for how lessons work
 globs: 
 ---
+
 # Your rule content
 
-In this project, we create blog-like lessons for users to read through to learn about Next JS.
+In this project, we create blog like lessons for users to read through to learn about Next JS,
 This is done via MDX files in the content/lessons folders.
 
-## Writing Style
-The lessons should be written in a concise but narrative style that explains concepts clearly without being verbose. 
-Each concept should be explained in focused paragraphs that get straight to the point while maintaining a natural flow.
+When we create a new lesson we should create the lesson in a folder that is the correct category for the lesson.
 
-Aim for clarity and brevity:
-- Keep paragraphs short and focused (2-3 sentences)
-- Remove unnecessary adjectives and qualifiers
-- Explain technical concepts directly without over-elaboration
-- Use simple, clear language
+The lessons should be like a blog post and explain the topic with examples and possibly diagrams for visual learning, we should NOT just put a bunch of dot points in the post.
 
-Avoid:
-- Excessive detail or repetition
-- Overuse of bullet points, lists and number lists
-- Unnecessary technical jargon
-- Overly formal or academic language
+We should write paragraphs clearly explaining the concepts for the lesson broken down into sections, which would be separated by headings. 
 
-Bad example (too verbose):
-```
-Feature X is an incredibly powerful and groundbreaking innovation that revolutionizes the way we handle state management in our applications. When implementing this extraordinary feature, developers will immediately notice the remarkable improvement in performance metrics, while simultaneously experiencing an unprecedented level of control over their application's data flow.
-```
+We do not need to include a heading in the lesson because the heading is supplied by another reusable component. 
 
-Good example (concise but informative):
-```
-Feature X simplifies state management while improving application performance. It provides direct control over data flow and automatically optimizes state updates for better efficiency.
-```
+At the end of every lesson we should include an interactive lesson link using this component 
 
-## Structure
-Create lessons in folders matching their category. Each lesson should include:
-
-1. A clear introduction that states what will be learned
-2. Sections with practical examples and explanations
-3. Code samples that demonstrate real-world usage
-4. A concise summary of key points where appropriate
-
-You can also use this component to add Diagrams
-
-<ThemeImage
-  darkSrc="/images/dark_error.svg"
-  lightSrc="/images/light_error.svg"
-  alt="Error boundary diagram showing how error boundaries work in Next.js"
-  size="large"
-/>
-
-Remember that the main heading is supplied by another component, so don't include it in the lesson.
-
-## Interactive Components
-Since we are using MDX feel free to create react components as interactive examples if applicable.
-
-End each lesson with an interactive exercise using this component:
 
 <InteractiveExercises href="<link to lesson>">
-<!-- Brief, clear description of the exercise, Example below -->
-Ready to try it yourself? Head over to the Image Optimization Exercise where you'll:
 
-- Implement responsive images
-- Configure remote image domains
-- Add blur-up placeholders
-- Optimize above-the-fold images
+<!-- Content for what the user will be doing goes here -->
 
 </InteractiveExercises>
 
 
-## Adding to Constants
-New lessons must be added to one of the category lists in the constants.ts file with this format:
+New lessons must be added to one of the category lists in the constants.ts file with this format
 
  {
     id: 'server-components',
@@ -82,6 +38,8 @@ New lessons must be added to one of the category lists in the constants.ts file 
     featured: true,
     status: statuses.completed,
     isDisplayed: isDisplayed.true,
-  }
+  },
 
-The lesson folder name must match the `id` exactly. For example, a lesson with id 'server-components' must use that exact name for its folder.
+
+Then the new lesson folder that gets created much match the `id` of this object, this is very important. For example in the above object we have server-components if we now name the lesson ssr it will not load. It must match the id exactly.
+

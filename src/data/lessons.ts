@@ -9,6 +9,7 @@ export interface Lesson {
   prerequisites?: string[]
   order?: number
   featured?: boolean
+  isDisplayed?: boolean
 }
 
 // Combine all lessons
