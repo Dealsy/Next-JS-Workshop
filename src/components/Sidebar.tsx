@@ -62,7 +62,7 @@ export default function Sidebar() {
                           const isCompleted = isLessonCompleted(lesson.id)
                           return (
                             <SidebarMenuItem key={`${lesson.id}-${isCompleted}`} className="pl-2">
-                              <Link href={getLessonPath(lesson)} passHref legacyBehavior>
+                              <Link href={getLessonPath(lesson)}>
                                 <SidebarMenuButton
                                   className={`w-full justify-between ${
                                     pathname === getLessonPath(lesson)

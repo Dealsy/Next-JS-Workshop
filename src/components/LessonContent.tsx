@@ -2,6 +2,7 @@ import { getLessonById } from '@/data/lessons'
 import path from 'path'
 import fs from 'fs/promises'
 import { CompletionCheckbox } from './LessonCompletionCheckbox'
+import { LessonContentWrapper } from './LessonContentWrapper'
 
 export default async function LessonContent({ lessonId }: { lessonId: string }) {
   const lesson = getLessonById(lessonId)
@@ -46,14 +47,14 @@ export default async function LessonContent({ lessonId }: { lessonId: string }) 
     .default
 
   return (
-    <div className="space-y-8">
+    <LessonContentWrapper lessonId={lessonId}>
       <div className="prose prose-slate max-w-none dark:prose-invert prose-code:text-purple-600 dark:prose-code:text-[#80cbc4] prose-code:before:content-none prose-code:after:content-none">
         <Content />
       </div>
       <div className="border-t pt-8">
         <CompletionCheckbox lessonId={lessonId} />
       </div>
-    </div>
+    </LessonContentWrapper>
   )
 }
 

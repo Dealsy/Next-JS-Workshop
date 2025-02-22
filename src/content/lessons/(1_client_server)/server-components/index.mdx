@@ -1,254 +1,195 @@
 Server Components are a fundamental concept in Next.js that allows you to render components on the server by default. This approach brings several benefits including improved performance, reduced client-side JavaScript, better SEO and a better Developer Experience (DX).
 
-## What are Server Components?
+Server Components execute and render entirely on the server, fundamentally changing how we think about component architecture. In Next.js 15, these components must be async functions, opening up new possibilities for data fetching and server-side operations.
 
-Server Components are React components that execute and render entirely on the server.
+When you create a new Next.js application, every component is a Server Component by default, giving you immediate access to these benefits.
 
-Server Components must be `async` functions as of Next 15.
-
-They allow developers to:
-
-- Access server-side resources directly
-- Keep sensitive data and logic on the server
-- Support streaming and progressive rendering
-- Render HTML on the server
-- Allow for optional caching
-- Revalidate routes from the server
-- Data fetching
-
-All pages are Server Components by default in Next.js
+Let's look at a basic Server Component:
 
 ```tsx
-export default function ServerComponent() {
+export default async function WelcomeMessage() {
   return (
-    <div>
-      <h1>Hello from the Server!</h1>
+    <div className="welcome-container">
+      <h1>Welcome to Our Platform</h1>
+      <p>This message was rendered entirely on the server!</p>
     </div>
-  );
+  )
 }
 ```
 
-## Key Benefits
+Yes that is HTML, and it was rendered on the server.
 
-### 1. Zero Client-Side JavaScript
+## The Power of Zero Client JavaScript
 
-Server Components don't ship any JavaScript to the client by default. This means:
-
-- Faster page loads
-- Lower bandwidth usage
-- Better performance on low-end devices
-
-### 2. Direct Backend Access
-
-You can directly access backend resources:
+One of the most compelling aspects of Server Components is their ability to render without shipping any JavaScript to the client. This has profound implications for your application's performance:
 
 ```tsx
-// Access database directly in a Server Component ( The client doesn't have access to the database )
-export default async function UserProfile({ userId }: { userId: string }) {
-  const user = await db.users.findUnique({
-    where: { id: userId },
-  });
+type DatabaseUser = {
+  id: string
+  name: string
+  email: string
+  preferences: {
+    theme: 'light' | 'dark'
+    notifications: boolean
+  }
+}
 
-  return <div>Hello, {user.name}!</div>;
+export default async function UserProfile() {
+  // This database query happens entirely on the server
+  const user = (await db.users.findFirst({
+    where: { id: 'current-user' },
+  })) as DatabaseUser
+
+  return (
+    <div className="profile-container">
+      <h2>{user.name}'s Profile</h2>
+      <div className="user-preferences">
+        <p>Theme: {user.preferences.theme}</p>
+        <p>Notifications: {user.preferences.notifications ? 'Enabled' : 'Disabled'}</p>
+      </div>
+    </div>
+  )
 }
 ```
 
-## 3. Automatic Code Splitting
+In this example, the database query and sensitive user information never reach the client's browser. The component renders on the server, and only the final HTML is sent to the client, significantly reducing the JavaScript bundle size and protecting sensitive data.
 
-Server Components help with automatic code splitting by keeping server-only code separate from client code.
+## Simplified Data Fetching
 
-## 4. Data Fetching
+Server Components dramatically simplify how we handle data fetching. Instead of managing complex state and side effects on the client, we can fetch data directly where it's needed. Here's a practical comparison:
 
-Server Components can fetch data from the server and pass it to the client, the amount of syntax required is
-significantly less than in Client Components.
-
-For example, to fetch data client side, you would need to do something like this:
+Traditional client-side fetching often requires multiple pieces:
 
 ```tsx
-"use client";
+'use client'
 
-const useData = () => {
-  const [data, setData] = useState<any>(null);
-  // Handle loading state
-  const [isLoading, setIsLoading] = useState(true);
-  // Handle error state
-  const [error, setError] = useState<Error | null>(null);
+type Post = {
+  id: string
+  title: string
+  content: string
+}
+
+type FetchState<T> = {
+  data: T | null
+  isLoading: boolean
+  error: Error | null
+}
+
+function usePosts() {
+  const [state, setState] = useState<FetchState<Post[]>>({
+    data: null,
+    isLoading: true,
+    error: null,
+  })
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchPosts = async () => {
       try {
-        const response = await fetch("/api/data");
-        const result = await response.json();
-        setData(result);
-      } catch (err) {
-        setError(err instanceof Error ? err : new Error("An error occurred"));
+        const response = await fetch('/api/posts')
+        const posts = await response.json()
+        setState({ data: posts, isLoading: false, error: null })
+      } catch (error) {
+        setState({
+          data: null,
+          isLoading: false,
+          error: error instanceof Error ? error : new Error('Failed to fetch posts'),
+        })
       }
-      setIsLoading(false);
-    };
+    }
 
-    fetchData();
-  }, []);
+    fetchPosts()
+  }, [])
 
-  return { data, isLoading, error };
-};
-```
-
-Using it in the client component
-
-```tsx
-"use client";
-export default function DataComponent() {
-  const { data, isLoading, error } = useData();
-
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error.message}</div>;
-
-  return <div>{data.name}</div>;
+  return state
 }
 ```
 
-We have to account for loading and errors and make sure we get the useEffect
-hook to fetch the data correctly without accidentally causing race conditions or forgetting
-any other logic.
-
-On the server we can change this to simply be:
+With Server Components, this becomes beautifully simple:
 
 ```tsx
-export default async function Page() {
-  // Fetching data from a fetch function
-  const response = await getData(); // [!code highlight]
-
-  if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`);
-  }
-
-  const data = await response.json();
-
-  return <div>{data.name}</div>;
+type Post = {
+  id: string
+  title: string
+  content: string
 }
-```
 
-Since we are fetching on the server, the data will be fetched before the client has to fully render,
-this means we can avioid useEffect hell and just simply call the endpoint directly.
-
-## When to use Server Components
-
-Use Server Components when:
-
-- You need to access backend resources directly
-- The component doesn't need interactivity
-- You want to keep sensitive data/logic on the server
-- You want to reduce client-side JavaScript
-
-```tsx
-// Good use case for a Server Component
-export default async function ProductList() {
-  const products = await fetchProducts(); // Direct database access
+export default async function BlogPosts() {
+  const posts = (await fetch('https://api.example.com/posts').then(res => res.json())) as Post[]
 
   return (
-    <div>
-      {products.map((product) => (
-        <div key={product.id}>
-          <h2>{product.name}</h2>
-          <p>{product.description}</p>
-        </div>
+    <div className="blog-container">
+      {posts.map(post => (
+        <article key={post.id} className="post">
+          <h2>{post.title}</h2>
+          <p>{post.content}</p>
+        </article>
       ))}
     </div>
-  );
+  )
 }
 ```
 
-<Alert type="info">
-  If your component needs interactivity, you need to use a Client Component.
+## Composing Server and Client Components
 
-Client components allow you to use browser APIs and React hooks, these are not
-available in Server Components.
-
-</Alert>
-
-## Best Practices
-
-1. **Start with Server Components**
-
-   - Use Server Components by default
-   - Only switch to Client Components when needed for interactivity
-
-2. **Proper Component Boundaries**
-
-   - Keep interactive parts isolated in Client Components
-   - Don't make entire pages Client Components
-
-3. **Data Fetching**
-   - Fetch data in Server Components when possible
-   - Use React Suspense for loading states
+While Server Components are powerful, some features require client-side interactivity. The key is knowing when to use each and how to compose them effectively:
 
 ```tsx
-// Good pattern: Server Component with isolated client interactivity
-export default async function Page() {
-  const data = await fetchData();
+// UserSettings.tsx - Client Component for interactive features
+'use client'
+
+type Theme = 'light' | 'dark'
+
+type SettingsProps = {
+  initialTheme: Theme
+}
+
+export default function UserSettings({ initialTheme }: SettingsProps) {
+  const [theme, setTheme] = useState<Theme>(initialTheme)
 
   return (
-    <div>
-      <ServerRenderedContent data={data} />
-      <ClientInteractiveWidget /> {/* Only this part is interactive */}
+    <button onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')} className="theme-toggle">
+      Current theme: {theme}
+    </button>
+  )
+}
+
+// page.tsx - Server Component that composes both
+export default async function SettingsPage() {
+  const userTheme = (await getUserThemePreference()) as Theme
+
+  return (
+    <div className="settings-page">
+      <h1>User Settings</h1>
+      <div className="settings-container">
+        <UserSettings initialTheme={userTheme} />
+      </div>
     </div>
-  );
+  )
 }
 ```
 
-## Common Pitfalls
+This composition pattern allows us to:
 
-1. **Mixing Server and Client Code**
+- Keep sensitive data and heavy computations on the server
+- Add interactivity only where needed
+- Maintain optimal performance
+- Provide a seamless user experience
 
-```tsx
-// ✅ Correct: Use browser API in Client Component
-"use client";
-export function WindowSize() {
-  const [width, setWidth] = useState(window.innerWidth);
-  // ... rest of the component
-}
+When building with Server Components, remember these key principles:
 
-// ❌ Wrong: Using browser APIs in Server Component
-export default async function ServerComponent() {
-  const width = window.innerWidth; // This will throw an error!
-  return <div>Width: {width}</div>;
-}
-```
-
-2. **Over-using Client Components**
-
-```tsx
-// ❌ Wrong: Making entire page a Client Component
-"use client";
-export default function Page() {
-  return (
-    <div>
-      <StaticHeader /> {/* Could be a Server Component */}
-      <InteractiveForm /> {/* Needs to be Client */}
-      <StaticFooter /> {/* Could be a Server Component */}
-    </div>
-  );
-}
-
-// ✅ Correct: Only make interactive parts Client Components
-export default async function Page() {
-  return (
-    <div>
-      <StaticHeader />
-      <ClientForm /> {/* Only this needs 'use client' */}
-      <StaticFooter />
-    </div>
-  );
-}
-```
-
-3. **Server components must be async functions**
+- Start with Server Components by default
+- Move to Client Components only when you need interactivity
+- Keep your component boundaries clean and logical
+- Use TypeScript to ensure type safety across your application
+- Leverage server-side data fetching whenever possible
 
 <InteractiveExercises href="/server_components">
-
 Ready to try it yourself? Head over to the Server Components Exercise where you'll:
 
 - Convert a client component to a server component
+- Implement server-side data fetching
+- Create a hybrid approach using both server and client components
+- Handle loading and error states properly
 
 </InteractiveExercises>
 

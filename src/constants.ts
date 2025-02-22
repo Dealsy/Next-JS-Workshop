@@ -11,6 +11,7 @@ export const EXERCISE_URLS = {
   redirect: 'src/app/(exercises)/(2_routing)/linking-and-navigation/redirect/page.tsx',
   redirect_success: 'src/app/(exercises)/(2_routing)/linking-and-navigation/success/page.tsx',
   loading_ui: 'src/app/(exercises)/(2_routing)/loading-ui/page.tsx',
+  error_handling: 'src/app/(exercises)/(2_routing)/error-handling/page.tsx',
 } as const
 
 export const EXERCISE_ROUTES = {
@@ -23,8 +24,8 @@ export const EXERCISE_ROUTES = {
   use_router: '/linking-and-navigation/useRouter',
   redirect: '/linking-and-navigation/redirect',
   redirect_success: '/linking-and-navigation/success',
-
   loading_ui: '/loading-ui',
+  error_handling: '/error-handling',
 } as const
 
 export const categories = {
@@ -61,7 +62,7 @@ export const clientServerLessons = [
     difficulty: difficulties['intermediate'],
     order: 1,
     featured: true,
-    status: statuses.upcoming,
+    status: statuses.completed,
     isDisplayed: isDisplayed.true,
   },
   {
@@ -125,7 +126,7 @@ export const routingLessons = [
     category: categories['Routing'],
     difficulty: difficulties['beginner'],
     order: 3,
-    status: statuses.upcoming,
+    status: statuses.completed,
     isDisplayed: isDisplayed.true,
   },
   {
@@ -135,7 +136,7 @@ export const routingLessons = [
     category: categories['Routing'],
     difficulty: difficulties['beginner'],
     order: 4,
-    status: statuses.upcoming,
+    status: statuses.completed,
     isDisplayed: isDisplayed.true,
   },
   {
