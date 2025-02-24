@@ -12,6 +12,8 @@ export const EXERCISE_URLS = {
   redirect_success: 'src/app/(exercises)/(2_routing)/linking-and-navigation/success/page.tsx',
   loading_ui: 'src/app/(exercises)/(2_routing)/loading-ui/page.tsx',
   error_handling: 'src/app/(exercises)/(2_routing)/error-handling/page.tsx',
+  data_streaming: 'src/app/(exercises)/(2_routing)/data-streaming/page.tsx',
+  parallel_routes: 'src/app/(exercises)/(2_routing)/parallel-routes/page.tsx',
 } as const
 
 export const EXERCISE_ROUTES = {
@@ -26,6 +28,8 @@ export const EXERCISE_ROUTES = {
   redirect_success: '/linking-and-navigation/success',
   loading_ui: '/loading-ui',
   error_handling: '/error-handling',
+  data_streaming: '/data-streaming',
+  parallel_routes: '/parallel-routes',
 } as const
 
 export const categories = {
@@ -147,7 +151,7 @@ export const routingLessons = [
     difficulty: difficulties['intermediate'],
     order: 5,
     featured: true,
-    status: statuses.upcoming,
+    status: statuses.completed,
     isDisplayed: isDisplayed.true,
   },
   {

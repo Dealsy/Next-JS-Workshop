@@ -11,6 +11,12 @@ In this folder group you will find exercises folders for each lesson, when creat
 
 Each exercise will contain partially built out pages where the users will have to edit them to learn how to get to the solution. 
 
-We should also create a solutions file called solutions.tsx that sits in the same folder as the exercise, this is a completed version of the exercise with no comments, the idea is that if a user is stuck or just wants to compare their solution with the correct one, they can open the solutions file to compare
+We should also create a solutions file or folder if there are multiple pages that need soultions called solutions.tsx that sits in the same folder as the exercise, this is a completed version of the exercise with no comments, the idea is that if a user is stuck or just wants to compare their solution with the correct one, they can open the solutions file to compare
 
 
+When we create a new excercise we need to update the constants.ts file
+
+You must add:
+
+- EXERCISE_URLS - The path to the physical exercise files in the editor
+- EXERCISE_ROUTES - The url for the web page i.e /server-components
