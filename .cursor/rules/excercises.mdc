@@ -20,3 +20,6 @@ You must add:
 
 - EXERCISE_URLS - The path to the physical exercise files in the editor
 - EXERCISE_ROUTES - The url for the web page i.e /server-components
+
+
+Solutions should include any extra credits as well

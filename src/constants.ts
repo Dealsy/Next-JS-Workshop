@@ -14,6 +14,8 @@ export const EXERCISE_URLS = {
   error_handling: 'src/app/(exercises)/(2_routing)/error-handling/page.tsx',
   data_streaming: 'src/app/(exercises)/(2_routing)/data-streaming/page.tsx',
   parallel_routes: 'src/app/(exercises)/(2_routing)/parallel-routes/page.tsx',
+  use_cache: 'src/app/(exercises)/(3_cache)/use-cache/page.tsx',
+  image_optimization: 'src/app/(exercises)/(4_optimizations)/image-optimization/page.tsx',
 } as const
 
 export const EXERCISE_ROUTES = {
@@ -30,6 +32,8 @@ export const EXERCISE_ROUTES = {
   error_handling: '/error-handling',
   data_streaming: '/data-streaming',
   parallel_routes: '/parallel-routes',
+  use_cache: '/use-cache',
+  image_optimization: '/image-optimization',
 } as const
 
 export const categories = {
@@ -172,7 +176,7 @@ export const routingLessons = [
     difficulty: difficulties['advanced'],
     order: 7,
     featured: true,
-    status: statuses.upcoming,
+    status: statuses.completed,
     isDisplayed: isDisplayed.true,
   },
 ]
@@ -185,7 +189,7 @@ export const cacheLessons = [
     category: categories['Cache'],
     difficulty: difficulties['intermediate'],
     order: 1,
-    status: statuses.upcoming,
+    status: statuses.completed,
     isDisplayed: isDisplayed.true,
   },
 ]
@@ -212,7 +216,7 @@ export const optimizationsLessons = [
     category: categories['Optimizations'],
     difficulty: difficulties['intermediate'],
     order: 1,
-    status: statuses.upcoming,
+    status: statuses.completed,
     isDisplayed: isDisplayed.true,
   },
   {
