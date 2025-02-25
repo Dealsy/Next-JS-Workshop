@@ -58,6 +58,7 @@ const transformLessonsToRoadmap = (): TopicSection[] => {
 export default function Roadmap() {
   const workshopData = transformLessonsToRoadmap()
 
+  // calculate the total number of lessons and the number of completed lessons
   const totalLessons = workshopData.reduce((sum, section) => sum + section.lessons.length, 0)
   const completedLessons = workshopData.reduce(
     (sum, section) =>
@@ -66,8 +67,10 @@ export default function Roadmap() {
   )
   const progressPercentage = (completedLessons / totalLessons) * 100
 
-  // Get all section titles to set as default open values
-  const defaultOpenValues = workshopData.map((_, index) => `item-${index}`)
+  // if a section is completed, it will be closed by default
+  const defaultOpenValues = workshopData
+    .map((section, index) => (!section.isCompleted ? `item-${index}` : null))
+    .filter(Boolean) as string[]
 
   return (
     <div className="min-h-screen">

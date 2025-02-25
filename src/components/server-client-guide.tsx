@@ -1,69 +1,58 @@
-import { Check, X } from "lucide-react";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { cn } from "@/lib/utils";
+import { Check, X } from 'lucide-react'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { cn } from '@/lib/utils'
 
 interface GuideItem {
-  task: string;
-  server: boolean;
-  client: boolean;
-  code?: string;
+  task: string
+  server: boolean
+  client: boolean
+  code?: string
 }
 
 const guideItems: GuideItem[] = [
   {
-    task: "Fetch data",
+    task: 'Fetch data',
     server: true,
     client: false,
   },
   {
-    task: "Access backend resources (directly)",
+    task: 'Access backend resources (directly)',
     server: true,
     client: false,
   },
   {
-    task: "Keep sensitive information on the server (access tokens, API keys, etc)",
+    task: 'Keep sensitive information on the server (access tokens, API keys, etc)',
     server: true,
     client: false,
   },
   {
-    task: "Keep large dependencies on the server / Reduce client-side JavaScript",
+    task: 'Keep large dependencies on the server / Reduce client-side JavaScript',
     server: true,
     client: false,
   },
   {
-    task: "Add interactivity and event listeners",
+    task: 'Add interactivity and event listeners',
     server: false,
     client: true,
-    code: "onClick(), onChange()",
+    code: 'onClick(), onChange()',
   },
   {
-    task: "Use State and Lifecycle Effects",
+    task: 'Use State and Lifecycle Effects',
     server: false,
     client: true,
-    code: "useState(), useReducer(), useEffect()",
+    code: 'useState(), useReducer(), useEffect()',
   },
   {
-    task: "Use browser-only APIs",
-    server: false,
-    client: true,
-  },
-  {
-    task: "Use custom hooks that depend on state, effects, or browser-only APIs",
+    task: 'Use browser-only APIs',
     server: false,
     client: true,
   },
   {
-    task: "Use React Class components",
+    task: 'Use custom hooks that depend on state, effects, or browser-only APIs',
     server: false,
     client: true,
   },
-];
+]
 
 export default function ServerClientGuide() {
   return (
@@ -71,30 +60,23 @@ export default function ServerClientGuide() {
       <CardHeader className="space-y-2">
         <CardTitle className="text-2xl">Server vs Client Components</CardTitle>
         <CardDescription>
-          A guide to help you decide when to use Server and Client Components in
-          your Next.js application
+          A guide to help you decide when to use Server and Client Components in your Next.js
+          application
         </CardDescription>
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-[1fr_auto_auto] gap-4">
-          <div className="font-medium text-sm text-muted-foreground">
-            WHAT DO YOU NEED TO DO?
-          </div>
-          <div className="font-medium text-sm text-muted-foreground px-4">
-            SERVER
-          </div>
-          <div className="font-medium text-sm text-muted-foreground px-4">
-            CLIENT
-          </div>
+          <div className="font-medium text-sm text-muted-foreground">WHAT DO YOU NEED TO DO?</div>
+          <div className="font-medium text-sm text-muted-foreground px-4">SERVER</div>
+          <div className="font-medium text-sm text-muted-foreground px-4">CLIENT</div>
 
           {guideItems.map((item, index) => (
             <div key={index} className="contents">
               <div
                 className={cn(
-                  "flex items-center p-4 rounded-lg",
-                  index % 2 === 0 ? "bg-muted/50" : "bg-background"
-                )}
-              >
+                  'flex items-center p-4 rounded-lg',
+                  index % 2 === 0 ? 'bg-muted/50' : 'bg-background',
+                )}>
                 <div>
                   {item.task}
                   {item.code && (
@@ -106,10 +88,9 @@ export default function ServerClientGuide() {
               </div>
               <div
                 className={cn(
-                  "flex items-center justify-center p-4",
-                  index % 2 === 0 ? "bg-muted/50" : "bg-background"
-                )}
-              >
+                  'flex items-center justify-center p-4',
+                  index % 2 === 0 ? 'bg-muted/50' : 'bg-background',
+                )}>
                 {item.server ? (
                   <div className="h-8 w-8 rounded-full bg-green-500/10 flex items-center justify-center">
                     <Check className="h-4 w-4 text-green-500" />
@@ -122,10 +103,9 @@ export default function ServerClientGuide() {
               </div>
               <div
                 className={cn(
-                  "flex items-center justify-center p-4",
-                  index % 2 === 0 ? "bg-muted/50" : "bg-background"
-                )}
-              >
+                  'flex items-center justify-center p-4',
+                  index % 2 === 0 ? 'bg-muted/50' : 'bg-background',
+                )}>
                 {item.client ? (
                   <div className="h-8 w-8 rounded-full bg-green-500/10 flex items-center justify-center">
                     <Check className="h-4 w-4 text-green-500" />
@@ -141,5 +121,5 @@ export default function ServerClientGuide() {
         </div>
       </CardContent>
     </Card>
-  );
+  )
 }

@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card'
 import { cn } from '@/lib/utils'
 
+// This component is used to display the interactive exercises at the end of the lessons
 export function InteractiveExercises({
   children,
   href,

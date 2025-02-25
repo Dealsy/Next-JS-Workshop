@@ -2,6 +2,9 @@ import { AlertCircle, Info, AlertTriangle } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Card, CardContent } from '@/components/ui/card'
 
+//  This component is used to display alerts in the lessons
+
+// This is a javaScript object that contains classNames used to style the alert and set the icon, header, and text color
 const alertTypes = {
   info: {
     icon: Info,
@@ -26,6 +29,9 @@ const alertTypes = {
   },
 } as const
 
+// Here we use TypeScyncing to sync the type of the type prop with the keys of the alertTypes object
+// This allows us to add or remove any values in the alertTypes object and have TypeScript automatically
+// handle the rest
 type AlertType = keyof typeof alertTypes
 
 export default function Alert({
@@ -37,6 +43,7 @@ export default function Alert({
   type: AlertType
   className?: string
 }) {
+  // Here we destructure the alertTypes object to get the styles, textColor, iconColor, header, and icon
   const { styles, textColor, iconColor, header, icon: Icon } = alertTypes[type]
 
   return (

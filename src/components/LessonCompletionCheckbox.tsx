@@ -9,9 +9,11 @@ type LessonCompletionCheckboxProps = {
   lessonId: string
 }
 
+// This component is used to display the lesson completion checkbox in the lessons
 export function CompletionCheckbox({ lessonId }: LessonCompletionCheckboxProps) {
   const { isLessonCompleted, toggleLessonCompletion } = useLessonProgressContext()
   const completed = isLessonCompleted(lessonId)
+  // This is a hook that is used to trigger confetti when the lesson is completed
   const [confetti, triggerConfetti] = useClickConfetti({ duration: 7000 })
 
   const onCompleted = (newCheckedState: boolean) => {

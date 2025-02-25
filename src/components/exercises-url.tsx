@@ -8,6 +8,7 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion'
 
+// This component is used to display the exercises url in the lessons
 export function ExercisesUrl({ route }: { route: string }) {
   return (
     <div className="w-full max-w-2xl mx-auto mb-10">

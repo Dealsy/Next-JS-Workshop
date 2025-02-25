@@ -25,6 +25,8 @@ type ThemeImageProps = {
   size?: ImageSize
 }
 
+// This component is used to display images in the mdx lesson files
+// It allows for a light and dark themed image with a size prop to control the width of the image
 export default function ThemeImage({
   darkSrc,
   lightSrc,

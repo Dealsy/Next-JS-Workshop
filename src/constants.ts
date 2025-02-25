@@ -256,15 +256,16 @@ export const lessons: Lesson[] = [
 export const features = [
   {
     title: 'Hands-on Learning',
-    description: `Practice real-world Next.js concepts with ${lessons.length} interactive lessons and exercises.`,
+    description: `Practice real-world Next.js concepts with ${lessons.length} interactive lessons and exercises, with more on the way!`,
   },
   {
     title: 'Latest Features',
     description: 'Stay up-to-date with the newest Next.js 15+ features and best practices.',
   },
   {
-    title: 'Expert Guidance',
-    description: 'Learn from carefully crafted lessons and compare with reference solutions.',
+    title: 'Roadmap',
+    description:
+      'See planned upcoming lessons in the roadmap section. ( You can view this from the roadmap button in the header )',
   },
 ] as const
 

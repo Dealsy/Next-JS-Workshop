@@ -34,6 +34,7 @@ export default async function LessonContent({ lessonId }: { lessonId: string }) 
     return <LessonUnderConstruction />
   }
 
+  // Get the path to the lesson file
   const mdxPath = path.join(lessonsDir, categoryFolder, lessonId, 'index.mdx')
 
   // Check if file exists first
