@@ -48,6 +48,9 @@ Each lesson consists of:
 3. **Solution** - Reference implementation
 4. **Additional Resources** - Links to official docs and related content
 
+When you finish a lesson, you can click the checkbox at the botton of the lesson to mark it as complete,
+this will update some UI to help keep track of your progress.
+
 ## Where you will work and Exercises
 
 You will only need to work in the (exercises) folder, of course
