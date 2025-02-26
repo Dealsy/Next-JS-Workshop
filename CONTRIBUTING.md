@@ -72,9 +72,13 @@ We follow strict coding standards to maintain consistency throughout the project
 1. Ensure your code follows our coding standards
 2. Update documentation as necessary
 3. Use the appropriate prefix for your PR title based on the type of change:
+
+   - `[lesson]:` for creating new lessons
+   - `[exercise]:` for creating new exercisess
    - `[feat]:` for new features (e.g., `[feat]: Add dark mode support`)
    - `[update]:` for updates to existing features (e.g., `[update]: Improve error handling in auth flow`)
    - `[bug]:` for bug fixes (e.g., `[bug]: Fix login form validation`)
+
 4. Include a clear description of the changes in your pull request
 5. Link any related issues
 6. Wait for a maintainer to review your PR
