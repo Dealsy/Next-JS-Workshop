@@ -6,12 +6,7 @@ import { Card, CardHeader, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { difficulties, lessons } from '@/constants'
 
-/*
- * DO NOT EDIT
- *
- * This page is used to create the lesson pages
- */
-
+// This coponent is used to create the lesson pages
 export default async function LessonPage({ params }: { params: { slug: string[] } }) {
   const param = await params
 
@@ -52,6 +47,8 @@ export default async function LessonPage({ params }: { params: { slug: string[] 
   )
 }
 
+// This function is used to generate the static params for the lesson pages
+// This will be used to create the lesson pages at build time
 export function generateStaticParams() {
   return lessons.map(lesson => ({
     slug: [lesson.category.toLowerCase().replace(/[&\s]+/g, '_'), lesson.id],

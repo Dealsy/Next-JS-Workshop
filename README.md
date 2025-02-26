@@ -51,7 +51,8 @@ Each lesson consists of:
 ## Where you will work and Exercises
 
 You will only need to work in the (exercises) folder, of course
-if you wish you look throught the rest of the code base that is compeletely fine, just be aware that if you do make changes it may break the workshop.
+
+if you wish you look throught the rest of the codebase that is completely fine, just be aware that if you do make changes it may break the workshop.
 
 You will find a link to an exercise at the bottom of each lesson that has one.
 
@@ -64,3 +65,7 @@ You will also find a solutions file or folder that will contain the solution to 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Contributing
+
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.

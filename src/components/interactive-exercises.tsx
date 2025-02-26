@@ -14,7 +14,7 @@ export function InteractiveExercises({
     <Link href={href} className={cn('block group no-underline')}>
       <Card
         className={cn(
-          'relative overflow-hidden shadow-lg',
+          'relative overflow-hidden shadow-lg min-h-50',
           'border-2 border-transparent dark:border-gray-800',
           'transition-all duration-300 ease-in-out',
           'group-hover:border-primary/50 group-hover:shadow-2xl',
@@ -27,10 +27,10 @@ export function InteractiveExercises({
             'dark:from-primary/0 dark:via-primary/10 dark:to-primary/0',
             'opacity-0 group-hover:opacity-100',
             'transition-opacity duration-300 ease-in-out',
+            'group-hover:[animation:shimmer_2s_infinite]',
           )}
           style={{
             transform: 'translateX(-100%)',
-            animation: 'shimmer 2s infinite',
           }}
         />
         <CardHeader>
