@@ -72,7 +72,9 @@ export default function TodoForm() {
 }
 ```
 
-The second pattern involves defining server actions directly within your components. This approach can be useful for simpler operations or when the server action is specific to a single component.
+The second pattern involves defining server actions directly within your server components.
+This approach can be useful for simpler operations or when the server action is specific to a
+single component.
 
 <ThemeImage
   darkSrc="/images/dark_use_server.svg"
@@ -86,9 +88,8 @@ Here's an example of this inline pattern:
 ```tsx
 export default function TodoList() {
   async function deleteTodo(formData: FormData) {
-    'use server' // Opens a door to the server
+    'use server' // Opens a door to the client
 
-    // This code only runs on the server
     const user = await getCurrentUser()
 
     if (!user.id) {
@@ -99,7 +100,7 @@ export default function TodoList() {
     await db.todo.delete({
       where: { id },
     })
-    revalidatePath('/')
+    revalidatePath('/') // revalidates the page
 
     return { success: true }
   }
@@ -111,6 +112,11 @@ export default function TodoList() {
   )
 }
 ```
+
+<Alert type="info">
+  Note that server actions can only be created in server components, you cannot add `'use server'`
+  in a client component.
+</Alert>
 
 ## Building Robust Server Actions
 
@@ -153,19 +159,20 @@ export async function createTodo(formData: FormData) {
 When working with server actions, keep these key points in mind:
 
 - Server actions must be async functions
-- You can use server actions in client components, but not vice versa
+- Server actions cannot be created in client components
 - Server actions can't access client-side APIs
 - Each server action call results in a network request
 - Always implement proper security checks
 - Validate and sanitize all inputs
+- If you call an API route with a server action, you must use the full path to the route.
 
 <InteractiveExercises href="/use_server">
 Ready to try it yourself? Head over to the Use Server Exercise where you'll:
 
-- Create a server action to handle form submission
-- Setup a TODO list and add a todo item
-- Handle errors
-- Handle loading and success states
+- Build a todo list
+- Create a createTodoItem server action
+- Create a deleteTodoItem server action
+- Display the current todos
 
 </InteractiveExercises>
 
