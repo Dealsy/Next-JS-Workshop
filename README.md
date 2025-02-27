@@ -57,11 +57,11 @@ You will only need to work in the (exercises) folder, of course if you wish to l
 
 You will find a link to an exercise at the bottom of each lesson that has one.
 
+From there you can click the link to open it, the excercise page will tell you the file path to go to in your editor to begin the excercise.
+
 example:
 
 ![exercise-url](/public/images/exercise-url.png)
-
-From there you can click the link to open it, the excercise page will tell you the file path to go to in your editor to begin the excercise.
 
 Each excercise will have details on what you need to do with tips and extra credit options.
 
