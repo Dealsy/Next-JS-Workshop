@@ -1,8 +1,8 @@
-import Link from "next/link";
-import { GithubIcon, Map } from "lucide-react";
-import SearchBar from "./SearchBar";
-import { SidebarTrigger } from "./ui/sidebar";
-import ThemeToggle from "./ThemeToggle";
+import Link from 'next/link'
+import { GithubIcon, Map } from 'lucide-react'
+import SearchBar from './SearchBar'
+import { SidebarTrigger } from './ui/sidebar'
+import ThemeToggle from './ThemeToggle'
 
 export default function Header() {
   return (
@@ -31,11 +31,10 @@ export default function Header() {
             </li>
             <li>
               <a
-                href="https://github.com/yourusername/nextjs-workshop"
+                href="https://github.com/Dealsy/Next-JS-Workshop"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-muted-foreground"
-              >
+                className="hover:text-muted-foreground">
                 <GithubIcon className="inline-block w-5 h-5" />
               </a>
             </li>
@@ -43,5 +42,5 @@ export default function Header() {
         </nav>
       </div>
     </header>
-  );
+  )
 }
