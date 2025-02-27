@@ -32,10 +32,6 @@ export default function ParallelRoutesPage() {
   return (
     <div className="p-4">
       <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
-      <p className="text-gray-600 mb-8">
-        This page demonstrates parallel routes in Next.js. Notice how different sections load
-        independently.
-      </p>
 
       {/* The parallel routes (@analytics and @team) will be rendered here by the layout */}
     </div>
