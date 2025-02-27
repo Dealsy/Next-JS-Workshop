@@ -81,6 +81,16 @@ export default function Roadmap() {
           </h1>
         </div>
 
+        <p className="mb-2 text-sm text-gray-600 dark:text-gray-300">
+          This roadmap shows all current lessons, it also shows upcoming lessons that are not
+          completed yet
+        </p>
+
+        <p className="mb-8 text-sm text-gray-600 dark:text-gray-300">
+          This Roadmap will change over time, as new items are added, so check black every now and
+          then to see what new topics are in the works
+        </p>
+
         <div className="mb-8">
           <h2 className="text-xl font-semibold mb-2 text-black dark:text-white">
             Overall Progress
@@ -89,6 +99,17 @@ export default function Roadmap() {
           <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
             {completedLessons} of {totalLessons} lessons completed
           </p>
+        </div>
+
+        <div className="flex gap-6 mb-8">
+          <div className="flex items-center gap-2">
+            <CheckCircle className="h-5 w-5 text-green-500" />
+            <span className="text-sm text-gray-600 dark:text-gray-300">Completed</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <CheckCircle className="h-5 w-5 text-gray-300 dark:text-gray-600" />
+            <span className="text-sm text-gray-600 dark:text-gray-300">Upcoming</span>
+          </div>
         </div>
 
         <Accordion type="multiple" defaultValue={defaultOpenValues} className="space-y-4">

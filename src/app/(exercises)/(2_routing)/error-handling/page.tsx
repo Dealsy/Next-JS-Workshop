@@ -13,6 +13,7 @@ import { useState } from 'react'
  *    - Add a state to track when to throw an error
  *    - Throw a new Error when the state is true
  *    - Add a button that sets the error state to true
+ *    - Head to the error.tsx file to handle the error
  *
  * 🌟 Extra Credit:
  * 1. Add support for different error types:
@@ -32,6 +33,7 @@ import { useState } from 'react'
 
 // TODO: Add error state
 export default function Page() {
+  // state to track when to throw an error
   const [error, setError] = useState(false)
 
   // TODO: Add error throwing logic
