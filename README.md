@@ -55,11 +55,11 @@ this will update some UI to help keep track of your progress.
 
 You will only need to work in the (exercises) folder, of course if you wish to look through the rest of the codebase that is completely fine, just be aware that if you do make changes it may break the workshop.
 
+You will find a link to an exercise at the bottom of each lesson that has one.
+
 example:
 
 ![exercise-url](/public/images/exercise-url.png)
-
-You will find a link to an exercise at the bottom of each lesson that has one.
 
 From there you can click the link to open it, the excercise page will tell you the file path to go to in your editor to begin the excercise.
 
