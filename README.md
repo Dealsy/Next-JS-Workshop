@@ -53,7 +53,7 @@ this will update some UI to help keep track of your progress.
 
 ## Where you will work and Exercises
 
-You will only need to work in the (exercises) folder, of course if you wish you look throught the rest of the codebase that is completely fine, just be aware that if you do make changes it may break the workshop.
+You will only need to work in the (exercises) folder, of course if you wish to look through the rest of the codebase that is completely fine, just be aware that if you do make changes it may break the workshop.
 
 You will find a link to an exercise at the bottom of each lesson that has one.
 
