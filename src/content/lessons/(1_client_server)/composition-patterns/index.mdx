@@ -1,4 +1,6 @@
-Composition Patterns in Next.js help you structure your components efficiently by combining Server and Client Components. Understanding these patterns is crucial for building performant applications.
+Composition Patterns in Next.js help you structure your components efficiently by
+combining Server and Client Components. Understanding these patterns is crucial for
+building performant applications.
 
 <ServerClientGuide />
 
@@ -10,26 +12,28 @@ This pattern involves wrapping client components with server components to minim
 
 ```tsx
 // ServerComponent.tsx
-import ClientComponent from "./ClientComponent";
+import ClientComponent from './ClientComponent'
 
 export default function ServerComponent() {
-  const data = await fetchData(); // Server-side data fetch
+  const data = await fetchData() // Server-side data fetch
 
   return (
     <div>
       <h1>{data.title}</h1>
       <ClientComponent initialData={data} />
     </div>
-  );
+  )
 }
+```
+
+```tsx
+'use client'
 
 // ClientComponent.tsx
-("use client");
-
 export default function ClientComponent({ initialData }) {
-  const [data, setData] = useState(initialData);
+  const [data, setData] = useState(initialData)
   // Client-side interactivity
-  return <button onClick={() => setData(newData)}>Update</button>;
+  return <button onClick={() => setData(newData)}>Update</button>
 }
 ```
 
@@ -38,9 +42,9 @@ export default function ClientComponent({ initialData }) {
 Break down your page into independent components that can be server or client rendered:
 
 ```tsx
-import StaticHeader from "./StaticHeader";
-import InteractiveWidget from "./InteractiveWidget";
-import StaticFooter from "./StaticFooter";
+import StaticHeader from './StaticHeader'
+import InteractiveWidget from './InteractiveWidget'
+import StaticFooter from './StaticFooter'
 
 export default function Page() {
   return (
@@ -49,7 +53,7 @@ export default function Page() {
       <InteractiveWidget /> {/* Client Component */}
       <StaticFooter /> {/* Server Component */}
     </>
-  );
+  )
 }
 ```
 
@@ -60,7 +64,7 @@ export default function Page() {
    Keep providers as close to the root as possible to minimize client JavaScript:
 
    ```tsx
-   "use client";
+   'use client'
 
    // app/providers.tsx
    export function Providers({ children }) {
@@ -68,11 +72,11 @@ export default function Page() {
        <ThemeProvider>
          <AuthProvider>{children}</AuthProvider>
        </ThemeProvider>
-     );
+     )
    }
 
    // app/layout.tsx
-   import { Providers } from "./providers";
+   import { Providers } from './providers'
 
    export default function RootLayout({ children }) {
      return (
@@ -81,7 +85,7 @@ export default function Page() {
            <Providers>{children}</Providers>
          </body>
        </html>
-     );
+     )
    }
    ```
 
@@ -96,13 +100,13 @@ export default function Page() {
    ```tsx
    // Good Pattern
    async function ServerComponent() {
-     const data = await fetchData();
+     const data = await fetchData()
 
      if (!data) {
-       return <div>Error fetching data</div>;
+       return <div>Error fetching data</div>
      }
 
-     return <ClientComponent data={data} />;
+     return <ClientComponent data={data} />
    }
    ```
 
@@ -116,21 +120,21 @@ export default function Page() {
 
    ```tsx
    // Avoid this pattern
-   "use client";
+   'use client'
 
    function ClientComponent() {
-     const [data, setData] = useState(null);
-     const [loading, setLoading] = useState(true);
+     const [data, setData] = useState(null)
+     const [loading, setLoading] = useState(true)
 
      useEffect(() => {
-       setLoading(true);
-       fetchData().then((data) => {
-         setData(data);
-         setLoading(false);
-       });
-     }, []);
+       setLoading(true)
+       fetchData().then(data => {
+         setData(data)
+         setLoading(false)
+       })
+     }, [])
 
-     return <div> {loading ? "Loading..." : data} </div>;
+     return <div> {loading ? 'Loading...' : data} </div>
    }
    ```
 
@@ -148,20 +152,18 @@ export default function Page() {
    An example:
 
    ```tsx
-   "use client";
+   'use client'
 
-   import { use } from "react";
+   import { use } from 'react'
 
    type User = {
-     name: string;
-   };
+     name: string
+   }
 
    export default function UserProfile() {
-     const user = use(
-       fetch("https://api.example.com/user/1").then((res) => res.json())
-     );
+     const user = use(fetch('https://api.example.com/user/1').then(res => res.json()))
 
-     return <div>Hello, {user.name}</div>;
+     return <div>Hello, {user.name}</div>
    }
    ```
 
@@ -180,7 +182,7 @@ function ServerComponent() {
       <p>More static content</p>
       <ClientButton /> {/* Only the button is client-side */}
     </div>
-  );
+  )
 }
 ```
 
@@ -188,7 +190,7 @@ This example is all client side
 
 ```tsx
 // Avoid This Pattern
-"use client";
+'use client'
 
 function EntireSection() {
   return (
@@ -197,7 +199,7 @@ function EntireSection() {
       <p>Even static content</p>
       <button>Click me</button>
     </div>
-  );
+  )
 }
 ```
 

@@ -1,6 +1,6 @@
 import { Suspense } from 'react'
 
-/**
+/*
  * 🎯 Exercise: Data Streaming in Next.js
  *
  * In this exercise, you'll learn how to implement data streaming using React Suspense
