@@ -17,8 +17,8 @@ This workshop provides:
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/nextjs-workshop.git
-cd nextjs-workshop
+git clone https://github.com/yourusername/Next-JS-Workshop.git
+cd Next-JS-Workshop
 ```
 
 2. Install dependencies:
