@@ -10,6 +10,64 @@ type Data = {
   }
 }
 
+function LoadingState() {
+  return <StreamingLoader />
+}
+
+export default function DataStreamingExercise() {
+  return (
+    <div className="min-h-screen py-8">
+      <div className="max-w-7xl mx-auto px-4">
+        <div className="text-center mb-12">
+          <h1 className="text-4xl font-bold text-foreground  mb-4">Real-time Data Streaming</h1>
+          <p className="text-lg text-foreground/80 max-w-2xl mx-auto">
+            Watch as different data sources load independently. Notice how the page loads instantly
+            while data streams in progressively.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <div className="space-y-4">
+            <div className="bg-white rounded-lg p-4 shadow-sm border">
+              <h2 className="font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                <span className="w-3 h-3 bg-emerald-500 rounded-full"></span>
+                Fast Component
+              </h2>
+              <Suspense fallback={<LoadingState />}>
+                <StreamingDataCard delay={1000} />
+              </Suspense>
+            </div>
+          </div>
+
+          <div className="space-y-4">
+            <div className="bg-white rounded-lg p-4 shadow-sm border">
+              <h2 className="font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                <span className="w-3 h-3 bg-amber-500 rounded-full"></span>
+                Medium Component
+              </h2>
+              <Suspense fallback={<LoadingState />}>
+                <StreamingDataCard delay={3000} />
+              </Suspense>
+            </div>
+          </div>
+
+          <div className="space-y-4">
+            <div className="bg-white rounded-lg p-4 shadow-sm border">
+              <h2 className="font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                <span className="w-3 h-3 bg-rose-500 rounded-full"></span>
+                Slow Component
+              </h2>
+              <Suspense fallback={<LoadingState />}>
+                <StreamingDataCard delay={5000} />
+              </Suspense>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 async function getData(delay: number): Promise<Data> {
   // Simulate network delay (deterministic for server components)
   await new Promise(resolve => setTimeout(resolve, delay))
@@ -38,6 +96,8 @@ async function getData(delay: number): Promise<Data> {
 }
 
 async function StreamingDataCard({ delay }: { delay: number }) {
+  // Call the getData function inside of the StreamingDataCard component
+  // This will initalize the data streaming
   const data = await getData(delay)
 
   const speedConfig = {
@@ -103,64 +163,6 @@ async function StreamingDataCard({ delay }: { delay: number }) {
             className={`font-mono font-semibold ${config.textColor} bg-white px-2 py-1 rounded text-xs`}>
             {data.metadata.loadTime}ms
           </span>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-function LoadingState() {
-  return <StreamingLoader />
-}
-
-export default function DataStreamingExercise() {
-  return (
-    <div className="min-h-screen py-8">
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-foreground  mb-4">Real-time Data Streaming</h1>
-          <p className="text-lg text-foreground/80 max-w-2xl mx-auto">
-            Watch as different data sources load independently. Notice how the page loads instantly
-            while data streams in progressively.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          <div className="space-y-4">
-            <div className="bg-white rounded-lg p-4 shadow-sm border">
-              <h2 className="font-semibold text-gray-800 mb-4 flex items-center gap-2">
-                <span className="w-3 h-3 bg-emerald-500 rounded-full"></span>
-                Fast Component
-              </h2>
-              <Suspense fallback={<LoadingState />}>
-                <StreamingDataCard delay={1000} />
-              </Suspense>
-            </div>
-          </div>
-
-          <div className="space-y-4">
-            <div className="bg-white rounded-lg p-4 shadow-sm border">
-              <h2 className="font-semibold text-gray-800 mb-4 flex items-center gap-2">
-                <span className="w-3 h-3 bg-amber-500 rounded-full"></span>
-                Medium Component
-              </h2>
-              <Suspense fallback={<LoadingState />}>
-                <StreamingDataCard delay={3000} />
-              </Suspense>
-            </div>
-          </div>
-
-          <div className="space-y-4">
-            <div className="bg-white rounded-lg p-4 shadow-sm border">
-              <h2 className="font-semibold text-gray-800 mb-4 flex items-center gap-2">
-                <span className="w-3 h-3 bg-rose-500 rounded-full"></span>
-                Slow Component
-              </h2>
-              <Suspense fallback={<LoadingState />}>
-                <StreamingDataCard delay={5000} />
-              </Suspense>
-            </div>
-          </div>
         </div>
       </div>
     </div>

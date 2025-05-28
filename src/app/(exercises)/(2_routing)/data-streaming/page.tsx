@@ -31,51 +31,6 @@ type Data = {
   }
 }
 
-// Task 1: Implement getData to simulate a fetch with delay
-async function getData(delay: number): Promise<Data> {
-  // TODO: Add a delay using setTimeout wrapped in a Promise
-
-  await connection()
-  const timestamp = Date.now()
-  // You can update this to whatever you'd like
-  const title = `Data loaded in ${delay}ms`
-
-  // Simulate realistic API response
-  return {
-    title: title,
-    timestamp: timestamp,
-    metadata: {
-      loadTime: delay,
-    },
-  }
-}
-
-// Task 2: Complete the StreamingDataCard
-async function StreamingDataCard({ delay }: { delay: number }) {
-  // TODO: Call getData with the delay
-  const data = await getData(delay)
-
-  // TODO: write some code to handle displaying the data based on the delay
-  // You could create a config object with the different colors and labels for the different delays
-  // Or extend the config below to handle the different delays
-
-  const config = {
-    label: 'Custom',
-    color: 'bg-gray-500',
-    bgColor: 'bg-gray-50',
-    textColor: 'text-gray-700',
-  }
-
-  return (
-    <div
-      className={`${config.bgColor} rounded-lg p-4 border border-gray-200 hover:border-gray-300 transition-colors max-w-2xl`}>
-      {/* TODO: Create a layout to display that data, this can be whatever you want */}
-      {/* If you'd like an example, you can look at the solutions page */}
-      <div>Implement the card layout here</div>
-    </div>
-  )
-}
-
 // You can use this for your suspense fallback
 function LoadingState() {
   return (
@@ -118,6 +73,50 @@ export default function DataStreamingExercise() {
           <StreamingDataCard delay={5000} />
         </div>
       </div>
+    </div>
+  )
+}
+
+// Task 1: Implement getData to simulate a fetch with delay
+async function getData(delay: number): Promise<Data> {
+  // TODO: Add a delay using setTimeout wrapped in a Promise
+
+  await connection()
+  const timestamp = Date.now()
+  // You can update this to whatever you'd like
+  const title = `Data loaded in ${delay}ms`
+
+  // Simulate realistic API response
+  return {
+    title: title,
+    timestamp: timestamp,
+    metadata: {
+      loadTime: delay,
+    },
+  }
+}
+
+// Task 2: Complete the StreamingDataCard
+async function StreamingDataCard({ delay }: { delay: number }) {
+  // TODO: Call getData with the delay
+
+  // TODO: write some code to handle displaying the data based on the delay
+  // You could create a config object with the different colors and labels for the different delays
+  // Or extend the config below to handle the different delays
+
+  const config = {
+    label: 'Custom',
+    color: 'bg-gray-500',
+    bgColor: 'bg-gray-50',
+    textColor: 'text-gray-700',
+  }
+
+  return (
+    <div
+      className={`${config.bgColor} rounded-lg p-4 border border-gray-200 hover:border-gray-300 transition-colors max-w-2xl`}>
+      {/* TODO: Create a layout to display that data, this can be whatever you want */}
+      {/* If you'd like an example, you can look at the solutions page */}
+      <div className="dark:text-black text-foreground">Implement the card layout here</div>
     </div>
   )
 }
