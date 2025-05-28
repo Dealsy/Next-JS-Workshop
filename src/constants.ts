@@ -202,7 +202,7 @@ export const renderingLessons = [
     category: categories['Rendering'],
     difficulty: difficulties['intermediate'],
     order: 1,
-    featured: true,
+    featured: false,
     status: statuses.upcoming,
     isDisplayed: isDisplayed.false,
   },
